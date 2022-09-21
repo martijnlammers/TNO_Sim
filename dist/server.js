@@ -39,28 +39,28 @@ exports.__esModule = true;
 var express = require("express");
 var client_1 = require("@prisma/client");
 var app = express();
+app.use(express.json());
 var port = 3000;
 var prisma = new client_1.PrismaClient();
-app.post('/user/:id/profile', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, bio, profile;
+app.post('/event', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var user, results;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
-                id = req.params.id;
-                bio = req.body.bio;
-                return [4 /*yield*/, prisma.profile.create({
-                        data: {
-                            bio: bio,
-                            user: {
-                                connect: {
-                                    id: Number(id)
-                                }
-                            }
+            case 0: return [4 /*yield*/, prisma.sim_event.create({
+                    data: {
+                        user_id: req.body['user_id']
+                    }
+                })];
+            case 1:
+                user = _a.sent();
+                return [4 /*yield*/, prisma.sim_event.findMany({
+                        where: {
+                            user_id: 'martijn'
                         }
                     })];
-            case 1:
-                profile = _a.sent();
-                res.send(profile);
+            case 2:
+                results = _a.sent();
+                res.send(results);
                 return [2 /*return*/];
         }
     });

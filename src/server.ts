@@ -1,25 +1,27 @@
 import * as express from "express";
 import { PrismaClient } from '@prisma/client'
 const app = express()
+app.use(express.json());
 const port = 3000
 const prisma = new PrismaClient()
 
-app.post('/user/:id/profile', async (req, res) => {
-  const { id } = req.params
-  const { bio } = req.body
+interface IEvent {
+  user_id: string
+}
 
-  const profile = await prisma.profile.create({
+
+app.post('/event', async (req, res) => {
+  const user = await prisma.sim_event.create({
     data: {
-      bio,
-      user: {
-        connect: {
-          id: Number(id)
-        }
-      }
-    }
+      user_id: req.body['user_id'],
+    },
   })
-
-  res.send(profile)
+  const results = await prisma.sim_event.findMany({
+    where: {
+      user_id: 'martijn',
+    },
+  })
+  res.send(results)
 })
 
 const server = app.listen(3000, () =>

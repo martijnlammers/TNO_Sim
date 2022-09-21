@@ -1,0 +1,11 @@
+
+@host = http://127.0.0.1:3000
+
+###
+post {{host}}/event
+Content-Type: application/json
+
+{
+    "user_id":"martijn"
+}
+##
