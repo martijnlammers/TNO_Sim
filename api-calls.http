@@ -2,10 +2,26 @@
 @host = http://127.0.0.1:3000
 
 ###
-post {{host}}/event
+post {{host}}/simulation/event
 Content-Type: application/json
 
 {
     "user_id":"martijn"
 }
-##
+
+###
+delete {{host}}/simulation/event
+Content-Type: application/json
+
+{
+    "user_id":"martijn"
+}
+
+###
+get {{host}}/simulation/event
+Content-Type: application/json
+
+{
+    "user_id":"martijn"
+}
+
