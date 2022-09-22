@@ -16,9 +16,19 @@ app.post('/event', async (req, res) => {
       user_id: req.body['user_id'],
     },
   })
+  
   const results = await prisma.sim_event.findMany({
     where: {
       user_id: 'martijn',
+    },
+  })
+  res.send(results)
+})
+
+app.delete('/event', async (req, res) => {
+  const results = await prisma.sim_event.deleteMany({
+    where: {
+      user_id: req.body['user_id'],
     },
   })
   res.send(results)
