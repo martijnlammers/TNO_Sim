@@ -10,23 +10,27 @@ interface IEvent {
 }
 
 
-app.post('/event', async (req, res) => {
-  const user = await prisma.sim_event.create({
+app.post('/simulation/event', async (req, res) => {
+  const results = await prisma.sim_event.create({
     data: {
       user_id: req.body['user_id'],
     },
   })
-  
-  const results = await prisma.sim_event.findMany({
+
+  res.send(results)
+})
+
+app.delete('/simulation/event', async (req, res) => {
+  const results = await prisma.sim_event.deleteMany({
     where: {
-      user_id: 'martijn',
+      user_id: req.body['user_id'],
     },
   })
   res.send(results)
 })
 
-app.delete('/event', async (req, res) => {
-  const results = await prisma.sim_event.deleteMany({
+app.get('/simulation/event', async (req, res) => {
+  const results = await prisma.sim_event.findMany({
     where: {
       user_id: req.body['user_id'],
     },
