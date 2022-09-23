@@ -10,17 +10,18 @@ datasource db {
   url      = "file:./databases/simulation_history.db"
 }
 
-// model Sim_history_record {
-//   date          String
-//   sim_id        String      @unique
-//   events Sim_event[] 
-// }
+model Sim_history {
+  date          DateTime    @default(now())
+  id            String      @id @unique
+  events        Sim_event[] 
+}
 
 model Sim_event {
-  event_id                 Int @id @unique @default(autoincrement())
-  // sim_timestamp            String              
-  user_id                  String             
-  // action                   String
-  // record                   Sim_history_record @relation(fields: [record_id], references: [sim_id])
-  // record_id                String
+  id                       Int @id @default(autoincrement())
+  timestamp                DateTime              
+  user_id                  String            
+  action                   String
+  history                  Sim_history @relation(fields: [history_id], references: [id])
+  history_id               String 
+  @@unique([history_id, id])
 }
