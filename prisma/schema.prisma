@@ -18,7 +18,7 @@ model Sim_history {
 
 model Sim_event {
   id                       Int @id @default(autoincrement())
-  timestamp                DateTime              
+  timestamp                DateTime  @default(now())          
   user_id                  String            
   action                   String
   history                  Sim_history @relation(fields: [history_id], references: [id])

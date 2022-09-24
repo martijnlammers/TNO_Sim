@@ -1,6 +1,6 @@
 
 @host = http://127.0.0.1:3000
-@uuid = "0721624f-2736-4446-83e6-ef0dcc8c6133"
+@uuid = "1d7f9e7a-650d-449a-a74e-974933c8c9cc"
 ###
 post {{host}}/simulation/history
 ###
@@ -13,27 +13,14 @@ Content-Type: application/json
     "id":{{uuid}}
 }
 ###
-delete {{host}}/simulation/history
+# delete {{host}}/simulation/history
 ###
 post {{host}}/simulation/event
 Content-Type: application/json
 
 {
-    "user_id":"martijn"
-}
-###
-delete {{host}}/simulation/event
-Content-Type: application/json
-
-{
-    "user_id":"martijn"
-}
-
-###
-get {{host}}/simulation/event
-Content-Type: application/json
-
-{
-    "user_id":"martijn"
+    "user_id":"Player1",                         
+    "action":"Interacted with: Lamp 440hz",                 
+    "history_id":{{uuid}}         
 }
 
