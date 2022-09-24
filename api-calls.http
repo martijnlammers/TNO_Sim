@@ -1,6 +1,19 @@
 
 @host = http://127.0.0.1:3000
+@uuid = "0721624f-2736-4446-83e6-ef0dcc8c6133"
+###
+post {{host}}/simulation/history
+###
+get {{host}}/simulation/history
+###
+get {{host}}/simulation/history
+Content-Type: application/json
 
+{
+    "id":{{uuid}}
+}
+###
+delete {{host}}/simulation/history
 ###
 post {{host}}/simulation/event
 Content-Type: application/json
@@ -8,7 +21,6 @@ Content-Type: application/json
 {
     "user_id":"martijn"
 }
-
 ###
 delete {{host}}/simulation/event
 Content-Type: application/json
