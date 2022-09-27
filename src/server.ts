@@ -1,7 +1,7 @@
 import * as express from "express";
-import { PrismaClient } from '@prisma/client'
-import { v4 as uuidv4 } from 'uuid';
-import * as m from './models'
+import { PrismaClient } from "@prisma/client";
+import { v4 as uuidv4 } from "uuid";
+import * as m from "./models";
 
 const app = express();
 app.use(express.json());
@@ -31,7 +31,7 @@ const prisma = new PrismaClient();
 //   } else {
 //     result = await prisma.sim_history.findMany()
 //   }
-  
+
 //   res.send(result);
 // })
 
@@ -60,20 +60,31 @@ const prisma = new PrismaClient();
 //   res.send(results);
 // })
 
-app.post('/simulation/user', async (req, res) => {
-  const body = req.body
-  const result = await prisma.user.create({
-    data: {
-      id: uuidv4(),
-      firstname: body['firstname'],
-      lastname: body['lastname'],
-      addition: body['addition'],
-      role: m.Roles[body['role'] as keyof typeof m.Roles],
-    },
-  });
-  res.send(result);
-})
+app.post("/simulation/user", async (req, res) => {
+  const body = req.body;
+
+  // Check on valid role assignment.
+  if (Object.values(m.Roles).includes(body["role"])) {
+    const result = await prisma.user.create({
+      data: {
+        id: uuidv4(),
+        firstname: body["firstname"],
+        lastname: body["lastname"],
+        addition: body["addition"],
+        role: body["role"],
+      },
+    });
+    res.send(result);
+    return;
+  }
+  res.send("Invalid inputs.");
+});
+
+app.get("/simulation/user", async (req, res) => {
+  const results = await prisma.user.findMany();
+  res.send(results);
+});
 
 const server = app.listen(port, () =>
-  console.log(`🚀 Server ready at: http://localhost:3000`),
+  console.log(`🚀 Server ready at: http://localhost:3000`)
 );

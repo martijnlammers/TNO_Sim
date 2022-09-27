@@ -1,3 +1,4 @@
+//https://prismaliser.app/ to visualize the models.
 generator client {
   provider = "prisma-client-js"
 }
@@ -7,62 +8,58 @@ datasource db {
   url      = "file:./databases/simulation_history.db"
 }
 
-generator dbml {
-  provider = "prisma-dbml-generator"
-}
-
 model Session {
-  id String @id @unique
-  description String?
-  events Event[]
-  date DateTime @default(now())
-  participants User[]
-  duration DateTime?
-  scene Scene?
+  id           String    @id @unique @default(uuid())
+  description  String?
+  supervisor   User?    
+  events       Event[]
+  date         DateTime  @default(now())
+  duration     DateTime?
+  scene        Scene?
 }
 
 model User {
-  id String @id @unique
-  firstname String 
-  lastname  String
-  addition  String?
-  role      String @default("TRAINEE")
-  session   Session? @relation(fields: [session_id], references: [id])
-  session_id String @unique
-  event     Event? @relation(fields: [event_id], references: [id])
-  event_id String @unique
+  id         String   @id @unique @default(uuid())
+  firstname  String
+  lastname   String
+  addition   String?
+  role       String   @default("TRAINEE")
+  session    Session? @relation(fields: [session_id], references: [id]) 
+  session_id String?   @unique 
+  event      Event?   @relation(fields: [event_id], references: [id])
+  event_id   String?  @unique 
 }
 
 model Scene {
-  id String @id @unique
-  name String
+  id          String     @id @unique
+  name        String
   description String
-  session   Session?  @relation(fields: [session_id], references: [id])
-  session_id String @unique
-  evidences Evidence[]
+  session     Session   @relation(fields: [session_id], references: [id])
+  session_id  String    @unique
+  evidences   Evidence[]
 }
 
 model Evidence {
-  id String @id
-  x Int 
-  y Int 
-  z Int 
-  type String
+  id         String  @id
+  x          Int
+  y          Int
+  z          Int
+  type       String
   discovered Boolean
-  scene   Scene  @relation(fields: [scene_id], references: [id])
-  scene_id String @unique
-  event Event @relation(fields: [scene_id], references: [id])
-  event_id String
+  scene      Scene?   @relation(fields: [scene_id], references: [id])
+  scene_id   String  @unique
+  event      Event?   @relation(fields: [scene_id], references: [id])
+  event_id   String?
 }
 
 model Event {
-  id String @id @unique
-  type String
-  timestamp DateTime @default(now())
-  evidence Evidence?
-  user User?
-  session Session @relation(fields: [session_id], references: [id])
-  session_id String 
-  glasses String? 
-  filter String? 
+  id         String    @id @unique
+  type       String
+  timestamp  DateTime  @default(now())
+  user       User?
+  session    Session   @relation(fields: [session_id], references: [id])
+  session_id String
+  evidence   Evidence?
+  glasses    String?
+  filter     String?
 }

@@ -12,15 +12,16 @@ Content-Type: application/json
 {
     "id":{{uuid}}
 }
+
 ###
-# delete {{host}}/simulation/history
-###
-post {{host}}/simulation/event
+post {{host}}/simulation/user
 Content-Type: application/json
 
 {
-    "user_id":"Player1",                         
-    "action":"Interacted with: Lamp 440hz",                 
-    "history_id":{{uuid}}         
+    "firstname":"erik",                         
+    "lastname":"programmer",                 
+    "addition":"the",
+    "role":"TRAINEE"    
 }
-
+###
+get {{host}}/simulation/user
