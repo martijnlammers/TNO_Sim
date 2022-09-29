@@ -62,7 +62,20 @@ const prisma = new PrismaClient();
 
 app.post("/simulation/user", async (req, res) => {
   const body = req.body;
+  const existingUser = await prisma.user.findFirst({
+    where: {
+      firstname: body["firstname"],
+      lastname: body["lastname"],
+      addition: body["addition"],
+    }
+  });
 
+  // Check if user already exists.
+  if(existingUser != undefined){ 
+    res.send("User already exists.");
+    return;
+  }
+  
   // Check on valid role assignment.
   if (Object.values(m.Roles).includes(body["role"])) {
     const result = await prisma.user.create({
