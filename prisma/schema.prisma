@@ -11,11 +11,11 @@ datasource db {
 model Session {
   id           String    @id @unique @default(uuid())
   description  String?
-  supervisor   User?    
+  supervisor   User[]   
   events       Event[]
   date         DateTime  @default(now())
   duration     DateTime?
-  scene        Scene?
+  scene        Scene[]
 }
 
 model User {
@@ -25,9 +25,9 @@ model User {
   addition   String?
   role       String   @default("TRAINEE")
   session    Session? @relation(fields: [session_id], references: [id]) 
-  session_id String?   @unique 
+  session_id String?  
   event      Event?   @relation(fields: [event_id], references: [id])
-  event_id   String?  @unique 
+  event_id   String?
 }
 
 model Scene {
@@ -47,7 +47,7 @@ model Evidence {
   type       String
   discovered Boolean
   scene      Scene?   @relation(fields: [scene_id], references: [id])
-  scene_id   String  @unique
+  scene_id   String  @unique 
   event      Event?   @relation(fields: [scene_id], references: [id])
   event_id   String?
 }
@@ -56,7 +56,7 @@ model Event {
   id         String    @id @unique
   type       String
   timestamp  DateTime  @default(now())
-  user       User?
+  user       User[]
   session    Session   @relation(fields: [session_id], references: [id])
   session_id String
   evidence   Evidence?

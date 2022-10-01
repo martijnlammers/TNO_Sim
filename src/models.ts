@@ -12,5 +12,4 @@ enum Roles{
     TRAINEE = "TRAINEE",
     SUPERVISOR = "SUPERVISOR"
 }
-
 export {EventType, GlassesType, Roles}

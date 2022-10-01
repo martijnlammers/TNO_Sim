@@ -1,27 +1,29 @@
 
 @host = http://127.0.0.1:3000
-@uuid = "1d7f9e7a-650d-449a-a74e-974933c8c9cc"
-###
-post {{host}}/simulation/history
-###
-get {{host}}/simulation/history
-###
-get {{host}}/simulation/history
-Content-Type: application/json
-
-{
-    "id":{{uuid}}
-}
 
 ###
 post {{host}}/simulation/user
 Content-Type: application/json
 
 {
-    "firstname":"erik",                         
-    "lastname":"programmer",                 
-    "addition":"the",
+    "firstname":"joshua",                         
+    "lastname":"gamer",                 
+    "additio":"the",
     "role":"TRAINEE"    
 }
 ###
+put {{host}}/simulation/user
+Content-Type: application/json
+
+{
+    "id":"b00fbc67-5546-40ab-b202-a2ffd2880ed8",
+    "addition":"the"            
+}
+###
 get {{host}}/simulation/user
+
+
+# Logica verder schrijven
+# api-calls testen
+# OpenAPI-swagger documenteren van apicalls
+# Make public server

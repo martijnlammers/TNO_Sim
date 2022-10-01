@@ -61,34 +61,18 @@ const prisma = new PrismaClient();
 // })
 
 app.post("/simulation/user", async (req, res) => {
-  const body = req.body;
-  const existingUser = await prisma.user.findFirst({
-    where: {
-      firstname: body["firstname"],
-      lastname: body["lastname"],
-      addition: body["addition"],
-    }
-  });
-
-  // Check if user already exists.
-  if(existingUser != undefined){ 
-    res.send("User already exists.");
-    return;
-  }
   
   // Check on valid role assignment.
-  if (Object.values(m.Roles).includes(body["role"])) {
-    const result = await prisma.user.create({
-      data: {
-        id: uuidv4(),
-        firstname: body["firstname"],
-        lastname: body["lastname"],
-        addition: body["addition"],
-        role: body["role"],
-      },
-    });
+  if (Object.values(m.Roles).includes(req.body["role"])) {
+    const data = req.body;
+    let result: any;
+    try{
+      result = await prisma.user.create(data);
+    } catch(e){
+      res.send(result);
+      return;
+    }
     res.send(result);
-    return;
   }
   res.send("Invalid inputs.");
 });
@@ -96,6 +80,23 @@ app.post("/simulation/user", async (req, res) => {
 app.get("/simulation/user", async (req, res) => {
   const results = await prisma.user.findMany();
   res.send(results);
+});
+
+app.put("/simulation/user", async (req, res) => {
+  const data = req.body;
+  let result: any;
+  try{
+    result = await prisma.user.update({
+      where: {
+        id: req.body["id"],
+      },
+      data
+    });
+  } catch(e){
+    res.send(e);
+    return;
+  }
+  res.send(result);
 });
 
 const server = app.listen(port, () =>
