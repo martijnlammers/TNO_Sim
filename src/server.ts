@@ -61,20 +61,15 @@ const prisma = new PrismaClient();
 // })
 
 app.post("/simulation/user", async (req, res) => {
-  
-  // Check on valid role assignment.
-  if (Object.values(m.Roles).includes(req.body["role"])) {
-    const data = req.body;
-    let result: any;
-    try{
-      result = await prisma.user.create(data);
-    } catch(e){
-      res.send(result);
-      return;
-    }
+  const data = req.body;
+  let result: any;
+  try {
+    result = await prisma.user.create({ data });
     res.send(result);
+  } catch (e) {
+    res.send(e);
   }
-  res.send("Invalid inputs.");
+  return;
 });
 
 app.get("/simulation/user", async (req, res) => {
@@ -85,18 +80,17 @@ app.get("/simulation/user", async (req, res) => {
 app.put("/simulation/user", async (req, res) => {
   const data = req.body;
   let result: any;
-  try{
+  try {
     result = await prisma.user.update({
       where: {
         id: req.body["id"],
       },
-      data
+      data,
     });
-  } catch(e){
+    res.send(result);
+  } catch (e) {
     res.send(e);
-    return;
   }
-  res.send(result);
 });
 
 const server = app.listen(port, () =>
