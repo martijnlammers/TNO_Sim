@@ -40,15 +40,15 @@ model Scene {
 }
 
 model Evidence {
-  id         String  @id  @default(uuid())
+  id         String  @id @unique @default(uuid())
   x          Int
   y          Int
   z          Int
   type       String
   discovered Boolean
   scene      Scene?   @relation(fields: [scene_id], references: [id])
-  scene_id   String  @unique 
-  event      Event?   @relation(fields: [scene_id], references: [id])
+  scene_id   String?
+  event      Event?   @relation(fields: [event_id], references: [id])
   event_id   String?
 }
 
@@ -59,7 +59,7 @@ model Event {
   user       User[]
   session    Session   @relation(fields: [session_id], references: [id])
   session_id String
-  evidence   Evidence?
+  evidence   Evidence[]
   glasses    String?
   filter     String?
 }

@@ -12,4 +12,11 @@ enum Roles{
     TRAINEE = "TRAINEE",
     SUPERVISOR = "SUPERVISOR"
 }
-export {EventType, GlassesType, Roles}
+
+enum EvidenceTypes{
+    BLOOD = "BLOOD",
+    GUNPOWDER = "GUNPOWDER",
+    BODILYFLUID = "BODILYFLUID",
+    FIBER = "FIBER"
+}
+export {EventType, GlassesType, Roles, EvidenceTypes}

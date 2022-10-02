@@ -58,7 +58,40 @@ Content-Type: application/json
 get {{host}}/simulation/scene
 
 
+###
+post {{host}}/simulation/evidence
+Content-Type: application/json
+
+{
+    "x":5,                         
+    "y":10,                 
+    "z":0,
+    "type":"BLOOD",
+    "discovered":false,
+    "scene_id":"d00fb22e-a352-4554-849e-929d957fe24c"
+}
+
+###
+get {{host}}/simulation/evidence
+
+###
+put {{host}}/simulation/evidence
+Content-Type: application/json
+
+{
+    "scene_id":"d00fb22e-a352-4554-849e-929d957fe24c",
+    "id":"e9471416-4bad-4aa2-b42f-d47fddc1af40"
+}
+
+
 # Logica verder schrijven
 # api-calls testen
 # OpenAPI-swagger documenteren van apicalls
 # Make public server
+
+
+# Create users
+# Create session
+# Create scene
+# Create evidence
+# Create events

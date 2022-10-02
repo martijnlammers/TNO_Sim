@@ -50,7 +50,16 @@ app.get("/simulation/session", async (req, res) => {
       scene: {
         select:{
           id:true,
-          evidences:true
+          evidences:{
+            select:{
+              id:true,
+              x:true,
+              y:true,
+              z:true,
+              type:true,
+              discovered:true
+            }
+          }
         }
       }
     }
@@ -126,6 +135,41 @@ app.get("/simulation/scene", async (req, res) => {
     }
 });
   res.send(results);
+});
+
+app.get("/simulation/evidence", async (req, res) => {
+  const results = await prisma.evidence.findMany();
+  res.send(results);
+});
+
+app.post("/simulation/evidence", async (req, res) => {
+  const data = req.body;
+  let result: any;
+  try {
+    result = await prisma.evidence.create({ data });
+    res.send(result);
+  } catch (e) {
+    console.log(e);
+    res.send(e);
+  }
+  return;
+});
+
+app.put("/simulation/evidence", async (req, res) => {
+  const data = req.body;
+  let result: any;
+  try {
+    result = await prisma.evidence.update({
+      where: {
+        id: req.body["id"],
+      },
+      data,
+    });
+    res.send(result);
+  } catch (e) {
+    console.log(e);
+    res.send(e);
+  }
 });
 const server = app.listen(port, () =>
   console.log(`🚀 Server ready at: http://localhost:3000`)
