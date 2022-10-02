@@ -38,83 +38,79 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 var express = require("express");
 var client_1 = require("@prisma/client");
-var uuid_1 = require("uuid");
-var app = express();
-app.use(express.json());
+var app = express().use(express.json());
 var port = 3000;
 var prisma = new client_1.PrismaClient();
-app.post('/simulation/history', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var result;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, prisma.sim_history.create({
-                    data: {
-                        id: "".concat((0, uuid_1.v4)())
-                    }
-                })];
-            case 1:
-                result = _a.sent();
-                res.send(result);
-                return [2 /*return*/];
-        }
-    });
-}); });
-app.get('/simulation/history', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var result;
+app.post("/simulation/session", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var data, result, e_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                if (!(req.body['id'] != null)) return [3 /*break*/, 2];
-                return [4 /*yield*/, prisma.sim_history.findUnique({
-                        where: {
-                            id: req.body['id']
-                        },
-                        include: {
-                            events: true
-                        }
-                    })];
+                data = req.body;
+                _a.label = 1;
             case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, prisma.session.create({ data: data })];
+            case 2:
                 result = _a.sent();
-                return [3 /*break*/, 4];
-            case 2: return [4 /*yield*/, prisma.sim_history.findMany()];
-            case 3:
-                result = _a.sent();
-                _a.label = 4;
-            case 4:
                 res.send(result);
-                return [2 /*return*/];
+                return [3 /*break*/, 4];
+            case 3:
+                e_1 = _a.sent();
+                console.log(e_1);
+                res.send(e_1);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); });
-app["delete"]('/simulation/history', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var result;
+app.put("/simulation/session", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var data, result, e_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, prisma.sim_history.deleteMany()];
+            case 0:
+                data = req.body;
+                _a.label = 1;
             case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, prisma.session.update({
+                        where: {
+                            id: req.body["id"]
+                        },
+                        data: data
+                    })];
+            case 2:
                 result = _a.sent();
                 res.send(result);
-                return [2 /*return*/];
+                return [3 /*break*/, 4];
+            case 3:
+                e_2 = _a.sent();
+                console.log(e_2);
+                res.send(e_2);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); });
-// app.get('/simulation/event', async (req, res) => {
-//   const results = await prisma.sim_event.findMany({
-//     where: {
-//       user_id: req.body['user_id'],
-//     },
-//   });
-//   res.send(results);
-// })
-app.post('/simulation/event', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+app.get("/simulation/session", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var results;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, prisma.sim_event.create({
-                    data: {
-                        user_id: req.body['user_id'],
-                        action: req.body['action'],
-                        history_id: req.body['history_id']
+            case 0: return [4 /*yield*/, prisma.session.findMany({
+                    include: {
+                        participants: {
+                            select: {
+                                id: true,
+                                role: true
+                            }
+                        },
+                        events: true,
+                        scene: {
+                            select: {
+                                id: true,
+                                evidences: true
+                            }
+                        }
                     }
                 })];
             case 1:
@@ -124,6 +120,129 @@ app.post('/simulation/event', function (req, res) { return __awaiter(void 0, voi
         }
     });
 }); });
-var server = app.listen(3000, function () {
+app.post("/simulation/user", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var data, result, e_3;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                data = req.body;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, prisma.user.create({ data: data })];
+            case 2:
+                result = _a.sent();
+                res.send(result);
+                return [3 /*break*/, 4];
+            case 3:
+                e_3 = _a.sent();
+                res.send(e_3);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
+app.get("/simulation/user", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var results;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, prisma.user.findMany()];
+            case 1:
+                results = _a.sent();
+                res.send(results);
+                return [2 /*return*/];
+        }
+    });
+}); });
+app.put("/simulation/user", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var data, result, e_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                data = req.body;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, prisma.user.update({
+                        where: {
+                            id: req.body["id"]
+                        },
+                        data: data
+                    })];
+            case 2:
+                result = _a.sent();
+                res.send(result);
+                return [3 /*break*/, 4];
+            case 3:
+                e_4 = _a.sent();
+                res.send(e_4);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
+app["delete"]("/simulation/user", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var result, e_5;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, prisma.user["delete"]({
+                        where: {
+                            id: req.body["id"]
+                        }
+                    })];
+            case 1:
+                result = _a.sent();
+                res.send(result);
+                return [3 /*break*/, 3];
+            case 2:
+                e_5 = _a.sent();
+                res.send(e_5);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); });
+app.post("/simulation/scene", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var data, result, e_6;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                data = req.body;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, prisma.scene.create({ data: data })];
+            case 2:
+                result = _a.sent();
+                res.send(result);
+                return [3 /*break*/, 4];
+            case 3:
+                e_6 = _a.sent();
+                console.log(e_6);
+                res.send(e_6);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
+app.get("/simulation/scene", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var results;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, prisma.scene.findMany({
+                    include: {
+                        evidences: true
+                    }
+                })];
+            case 1:
+                results = _a.sent();
+                res.send(results);
+                return [2 /*return*/];
+        }
+    });
+}); });
+var server = app.listen(port, function () {
     return console.log("\uD83D\uDE80 Server ready at: http://localhost:3000");
 });

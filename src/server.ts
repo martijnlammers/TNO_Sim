@@ -40,9 +40,19 @@ app.put("/simulation/session", async (req, res) => {
 app.get("/simulation/session", async (req, res) => {
   const results = await prisma.session.findMany({
     include:{
-      participants: true,
+      participants:{
+        select:{
+          id:true,
+          role:true
+        }
+      },
       events: true,
-      scene: true
+      scene: {
+        select:{
+          id:true,
+          evidences:true
+        }
+      }
     }
   });
   res.send(results);
@@ -96,6 +106,27 @@ app.delete("/simulation/user", async (req, res) => {
   return;
 });
 
+app.post("/simulation/scene", async (req, res) => {
+  const data = req.body;
+  let result: any;
+  try {
+    result = await prisma.scene.create({ data });
+    res.send(result);
+  } catch (e) {
+    console.log(e);
+    res.send(e);
+  }
+  return;
+});
+
+app.get("/simulation/scene", async (req, res) => {
+  const results = await prisma.scene.findMany({
+    include:{
+      evidences: true
+    }
+});
+  res.send(results);
+});
 const server = app.listen(port, () =>
   console.log(`🚀 Server ready at: http://localhost:3000`)
 );

@@ -6,9 +6,9 @@ post {{host}}/simulation/user
 Content-Type: application/json
 
 {
-    "firstname":"joshua",                         
+    "firstname":"mathew",                         
     "lastname":"gamer",                 
-    "additio":"the",
+    "addition":"the",
     "role":"TRAINEE"    
 }
 ###
@@ -16,11 +16,46 @@ put {{host}}/simulation/user
 Content-Type: application/json
 
 {
-    "id":"b00fbc67-5546-40ab-b202-a2ffd2880ed8",
-    "addition":"the"            
+    "id":"ac89db60-898e-4059-b7eb-77c1fa8b11b4",
+    "session_id":"0926a1bf-181d-413f-b9c4-b2ea9df9f72d"   
 }
+
+# "ac89db60-898e-4059-b7eb-77c1fa8b11b4"
+# "289a3445-4aed-4dbd-8c72-2db85566ca1d"
+# "b00fbc67-5546-40ab-b202-a2ffd2880ed8"
 ###
 get {{host}}/simulation/user
+
+###
+delete {{host}}/simulation/user
+Content-Type: application/json
+
+{
+    "id":"4962856a-071f-4051-8b9e-772368fc6f24"
+}
+###
+post {{host}}/simulation/session
+Content-Type: application/json
+
+{
+    "description":"Temporary dummy session2."                     
+}
+
+###
+get {{host}}/simulation/session
+
+###
+post {{host}}/simulation/scene
+Content-Type: application/json
+
+{
+    "name":"Arbitrary scene name",                         
+    "description":"dummy scene",                 
+    "session_id":"0926a1bf-181d-413f-b9c4-b2ea9df9f72d"
+}
+
+###
+get {{host}}/simulation/scene
 
 
 # Logica verder schrijven

@@ -11,7 +11,7 @@ datasource db {
 model Session {
   id           String    @id @unique @default(uuid())
   description  String?
-  supervisor   User[]   
+  participants   User[]   
   events       Event[]
   date         DateTime  @default(now())
   duration     DateTime?
@@ -31,7 +31,7 @@ model User {
 }
 
 model Scene {
-  id          String     @id @unique
+  id          String     @id @unique @default(uuid())
   name        String
   description String
   session     Session   @relation(fields: [session_id], references: [id])
@@ -40,7 +40,7 @@ model Scene {
 }
 
 model Evidence {
-  id         String  @id
+  id         String  @id  @default(uuid())
   x          Int
   y          Int
   z          Int
@@ -53,7 +53,7 @@ model Evidence {
 }
 
 model Event {
-  id         String    @id @unique
+  id         String    @id @unique  @default(uuid())
   type       String
   timestamp  DateTime  @default(now())
   user       User[]
