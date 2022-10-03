@@ -26,8 +26,7 @@ model User {
   role       String   @default("TRAINEE")
   session    Session? @relation(fields: [session_id], references: [id]) 
   session_id String?  
-  event      Event[]   //@relation(fields: [event_id], references: [id])
-  //event_id   String[]
+  event      Event[]  
 }
 
 model Scene {
@@ -45,7 +44,6 @@ model Evidence {
   y          Float
   z          Float
   type       String
-  discovered Boolean
   scene      Scene?   @relation(fields: [scene_id], references: [id])
   scene_id   String?
   event      Event?   @relation(fields: [event_id], references: [id])
