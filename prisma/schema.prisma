@@ -26,8 +26,8 @@ model User {
   role       String   @default("TRAINEE")
   session    Session? @relation(fields: [session_id], references: [id]) 
   session_id String?  
-  event      Event?   @relation(fields: [event_id], references: [id])
-  event_id   String?
+  event      Event[]   //@relation(fields: [event_id], references: [id])
+  //event_id   String[]
 }
 
 model Scene {
@@ -41,9 +41,9 @@ model Scene {
 
 model Evidence {
   id         String  @id @unique @default(uuid())
-  x          Int
-  y          Int
-  z          Int
+  x          Float
+  y          Float
+  z          Float
   type       String
   discovered Boolean
   scene      Scene?   @relation(fields: [scene_id], references: [id])
@@ -54,9 +54,10 @@ model Evidence {
 
 model Event {
   id         String    @id @unique  @default(uuid())
-  type       String
+  action     String
   timestamp  DateTime  @default(now())
-  user       User[]
+  user       User?     @relation(fields: [user_id], references: [id])
+  user_id    String?
   session    Session   @relation(fields: [session_id], references: [id])
   session_id String
   evidence   Evidence[]
