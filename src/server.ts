@@ -38,47 +38,15 @@ app.put("/simulation/session", async (req, res) => {
 });
 
 app.get("/simulation/session", async (req, res) => {
-  const results = await prisma.session.findMany({
-    include:{
-      participants:{
-        select:{
-          id:true,
-          role:true
-        }
-      },
-      events: {
-        select: {
-          id:true,
-          action:true,
-          timestamp:true,
-          glasses:true,
-          user:{
-            select:{
-              id:true,
-            }
-          },
-          filter:true
-          
-        }
-      },
-      scene: {
-        select:{
-          id:true,
-          evidences:{
-            select:{
-              id:true,
-              x:true,
-              y:true,
-              z:true,
-              type:true,
-              discovered:true
-            }
-          }
-        }
-      }
-    }
-  });
-  res.send(results);
+  const keywords = req.body["keywords"];
+  console.log(keywords);
+  try{
+    let results = await prisma.session.findMany(keywords);
+    res.send(results);
+  } catch(e){
+    console.log(e);
+    res.send(e);
+  }
 });
 
 app.post("/simulation/user", async (req, res) => {
@@ -94,8 +62,15 @@ app.post("/simulation/user", async (req, res) => {
 });
 
 app.get("/simulation/user", async (req, res) => {
-  const results = await prisma.user.findMany();
-  res.send(results);
+  const keywords = req.body["keywords"];
+  console.log(keywords);
+  try{
+    let results = await prisma.user.findMany(keywords);
+    res.send(results);
+  } catch(e){
+    console.log(e);
+    res.send(e);
+  }
 });
 
 app.put("/simulation/user", async (req, res) => {

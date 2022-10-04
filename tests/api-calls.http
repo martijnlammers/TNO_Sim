@@ -25,7 +25,20 @@ Content-Type: application/json
 
 ###
 get {{host}}/simulation/user
+Content-Type: application/json
 
+{
+    "keywords":{
+        "where":{
+            "id":"ac89db60-898e-4059-b7eb-77c1fa8b11b4"
+        },
+        "select":{
+            "id":true,
+            "firstname":true,
+            "lastname":true
+        }
+    }
+}
 ###
 delete {{host}}/simulation/user
 Content-Type: application/json
@@ -40,9 +53,28 @@ Content-Type: application/json
 {
     "description":"Temporary dummy session2."                     
 }
-
 ###
 get {{host}}/simulation/session
+###
+get {{host}}/simulation/session
+Content-Type: application/json
+
+{
+    "keywords":{
+        "where":{
+            "id":"0926a1bf-181d-413f-b9c4-b2ea9df9f72d"
+        },
+        "include":{
+            "participants":{
+                "select":{
+                    "id":true
+                }
+            },
+            "events":true
+        }
+    }
+}
+
 
 ###
 post {{host}}/simulation/scene
@@ -102,13 +134,8 @@ Content-Type: application/json
     "user_id":"ac89db60-898e-4059-b7eb-77c1fa8b11b4"
 }
 
-# api-calls testen
-# OpenAPI-swagger documenteren van apicalls
-# Make public server
+
+# Make server public
+# Write documentation
 
 
-# Create users
-# Create session
-# Create scene
-# Create evidence
-# Create events
