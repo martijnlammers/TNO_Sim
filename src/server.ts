@@ -14,10 +14,15 @@ app.get("/", async (req, res) => {
 });
 
 app.post("/simulation/session", async (req, res) => {
+  const description = String(req.query.description);
   const data = req.body;
   let result: any;
   try {
-    result = await prisma.session.create({ data });
+    result = await prisma.session.create({ 
+      data:{
+        description: description
+      }
+     });
     res.send(result);
   } catch (e) {
     console.log(e);
@@ -44,10 +49,49 @@ app.put("/simulation/session", async (req, res) => {
 });
 
 app.get("/simulation/session", async (req, res) => {
-  const keywords = req.body["keywords"];
-  console.log(keywords);
   try{
-    let results = await prisma.session.findMany(keywords);
+    const scene = !!req.query.scene
+    const events = !!req.query.events
+    const participants = !!req.query.participants
+    let results = await prisma.session.findMany({
+      where:{
+        id: String(req.query.id)
+      },
+      include:{
+        participants:{
+          select:{
+            id: participants,
+            firstname: participants,
+            role: participants
+          }
+        },
+        events:{
+          select:{
+            id: events,
+            action: events,
+            timestamp: events,
+            glasses: events,
+            filter: events
+          }
+        },
+        scene:{
+          select:{
+            id: scene,
+            name: scene,
+            evidences: {
+              select:{
+                x: scene,
+                y: scene,
+                z: scene,
+                type: scene,
+                event_id: scene
+              }
+            }
+          }
+        }
+      }
+    } 
+    );
     res.send(results);
   } catch(e){
     console.log(e);
