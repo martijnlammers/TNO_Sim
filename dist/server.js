@@ -39,8 +39,15 @@ exports.__esModule = true;
 var express = require("express");
 var client_1 = require("@prisma/client");
 var app = express().use(express.json());
-var port = 3000;
+var port = 80;
 var prisma = new client_1.PrismaClient();
+var hostname = '0.0.0.0';
+app.get("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        res.send("Hello world!");
+        return [2 /*return*/];
+    });
+}); });
 app.post("/simulation/session", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var data, result, e_1;
     return __generator(this, function (_a) {
@@ -93,35 +100,31 @@ app.put("/simulation/session", function (req, res) { return __awaiter(void 0, vo
     });
 }); });
 app.get("/simulation/session", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var results;
+    var keywords, results, e_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, prisma.session.findMany({
-                    include: {
-                        participants: {
-                            select: {
-                                id: true,
-                                role: true
-                            }
-                        },
-                        events: true,
-                        scene: {
-                            select: {
-                                id: true,
-                                evidences: true
-                            }
-                        }
-                    }
-                })];
+            case 0:
+                keywords = req.body["keywords"];
+                console.log(keywords);
+                _a.label = 1;
             case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, prisma.session.findMany(keywords)];
+            case 2:
                 results = _a.sent();
                 res.send(results);
-                return [2 /*return*/];
+                return [3 /*break*/, 4];
+            case 3:
+                e_3 = _a.sent();
+                console.log(e_3);
+                res.send(e_3);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); });
 app.post("/simulation/user", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var data, result, e_3;
+    var data, result, e_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -135,27 +138,39 @@ app.post("/simulation/user", function (req, res) { return __awaiter(void 0, void
                 res.send(result);
                 return [3 /*break*/, 4];
             case 3:
-                e_3 = _a.sent();
-                res.send(e_3);
+                e_4 = _a.sent();
+                res.send(e_4);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
     });
 }); });
 app.get("/simulation/user", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var results;
+    var keywords, results, e_5;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, prisma.user.findMany()];
+            case 0:
+                keywords = req.body["keywords"];
+                console.log(keywords);
+                _a.label = 1;
             case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, prisma.user.findMany(keywords)];
+            case 2:
                 results = _a.sent();
                 res.send(results);
-                return [2 /*return*/];
+                return [3 /*break*/, 4];
+            case 3:
+                e_5 = _a.sent();
+                console.log(e_5);
+                res.send(e_5);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); });
 app.put("/simulation/user", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var data, result, e_4;
+    var data, result, e_6;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -174,15 +189,16 @@ app.put("/simulation/user", function (req, res) { return __awaiter(void 0, void 
                 res.send(result);
                 return [3 /*break*/, 4];
             case 3:
-                e_4 = _a.sent();
-                res.send(e_4);
+                e_6 = _a.sent();
+                console.log(e_6);
+                res.send(e_6);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
     });
 }); });
 app["delete"]("/simulation/user", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var result, e_5;
+    var result, e_7;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -197,15 +213,15 @@ app["delete"]("/simulation/user", function (req, res) { return __awaiter(void 0,
                 res.send(result);
                 return [3 /*break*/, 3];
             case 2:
-                e_5 = _a.sent();
-                res.send(e_5);
+                e_7 = _a.sent();
+                res.send(e_7);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
     });
 }); });
 app.post("/simulation/scene", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var data, result, e_6;
+    var data, result, e_8;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -219,9 +235,9 @@ app.post("/simulation/scene", function (req, res) { return __awaiter(void 0, voi
                 res.send(result);
                 return [3 /*break*/, 4];
             case 3:
-                e_6 = _a.sent();
-                console.log(e_6);
-                res.send(e_6);
+                e_8 = _a.sent();
+                console.log(e_8);
+                res.send(e_8);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
@@ -243,6 +259,120 @@ app.get("/simulation/scene", function (req, res) { return __awaiter(void 0, void
         }
     });
 }); });
-var server = app.listen(port, function () {
-    return console.log("\uD83D\uDE80 Server ready at: http://localhost:3000");
+app.get("/simulation/evidence", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var results;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, prisma.evidence.findMany()];
+            case 1:
+                results = _a.sent();
+                res.send(results);
+                return [2 /*return*/];
+        }
+    });
+}); });
+app.post("/simulation/evidence", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var data, result, e_9;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                data = req.body;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, prisma.evidence.create({ data: data })];
+            case 2:
+                result = _a.sent();
+                res.send(result);
+                return [3 /*break*/, 4];
+            case 3:
+                e_9 = _a.sent();
+                console.log(e_9);
+                res.send(e_9);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
+app.put("/simulation/evidence", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var data, result, e_10;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                data = req.body;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, prisma.evidence.update({
+                        where: {
+                            id: req.body["id"]
+                        },
+                        data: data
+                    })];
+            case 2:
+                result = _a.sent();
+                res.send(result);
+                return [3 /*break*/, 4];
+            case 3:
+                e_10 = _a.sent();
+                console.log(e_10);
+                res.send(e_10);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
+app.post("/simulation/event", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var data, result, e_11;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                data = req.body;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, prisma.event.create({ data: data })];
+            case 2:
+                result = _a.sent();
+                res.send(result);
+                return [3 /*break*/, 4];
+            case 3:
+                e_11 = _a.sent();
+                console.log(e_11);
+                res.send(e_11);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
+app.put("/simulation/event", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var data, result, e_12;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                data = req.body;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, prisma.event.update({
+                        where: {
+                            id: req.body["id"]
+                        },
+                        data: data
+                    })];
+            case 2:
+                result = _a.sent();
+                res.send(result);
+                return [3 /*break*/, 4];
+            case 3:
+                e_12 = _a.sent();
+                console.log(e_12);
+                res.send(e_12);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
+var server = app.listen(port, hostname, function () {
+    return console.log("\uD83D\uDE80 Server ready at: ".concat(hostname, ":").concat(port));
 });
