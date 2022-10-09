@@ -1,5 +1,5 @@
 
-@host = http://127.0.0.1:3000
+@host = http://127.0.0.1:80
 
 ###
 post {{host}}/simulation/user
@@ -70,7 +70,13 @@ Content-Type: application/json
                     "id":true
                 }
             },
-            "events":true
+            "events":{
+                "select":{
+                    "action":true,
+                    "glasses":true,
+                    "filter":true
+                }
+            }
         }
     }
 }
