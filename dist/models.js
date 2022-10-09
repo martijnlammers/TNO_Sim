@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.Roles = exports.GlassesType = exports.EventType = void 0;
+exports.EvidenceTypes = exports.Roles = exports.GlassesType = exports.EventType = void 0;
 var EventType;
 (function (EventType) {
     EventType["TAKE"] = "grabbed";
@@ -18,3 +18,11 @@ var Roles;
     Roles["SUPERVISOR"] = "SUPERVISOR";
 })(Roles || (Roles = {}));
 exports.Roles = Roles;
+var EvidenceTypes;
+(function (EvidenceTypes) {
+    EvidenceTypes["BLOOD"] = "BLOOD";
+    EvidenceTypes["GUNPOWDER"] = "GUNPOWDER";
+    EvidenceTypes["BODILYFLUID"] = "BODILYFLUID";
+    EvidenceTypes["FIBER"] = "FIBER";
+})(EvidenceTypes || (EvidenceTypes = {}));
+exports.EvidenceTypes = EvidenceTypes;
