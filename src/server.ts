@@ -3,9 +3,15 @@ import { PrismaClient } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 import * as m from "./models";
 
+
 const app = express().use(express.json());
-const port = 3000;
+const port = 80;
 const prisma = new PrismaClient();
+const hostname = '0.0.0.0';
+
+app.get("/", async (req, res) => {
+  res.send("Hello world!");
+});
 
 app.post("/simulation/session", async (req, res) => {
   const data = req.body;
@@ -193,6 +199,6 @@ app.put("/simulation/event", async (req, res) => {
 });
 
 
-const server = app.listen(port, () =>
-  console.log(`🚀 Server ready at: http://localhost:3000`)
+const server = app.listen(port, hostname, () =>
+  console.log(`🚀 Server ready at: ${hostname}:${port}`)
 );
