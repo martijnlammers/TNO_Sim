@@ -2,31 +2,31 @@ import * as express from "express";
 import { PrismaClient } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 import * as m from "./models";
-
+import e = require("express");
 
 const app = express().use(express.json());
 const port = 80;
 const prisma = new PrismaClient();
-const hostname = '0.0.0.0';
+const hostname = "0.0.0.0";
 
 app.get("/", async (req, res) => {
   res.send("Hello world!");
 });
 
 app.post("/simulation/session", async (req, res) => {
-  const description = req.query.description;
-  const data = req.body;
+  let description = !!req.query.description
+    ? String(req.query.description)
+    : null;
   let result: any;
   try {
-    result = await prisma.session.create({ 
-      data:{
-        description: description
-      }
-     });
+    result = await prisma.session.create({
+      data: {
+        description: description,
+      },
+    });
     res.send(result);
   } catch (e) {
-    console.log(e);
-    res.send(e);
+    internalError(res, e);
   }
   return;
 });
@@ -43,59 +43,65 @@ app.put("/simulation/session", async (req, res) => {
     });
     res.send(result);
   } catch (e) {
-    console.log(e);
-    res.send(e);
+    internalError(res, e);
   }
 });
 
 app.get("/simulation/session", async (req, res) => {
-  try{
-    const scene = !!req.query.scene
-    const events = !!req.query.events
-    const participants = !!req.query.participants
-    let results = await prisma.session.findMany({
-      where:{
-        id: String(req.query.id)
+  try {
+    const q = req.query
+    const scene = (q.scene == 'true' ? true : false);
+    const events = (q.events == 'true' ? true : false);
+    const participants = (q.participants == 'true' ? true : false);
+    let results;
+    results = await prisma.session.findUnique({
+      where: {
+        id: String(q.id),
       },
       include:{
-        participants:{
+        participants: {
           select:{
-            id: participants,
-            firstname: participants,
-            role: participants
+            id:true,
+            firstname:true,
+            role:true,
           }
         },
-        events:{
+        events: {
           select:{
-            id: events,
-            action: events,
-            timestamp: events,
-            glasses: events,
-            filter: events
+            id:true,
+            action:true,
+            timestamp:true,
+            user_id:true,
+            glasses:true,
+            filter:true
           }
         },
         scene:{
           select:{
-            id: scene,
-            name: scene,
+            id: true,
             evidences: {
               select:{
-                x: scene,
-                y: scene,
-                z: scene,
-                type: scene,
-                event_id: scene
+                id:true,
+                x:true,
+                y:true,
+                z:true,
+                type:true,
+                event_id:true
               }
             }
           }
         }
       }
-    } 
-    );
+    });
+    
+    // Remove delete constraints of original object.
+    results = JSON.parse(JSON.stringify(results));
+    if(!participants) delete results.participants
+    if(!events) delete results.events;
+    if(!scene) delete results.scene;
     res.send(results);
-  } catch(e){
-    console.log(e);
-    res.send(e);
+  } catch (e) {
+    internalError(res, e);
   }
 });
 
@@ -106,7 +112,7 @@ app.post("/simulation/user", async (req, res) => {
     result = await prisma.user.create({ data });
     res.send(result);
   } catch (e) {
-    res.send(e);
+    internalError(res, e);
   }
   return;
 });
@@ -114,12 +120,11 @@ app.post("/simulation/user", async (req, res) => {
 app.get("/simulation/user", async (req, res) => {
   const keywords = req.body["keywords"];
   console.log(keywords);
-  try{
+  try {
     let results = await prisma.user.findMany(keywords);
     res.send(results);
-  } catch(e){
-    console.log(e);
-    res.send(e);
+  } catch (e) {
+    internalError(res, e);
   }
 });
 
@@ -135,8 +140,7 @@ app.put("/simulation/user", async (req, res) => {
     });
     res.send(result);
   } catch (e) {
-    console.log(e);
-    res.send(e);
+    internalError(res, e);
   }
 });
 
@@ -144,13 +148,13 @@ app.delete("/simulation/user", async (req, res) => {
   let result: any;
   try {
     result = await prisma.user.delete({
-       where: {
-        id:req.body["id"]
-       } 
-      });
+      where: {
+        id: req.body["id"],
+      },
+    });
     res.send(result);
   } catch (e) {
-    res.send(e);
+    internalError(res, e);
   }
   return;
 });
@@ -162,18 +166,17 @@ app.post("/simulation/scene", async (req, res) => {
     result = await prisma.scene.create({ data });
     res.send(result);
   } catch (e) {
-    console.log(e);
-    res.send(e);
+    internalError(res, e);
   }
   return;
 });
 
 app.get("/simulation/scene", async (req, res) => {
   const results = await prisma.scene.findMany({
-    include:{
-      evidences: true
-    }
-});
+    include: {
+      evidences: true,
+    },
+  });
   res.send(results);
 });
 
@@ -189,8 +192,7 @@ app.post("/simulation/evidence", async (req, res) => {
     result = await prisma.evidence.create({ data });
     res.send(result);
   } catch (e) {
-    console.log(e);
-    res.send(e);
+    internalError(res, e);
   }
   return;
 });
@@ -207,8 +209,7 @@ app.put("/simulation/evidence", async (req, res) => {
     });
     res.send(result);
   } catch (e) {
-    console.log(e);
-    res.send(e);
+    internalError(res, e);
   }
 });
 
@@ -219,8 +220,7 @@ app.post("/simulation/event", async (req, res) => {
     result = await prisma.event.create({ data });
     res.send(result);
   } catch (e) {
-    console.log(e);
-    res.send(e);
+    internalError(res, e);
   }
   return;
 });
@@ -237,12 +237,16 @@ app.put("/simulation/event", async (req, res) => {
     });
     res.send(result);
   } catch (e) {
-    console.log(e);
-    res.send(e);
+    internalError(res, e);
   }
 });
-
 
 const server = app.listen(port, hostname, () =>
   console.log(`🚀 Server ready at: ${hostname}:${port}`)
 );
+
+function internalError(res: express.Response, error: any) {
+  console.log(error);
+  res.statusCode = 500;
+  res.send(error);
+}

@@ -19,4 +19,6 @@ enum EvidenceTypes{
     BODILYFLUID = "BODILYFLUID",
     FIBER = "FIBER"
 }
+
+
 export {EventType, GlassesType, Roles, EvidenceTypes}
