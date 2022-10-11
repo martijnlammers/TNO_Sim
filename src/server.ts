@@ -14,7 +14,7 @@ app.get("/", async (req, res) => {
 });
 
 app.post("/simulation/session", async (req, res) => {
-  const description = String(req.query.description);
+  const description = req.query.description;
   const data = req.body;
   let result: any;
   try {
