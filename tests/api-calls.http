@@ -2,15 +2,7 @@
 @host = http://127.0.0.1:80
 
 ###
-post {{host}}/simulation/user
-Content-Type: application/json
-
-{
-    "firstname":"mathew",                         
-    "lastname":"gamer",                 
-    "addition":"the",
-    "role":"TRAINEE"    
-}
+post {{host}}/simulation/user?firstname=mathew&lastname=gamer&role=TRAINEE
 ###
 put {{host}}/simulation/user
 Content-Type: application/json
@@ -28,7 +20,7 @@ get {{host}}/simulation/user?id=ac89db60-898e-4059-b7eb-77c1fa8b11b4
 ###
 get {{host}}/simulation/user
 ###
-delete {{host}}/simulation/user?id=2109fd82-579a-4130-8f9a-ca22f53c4090
+delete {{host}}/simulation/user?id=eec4bed2-caed-4c87-a52e-73f0f1c82836
 
 ###
 post {{host}}/simulation/session?description=Dummy session description.

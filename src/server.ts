@@ -108,10 +108,22 @@ app.get("/simulation/session", async (req, res) => {
 });
 
 app.post("/simulation/user", async (req, res) => {
-  const data = req.body;
+  const q = req.query;
   let result: any;
+  if(!!!q.firstname || !!!q.lastname || !!!q.role){
+    res.statusCode = 500;
+    res.send("Invalid parameters.");
+    return
+  }
   try {
-    result = await prisma.user.create({ data });
+    result = await prisma.user.create({ 
+      data:{
+        firstname: String(q.firstname),
+        lastname: String(q.lastname),
+        addition: !!q.addition ? String(q.addition) : null,
+        role: String(q.role)
+      },
+    });
     res.send(result);
   } catch (e) {
     internalError(res, e);
