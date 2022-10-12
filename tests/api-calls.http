@@ -24,62 +24,19 @@ Content-Type: application/json
 # "b00fbc67-5546-40ab-b202-a2ffd2880ed8"
 
 ###
+get {{host}}/simulation/user?id=ac89db60-898e-4059-b7eb-77c1fa8b11b4
+###
 get {{host}}/simulation/user
-Content-Type: application/json
-
-{
-    "keywords":{
-        "where":{
-            "id":"ac89db60-898e-4059-b7eb-77c1fa8b11b4"
-        },
-        "select":{
-            "id":true,
-            "firstname":true,
-            "lastname":true
-        }
-    }
-}
 ###
-delete {{host}}/simulation/user
-Content-Type: application/json
+delete {{host}}/simulation/user?id=2109fd82-579a-4130-8f9a-ca22f53c4090
 
-{
-    "id":"4962856a-071f-4051-8b9e-772368fc6f24"
-}
 ###
-post {{host}}/simulation/session
-Content-Type: application/json
+post {{host}}/simulation/session?description=Dummy session description.
+###
+get {{host}}/simulation/session?id=0926a1bf-181d-413f-b9c4-b2ea9df9f72d&participants=true&events=true&scene=true
+###
+get {{host}}/simulation/session?id=0926a1bf-181d-413f-b9c4-b2ea9df9f72d
 
-{
-    "description":"Temporary dummy session2."                     
-}
-###
-get {{host}}/simulation/session
-###
-get {{host}}/simulation/session
-Content-Type: application/json
-
-{
-    "keywords":{
-        "where":{
-            "id":"0926a1bf-181d-413f-b9c4-b2ea9df9f72d"
-        },
-        "include":{
-            "participants":{
-                "select":{
-                    "id":true
-                }
-            },
-            "events":{
-                "select":{
-                    "action":true,
-                    "glasses":true,
-                    "filter":true
-                }
-            }
-        }
-    }
-}
 
 
 ###

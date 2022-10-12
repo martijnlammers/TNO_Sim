@@ -63,6 +63,8 @@ app.get("/simulation/session", async (req, res) => {
           select:{
             id:true,
             firstname:true,
+            addition:true,
+            lastname:true,
             role:true,
           }
         },
@@ -118,10 +120,19 @@ app.post("/simulation/user", async (req, res) => {
 });
 
 app.get("/simulation/user", async (req, res) => {
-  const keywords = req.body["keywords"];
-  console.log(keywords);
+  const q = req.query;
+  const id = !!q.id;
+  let results;
   try {
-    let results = await prisma.user.findMany(keywords);
+    if(id){
+      results = await prisma.user.findUnique({
+        where: {
+          id: String(q.id)
+        }
+      });
+    } else {
+      results = await prisma.user.findMany();
+    }
     res.send(results);
   } catch (e) {
     internalError(res, e);
@@ -149,7 +160,7 @@ app.delete("/simulation/user", async (req, res) => {
   try {
     result = await prisma.user.delete({
       where: {
-        id: req.body["id"],
+        id: String(req.query.id),
       },
     });
     res.send(result);
