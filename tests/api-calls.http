@@ -25,25 +25,11 @@ delete {{host}}/simulation/user?id=eec4bed2-caed-4c87-a52e-73f0f1c82836
 ###
 post {{host}}/simulation/session?description=Dummy session description.
 ###
-get {{host}}/simulation/session?id=0926a1bf-181d-413f-b9c4-b2ea9df9f72d&participants=true&events=true&scene=true
+get {{host}}/simulation/session?id=6b98a66e-2f0e-409c-98f9-f863e726f952&participants=true&events=true&scene=true
 ###
-get {{host}}/simulation/session?id=0926a1bf-181d-413f-b9c4-b2ea9df9f72d
-
-
-
+get {{host}}/simulation/session
 ###
-post {{host}}/simulation/scene
-Content-Type: application/json
-
-{
-    "name":"Arbitrary scene name",                         
-    "description":"dummy scene",                 
-    "session_id":"0926a1bf-181d-413f-b9c4-b2ea9df9f72d"
-}
-
-###
-get {{host}}/simulation/scene
-
+delete {{host}}/simulation/session?id=6b98a66e-2f0e-409c-98f9-f863e726f952
 
 ###
 post {{host}}/simulation/evidence
@@ -80,17 +66,3 @@ Content-Type: application/json
     "glasses":"440",
     "filter":"440"
 }
-###
-put {{host}}/simulation/event
-Content-Type: application/json
-
-{
-    "id":"e380b2dc-e6b4-45c3-bb6f-3ee78486aaf5",                   
-    "user_id":"ac89db60-898e-4059-b7eb-77c1fa8b11b4"
-}
-
-
-# Make server public
-# Write documentation
-
-

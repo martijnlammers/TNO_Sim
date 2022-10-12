@@ -17,34 +17,53 @@ app.post("/simulation/session", async (req, res) => {
   let description = !!req.query.description
     ? String(req.query.description)
     : null;
-  let result: any;
+  let session, scene: any;
   try {
-    result = await prisma.session.create({
+    session = await prisma.session.create({
       data: {
         description: description,
       },
     });
-    res.send(result);
+    scene = await prisma.scene.create({
+      data: {
+        name: 'N/A',
+        description: 'N/A',
+        session_id: session.id
+      },
+    });
+    res.send(session);
   } catch (e) {
     internalError(res, e);
   }
   return;
 });
 
-app.put("/simulation/session", async (req, res) => {
-  const data = req.body;
-  let result: any;
+app.delete("/simulation/session", async (req, res) => {
+  let session, scene, evidence: any;
   try {
-    result = await prisma.session.update({
-      where: {
-        id: req.body["id"],
-      },
-      data,
+    scene = await prisma.scene.findUnique({
+      where:{session_id: String(req.query.id)}
     });
-    res.send(result);
+  } catch (e){}
+  try {
+    evidence = await prisma.evidence.deleteMany({
+      where:{scene_id: String(scene?.id)}
+    });
+  } catch (e){}
+  try{
+    scene = await prisma.scene.delete({
+      where:{session_id: String(req.query.id)}
+    });
+  } catch (e){}
+  try {
+    session = await prisma.session.delete({
+      where:{id: String(req.query.id)}
+    });
+    res.send(session);
   } catch (e) {
     internalError(res, e);
   }
+  return;
 });
 
 app.get("/simulation/session", async (req, res) => {
@@ -54,47 +73,52 @@ app.get("/simulation/session", async (req, res) => {
     const events = (q.events == 'true' ? true : false);
     const participants = (q.participants == 'true' ? true : false);
     let results;
-    results = await prisma.session.findUnique({
-      where: {
-        id: String(q.id),
-      },
-      include:{
-        participants: {
-          select:{
-            id:true,
-            firstname:true,
-            addition:true,
-            lastname:true,
-            role:true,
-          }
+    const id = !!q.id;
+    if(id){
+      results = await prisma.session.findUnique({
+        where: {
+          id: String(q.id),
         },
-        events: {
-          select:{
-            id:true,
-            action:true,
-            timestamp:true,
-            user_id:true,
-            glasses:true,
-            filter:true
-          }
-        },
-        scene:{
-          select:{
-            id: true,
-            evidences: {
-              select:{
-                id:true,
-                x:true,
-                y:true,
-                z:true,
-                type:true,
-                event_id:true
+        include:{
+          participants: {
+            select:{
+              id:true,
+              firstname:true,
+              addition:true,
+              lastname:true,
+              role:true,
+            }
+          },
+          events: {
+            select:{
+              id:true,
+              action:true,
+              timestamp:true,
+              user_id:true,
+              glasses:true,
+              filter:true
+            }
+          },
+          scene:{
+            select:{
+              id: true,
+              evidences: {
+                select:{
+                  id:true,
+                  x:true,
+                  y:true,
+                  z:true,
+                  type:true,
+                  event_id:true
+                }
               }
             }
           }
         }
-      }
-    });
+      });
+    } else { 
+      results = await prisma.session.findMany();
+    }
     
     // Remove delete constraints of original object.
     results = JSON.parse(JSON.stringify(results));
@@ -194,15 +218,6 @@ app.post("/simulation/scene", async (req, res) => {
   return;
 });
 
-app.get("/simulation/scene", async (req, res) => {
-  const results = await prisma.scene.findMany({
-    include: {
-      evidences: true,
-    },
-  });
-  res.send(results);
-});
-
 app.get("/simulation/evidence", async (req, res) => {
   const results = await prisma.evidence.findMany();
   res.send(results);
@@ -246,22 +261,6 @@ app.post("/simulation/event", async (req, res) => {
     internalError(res, e);
   }
   return;
-});
-
-app.put("/simulation/event", async (req, res) => {
-  const data = req.body;
-  let result: any;
-  try {
-    result = await prisma.event.update({
-      where: {
-        id: req.body["id"],
-      },
-      data,
-    });
-    res.send(result);
-  } catch (e) {
-    internalError(res, e);
-  }
 });
 
 const server = app.listen(port, hostname, () =>
