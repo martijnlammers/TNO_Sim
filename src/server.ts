@@ -95,6 +95,7 @@ app.get("/simulation/session", async (req, res) => {
               action:true,
               timestamp:true,
               user_id:true,
+              evidence: true,
               glasses:true,
               filter:true
             }
@@ -175,22 +176,6 @@ app.get("/simulation/user", async (req, res) => {
   }
 });
 
-app.put("/simulation/user", async (req, res) => {
-  const data = req.body;
-  let result: any;
-  try {
-    result = await prisma.user.update({
-      where: {
-        id: req.body["id"],
-      },
-      data,
-    });
-    res.send(result);
-  } catch (e) {
-    internalError(res, e);
-  }
-});
-
 app.delete("/simulation/user", async (req, res) => {
   let result: any;
   try {
@@ -206,50 +191,49 @@ app.delete("/simulation/user", async (req, res) => {
   return;
 });
 
-app.post("/simulation/scene", async (req, res) => {
-  const data = req.body;
-  let result: any;
-  try {
-    result = await prisma.scene.create({ data });
-    res.send(result);
-  } catch (e) {
-    internalError(res, e);
-  }
-  return;
-});
-
-app.get("/simulation/evidence", async (req, res) => {
-  const results = await prisma.evidence.findMany();
-  res.send(results);
-});
-
 app.post("/simulation/evidence", async (req, res) => {
   const data = req.body;
   let result: any;
-  try {
-    result = await prisma.evidence.create({ data });
+  try{
+    result = await prisma.scene.findUnique({
+      where:{
+        session_id: data['session_id']
+      }
+    });
+    let id = result['id']
+    result = await prisma.evidence.create({
+      data:{
+        x:parseFloat(data['x']),
+        y:parseFloat(data['y']),
+        z:parseFloat(data['z']),
+        type:data['type'],
+        scene_id:id
+      }
+    });
     res.send(result);
-  } catch (e) {
+  } catch(e){
     internalError(res, e);
   }
-  return;
 });
 
 app.put("/simulation/evidence", async (req, res) => {
-  const data = req.body;
+  const query = req.query;
   let result: any;
-  try {
+  try{
     result = await prisma.evidence.update({
-      where: {
-        id: req.body["id"],
+      where:{
+        id:String(query.id)
       },
-      data,
+      data:{
+        event_id:String(query.event_id)
+      }
     });
     res.send(result);
-  } catch (e) {
+  } catch(e){
     internalError(res, e);
   }
 });
+
 
 app.post("/simulation/event", async (req, res) => {
   const data = req.body;

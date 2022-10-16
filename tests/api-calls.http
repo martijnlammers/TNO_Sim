@@ -3,17 +3,6 @@
 
 ###
 post {{host}}/simulation/user?firstname=mathew&lastname=gamer&role=TRAINEE
-###
-put {{host}}/simulation/user
-Content-Type: application/json
-
-{
-    "id":"ac89db60-898e-4059-b7eb-77c1fa8b11b4"
-}
-
-# "ac89db60-898e-4059-b7eb-77c1fa8b11b4"
-# "289a3445-4aed-4dbd-8c72-2db85566ca1d"
-# "b00fbc67-5546-40ab-b202-a2ffd2880ed8"
 
 ###
 get {{host}}/simulation/user?id=ac89db60-898e-4059-b7eb-77c1fa8b11b4
@@ -25,7 +14,7 @@ delete {{host}}/simulation/user?id=eec4bed2-caed-4c87-a52e-73f0f1c82836
 ###
 post {{host}}/simulation/session?description=Dummy session description.
 ###
-get {{host}}/simulation/session?id=6b98a66e-2f0e-409c-98f9-f863e726f952&participants=true&events=true&scene=true
+get {{host}}/simulation/session?id=0926a1bf-181d-413f-b9c4-b2ea9df9f72d&participants=false&events=false&scene=true
 ###
 get {{host}}/simulation/session
 ###
@@ -40,22 +29,10 @@ Content-Type: application/json
     "y":10,                 
     "z":0,
     "type":"BLOOD",
-    "discovered":false,
-    "scene_id":"d00fb22e-a352-4554-849e-929d957fe24c"
+    "session_id":"0926a1bf-181d-413f-b9c4-b2ea9df9f72d"
 }
 
-###
-get {{host}}/simulation/evidence
 
-###
-put {{host}}/simulation/evidence
-Content-Type: application/json
-
-{
-    "discovered":true,
-    "id":"e9471416-4bad-4aa2-b42f-d47fddc1af40",
-    "event_id":"e380b2dc-e6b4-45c3-bb6f-3ee78486aaf5"
-}
 ###
 post {{host}}/simulation/event
 Content-Type: application/json
@@ -66,3 +43,6 @@ Content-Type: application/json
     "glasses":"440",
     "filter":"440"
 }
+
+###
+put {{host}}/simulation/evidence?id=72325654-594a-4027-8310-7accd5cfee78&event_id=e4866c43-08f7-495c-9adb-44c0a1f40f65
