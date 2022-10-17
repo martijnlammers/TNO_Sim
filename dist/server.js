@@ -41,7 +41,7 @@ var client_1 = require("@prisma/client");
 var app = express().use(express.json());
 var port = 80;
 var prisma = new client_1.PrismaClient();
-var hostname = '0.0.0.0';
+var hostname = "0.0.0.0";
 app.get("/", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         res.send("Hello world!");
@@ -49,163 +49,254 @@ app.get("/", function (req, res) { return __awaiter(void 0, void 0, void 0, func
     });
 }); });
 app.post("/simulation/session", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var data, result, e_1;
+    var description, session, scene, e_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                data = req.body;
+                description = !!req.query.description
+                    ? String(req.query.description)
+                    : null;
                 _a.label = 1;
             case 1:
-                _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, prisma.session.create({ data: data })];
+                _a.trys.push([1, 4, , 5]);
+                return [4 /*yield*/, prisma.session.create({
+                        data: {
+                            description: description
+                        }
+                    })];
             case 2:
-                result = _a.sent();
-                res.send(result);
-                return [3 /*break*/, 4];
+                session = _a.sent();
+                return [4 /*yield*/, prisma.scene.create({
+                        data: {
+                            name: 'N/A',
+                            description: 'N/A',
+                            session_id: session.id
+                        }
+                    })];
             case 3:
+                scene = _a.sent();
+                res.send(session);
+                return [3 /*break*/, 5];
+            case 4:
                 e_1 = _a.sent();
-                console.log(e_1);
-                res.send(e_1);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                internalError(res, e_1);
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
         }
     });
 }); });
-app.put("/simulation/session", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var data, result, e_2;
+app["delete"]("/simulation/session", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var session, scene, evidence, e_2, e_3, e_4, e_5;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                data = req.body;
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, prisma.scene.findUnique({
+                        where: { session_id: String(req.query.id) }
+                    })];
+            case 1:
+                scene = _a.sent();
+                return [3 /*break*/, 3];
+            case 2:
+                e_2 = _a.sent();
+                return [3 /*break*/, 3];
+            case 3:
+                _a.trys.push([3, 5, , 6]);
+                return [4 /*yield*/, prisma.evidence.deleteMany({
+                        where: { scene_id: String(scene === null || scene === void 0 ? void 0 : scene.id) }
+                    })];
+            case 4:
+                evidence = _a.sent();
+                return [3 /*break*/, 6];
+            case 5:
+                e_3 = _a.sent();
+                return [3 /*break*/, 6];
+            case 6:
+                _a.trys.push([6, 8, , 9]);
+                return [4 /*yield*/, prisma.scene["delete"]({
+                        where: { session_id: String(req.query.id) }
+                    })];
+            case 7:
+                scene = _a.sent();
+                return [3 /*break*/, 9];
+            case 8:
+                e_4 = _a.sent();
+                return [3 /*break*/, 9];
+            case 9:
+                _a.trys.push([9, 11, , 12]);
+                return [4 /*yield*/, prisma.session["delete"]({
+                        where: { id: String(req.query.id) }
+                    })];
+            case 10:
+                session = _a.sent();
+                res.send(session);
+                return [3 /*break*/, 12];
+            case 11:
+                e_5 = _a.sent();
+                internalError(res, e_5);
+                return [3 /*break*/, 12];
+            case 12: return [2 /*return*/];
+        }
+    });
+}); });
+app.get("/simulation/session", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var q, scene, events, participants, results, id, e_6;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 5, , 6]);
+                q = req.query;
+                scene = (q.scene == 'true' ? true : false);
+                events = (q.events == 'true' ? true : false);
+                participants = (q.participants == 'true' ? true : false);
+                results = void 0;
+                id = !!q.id;
+                if (!id) return [3 /*break*/, 2];
+                return [4 /*yield*/, prisma.session.findUnique({
+                        where: {
+                            id: String(q.id)
+                        },
+                        include: {
+                            participants: {
+                                select: {
+                                    id: true,
+                                    firstname: true,
+                                    addition: true,
+                                    lastname: true,
+                                    role: true
+                                }
+                            },
+                            events: {
+                                select: {
+                                    id: true,
+                                    action: true,
+                                    timestamp: true,
+                                    user_id: true,
+                                    evidence: true,
+                                    glasses: true,
+                                    filter: true
+                                }
+                            },
+                            scene: {
+                                select: {
+                                    id: true,
+                                    evidences: {
+                                        select: {
+                                            id: true,
+                                            x: true,
+                                            y: true,
+                                            z: true,
+                                            type: true,
+                                            event_id: true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    })];
+            case 1:
+                results = _a.sent();
+                return [3 /*break*/, 4];
+            case 2: return [4 /*yield*/, prisma.session.findMany()];
+            case 3:
+                results = _a.sent();
+                _a.label = 4;
+            case 4:
+                // Remove delete constraints of original object.
+                results = JSON.parse(JSON.stringify(results));
+                if (!participants)
+                    delete results.participants;
+                if (!events)
+                    delete results.events;
+                if (!scene)
+                    delete results.scene;
+                res.send(results);
+                return [3 /*break*/, 6];
+            case 5:
+                e_6 = _a.sent();
+                internalError(res, e_6);
+                return [3 /*break*/, 6];
+            case 6: return [2 /*return*/];
+        }
+    });
+}); });
+app.post("/simulation/user", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var q, result, e_7;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                q = req.query;
+                if (!!!q.firstname || !!!q.lastname || !!!q.role) {
+                    res.statusCode = 500;
+                    res.send("Invalid parameters.");
+                    return [2 /*return*/];
+                }
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, prisma.session.update({
-                        where: {
-                            id: req.body["id"]
-                        },
-                        data: data
+                return [4 /*yield*/, prisma.user.create({
+                        data: {
+                            firstname: String(q.firstname),
+                            lastname: String(q.lastname),
+                            addition: !!q.addition ? String(q.addition) : null,
+                            role: String(q.role)
+                        }
                     })];
             case 2:
                 result = _a.sent();
                 res.send(result);
                 return [3 /*break*/, 4];
             case 3:
-                e_2 = _a.sent();
-                console.log(e_2);
-                res.send(e_2);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); });
-app.get("/simulation/session", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var keywords, results, e_3;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                keywords = req.body["keywords"];
-                console.log(keywords);
-                _a.label = 1;
-            case 1:
-                _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, prisma.session.findMany(keywords)];
-            case 2:
-                results = _a.sent();
-                res.send(results);
-                return [3 /*break*/, 4];
-            case 3:
-                e_3 = _a.sent();
-                console.log(e_3);
-                res.send(e_3);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); });
-app.post("/simulation/user", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var data, result, e_4;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                data = req.body;
-                _a.label = 1;
-            case 1:
-                _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, prisma.user.create({ data: data })];
-            case 2:
-                result = _a.sent();
-                res.send(result);
-                return [3 /*break*/, 4];
-            case 3:
-                e_4 = _a.sent();
-                res.send(e_4);
+                e_7 = _a.sent();
+                internalError(res, e_7);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
     });
 }); });
 app.get("/simulation/user", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var keywords, results, e_5;
+    var q, id, results, e_8;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                keywords = req.body["keywords"];
-                console.log(keywords);
+                q = req.query;
+                id = !!q.id;
                 _a.label = 1;
             case 1:
-                _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, prisma.user.findMany(keywords)];
-            case 2:
-                results = _a.sent();
-                res.send(results);
-                return [3 /*break*/, 4];
-            case 3:
-                e_5 = _a.sent();
-                console.log(e_5);
-                res.send(e_5);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); });
-app.put("/simulation/user", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var data, result, e_6;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                data = req.body;
-                _a.label = 1;
-            case 1:
-                _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, prisma.user.update({
+                _a.trys.push([1, 6, , 7]);
+                if (!id) return [3 /*break*/, 3];
+                return [4 /*yield*/, prisma.user.findUnique({
                         where: {
-                            id: req.body["id"]
-                        },
-                        data: data
+                            id: String(q.id)
+                        }
                     })];
             case 2:
-                result = _a.sent();
-                res.send(result);
-                return [3 /*break*/, 4];
-            case 3:
-                e_6 = _a.sent();
-                console.log(e_6);
-                res.send(e_6);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                results = _a.sent();
+                return [3 /*break*/, 5];
+            case 3: return [4 /*yield*/, prisma.user.findMany()];
+            case 4:
+                results = _a.sent();
+                _a.label = 5;
+            case 5:
+                res.send(results);
+                return [3 /*break*/, 7];
+            case 6:
+                e_8 = _a.sent();
+                internalError(res, e_8);
+                return [3 /*break*/, 7];
+            case 7: return [2 /*return*/];
         }
     });
 }); });
 app["delete"]("/simulation/user", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var result, e_7;
+    var result, e_9;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
                 return [4 /*yield*/, prisma.user["delete"]({
                         where: {
-                            id: req.body["id"]
+                            id: String(req.query.id)
                         }
                     })];
             case 1:
@@ -213,117 +304,82 @@ app["delete"]("/simulation/user", function (req, res) { return __awaiter(void 0,
                 res.send(result);
                 return [3 /*break*/, 3];
             case 2:
-                e_7 = _a.sent();
-                res.send(e_7);
+                e_9 = _a.sent();
+                internalError(res, e_9);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
     });
 }); });
-app.post("/simulation/scene", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var data, result, e_8;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                data = req.body;
-                _a.label = 1;
-            case 1:
-                _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, prisma.scene.create({ data: data })];
-            case 2:
-                result = _a.sent();
-                res.send(result);
-                return [3 /*break*/, 4];
-            case 3:
-                e_8 = _a.sent();
-                console.log(e_8);
-                res.send(e_8);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); });
-app.get("/simulation/scene", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var results;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, prisma.scene.findMany({
-                    include: {
-                        evidences: true
-                    }
-                })];
-            case 1:
-                results = _a.sent();
-                res.send(results);
-                return [2 /*return*/];
-        }
-    });
-}); });
-app.get("/simulation/evidence", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var results;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, prisma.evidence.findMany()];
-            case 1:
-                results = _a.sent();
-                res.send(results);
-                return [2 /*return*/];
-        }
-    });
-}); });
 app.post("/simulation/evidence", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var data, result, e_9;
+    var data, result, id, e_10;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 data = req.body;
                 _a.label = 1;
             case 1:
-                _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, prisma.evidence.create({ data: data })];
+                _a.trys.push([1, 4, , 5]);
+                return [4 /*yield*/, prisma.scene.findUnique({
+                        where: {
+                            session_id: data['session_id']
+                        }
+                    })];
             case 2:
                 result = _a.sent();
-                res.send(result);
-                return [3 /*break*/, 4];
+                id = result['id'];
+                return [4 /*yield*/, prisma.evidence.create({
+                        data: {
+                            x: parseFloat(data['x']),
+                            y: parseFloat(data['y']),
+                            z: parseFloat(data['z']),
+                            type: data['type'],
+                            scene_id: id
+                        }
+                    })];
             case 3:
-                e_9 = _a.sent();
-                console.log(e_9);
-                res.send(e_9);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                result = _a.sent();
+                res.send(result);
+                return [3 /*break*/, 5];
+            case 4:
+                e_10 = _a.sent();
+                internalError(res, e_10);
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
         }
     });
 }); });
 app.put("/simulation/evidence", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var data, result, e_10;
+    var query, result, e_11;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                data = req.body;
+                query = req.query;
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
                 return [4 /*yield*/, prisma.evidence.update({
                         where: {
-                            id: req.body["id"]
+                            id: String(query.id)
                         },
-                        data: data
+                        data: {
+                            event_id: String(query.event_id)
+                        }
                     })];
             case 2:
                 result = _a.sent();
                 res.send(result);
                 return [3 /*break*/, 4];
             case 3:
-                e_10 = _a.sent();
-                console.log(e_10);
-                res.send(e_10);
+                e_11 = _a.sent();
+                internalError(res, e_11);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
     });
 }); });
 app.post("/simulation/event", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var data, result, e_11;
+    var data, result, e_12;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -337,37 +393,8 @@ app.post("/simulation/event", function (req, res) { return __awaiter(void 0, voi
                 res.send(result);
                 return [3 /*break*/, 4];
             case 3:
-                e_11 = _a.sent();
-                console.log(e_11);
-                res.send(e_11);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); });
-app.put("/simulation/event", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var data, result, e_12;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                data = req.body;
-                _a.label = 1;
-            case 1:
-                _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, prisma.event.update({
-                        where: {
-                            id: req.body["id"]
-                        },
-                        data: data
-                    })];
-            case 2:
-                result = _a.sent();
-                res.send(result);
-                return [3 /*break*/, 4];
-            case 3:
                 e_12 = _a.sent();
-                console.log(e_12);
-                res.send(e_12);
+                internalError(res, e_12);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
@@ -376,3 +403,8 @@ app.put("/simulation/event", function (req, res) { return __awaiter(void 0, void
 var server = app.listen(port, hostname, function () {
     return console.log("\uD83D\uDE80 Server ready at: ".concat(hostname, ":").concat(port));
 });
+function internalError(res, error) {
+    console.log(error);
+    res.statusCode = 500;
+    res.send(error);
+}
