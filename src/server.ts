@@ -1,9 +1,6 @@
 import * as express from "express";
 import { PrismaClient } from "@prisma/client";
-import { v4 as uuidv4 } from "uuid";
-import * as m from "./models";
 import e = require("express");
-
 const app = express().use(express.json());
 const port = 80;
 const prisma = new PrismaClient();
