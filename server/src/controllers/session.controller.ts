@@ -1,27 +1,27 @@
 import { Controller, Get, Post, Put, Delete } from '@nestjs/common';
-import { AppService } from '../services/database.service';
+import { SessionService } from '../services/session.service';
 
 @Controller('simulation')
 export class SessionController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly sessionService: SessionService) {}
 
   @Post('session')
   createSession(): string {
-    return this.appService.getHello();
+    return this.sessionService.createSession();
   }
   
   @Get('session')
   getSession(): string {
-    return this.appService.getHello();
+    return this.sessionService.getSession();
   }
 
   @Put('session')
   updateSession(): string {
-    return this.appService.getHello();
+    return this.sessionService.updateSession();
   }
 
   @Delete('session')
   deleteSession(): string {
-    return this.appService.getHello();
+    return this.sessionService.deleteSession();
   }
 }

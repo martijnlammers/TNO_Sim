@@ -1,27 +1,27 @@
 import { Controller, Get, Post, Put, Delete } from '@nestjs/common';
-import { AppService } from '../services/database.service';
+import { UserService } from '../services/user.service';
 
 @Controller('simulation')
 export class UserController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly userService: UserService) {}
 
   @Post('user')
   createUser(): string {
-    return this.appService.getHello();
+    return this.userService.createUser();
   }
 
   @Get('user')
   getUser(): string {
-    return this.appService.getHello();
+    return this.userService.getUser();
   }
 
   @Put('user')
   updateUser(): string {
-    return this.appService.getHello();
+    return this.userService.updateUser();
   }
 
   @Delete('user')
   deleteUser(): string {
-    return this.appService.getHello();
+    return this.userService.deleteUser();
   }
 }

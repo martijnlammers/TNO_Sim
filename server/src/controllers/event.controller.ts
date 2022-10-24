@@ -1,27 +1,27 @@
 import { Controller, Get, Post, Put, Delete } from '@nestjs/common';
-import { AppService } from '../services/database.service';
+import { EventService } from '../services/event.service';
 
 @Controller('simulation')
 export class EventController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly eventService: EventService) {}
 
   @Post('event')
   createEvent(): string {
-    return this.appService.getHello();
+    return this.eventService.createEvent();
   }
 
   @Get('event')
   getEvent(): string {
-    return this.appService.getHello();
+    return this.eventService.getEvent();
   }
 
   @Put('event')
   updateEvent(): string {
-    return this.appService.getHello();
+    return this.eventService.updateEvent();
   }
 
   @Delete('event')
   deleteEvent(): string {
-    return this.appService.getHello();
+    return this.eventService.deleteEvent();
   }
 }

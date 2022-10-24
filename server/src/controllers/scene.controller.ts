@@ -1,28 +1,27 @@
 import { Controller, Get, Post, Put, Delete } from '@nestjs/common';
-import { AppService } from '../services/database.service';
+import { SceneService } from '../services/scene.service';
 
 @Controller('simulation')
 export class SceneController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly sceneService: SceneService) {}
 
   @Post('scene')
   createScene(): string {
-    return this.appService.getHello();
+    return this.sceneService.createScene();
   }
 
   @Get('scene')
   getScene(): string {
-    return this.appService.getHello();
+    return this.sceneService.getScene();
   }
 
   @Put('scene')
   updateScene(): string {
-    return this.appService.getHello();
+    return this.sceneService.updateScene();
   }
 
   @Delete('scene')
   deleteScene(): string {
-    return this.appService.getHello();
+    return this.sceneService.deleteScene();
   }
-
 }

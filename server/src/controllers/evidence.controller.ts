@@ -1,27 +1,27 @@
 import { Controller, Get, Post, Put, Delete } from '@nestjs/common';
-import { AppService } from '../services/database.service';
+import { EvidenceService } from '../services/evidence.service';
 
 @Controller('simulation')
 export class EvidenceController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly evidenceService: EvidenceService) {}
 
   @Post('evidence')
   createEvent(): string {
-    return this.appService.getHello();
+    return this.evidenceService.createEvidence();
   }
 
   @Get('evidence')
   getEvent(): string {
-    return this.appService.getHello();
+    return this.evidenceService.getEvidence();
   }
 
   @Put('evidence')
   updateEvent(): string {
-    return this.appService.getHello();
+    return this.evidenceService.updateEvidence();
   }
 
   @Delete('evidence')
   deleteEvent(): string {
-    return this.appService.getHello();
+    return this.evidenceService.deleteEvidence();
   }
 }
