@@ -1,0 +1,68 @@
+//https://prismaliser.app/ to visualize the models.
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Session {
+  id           String    @id @unique @default(uuid())
+  description  String?
+  participants User[]
+  events       Event[]
+  startTime    DateTime  @default(now())
+  stopTime     DateTime?
+  scene        Scene?    @relation(fields: [sceneId], references: [id])
+  sceneId      String?
+}
+
+model User {
+  id        String   @id @unique @default(uuid())
+  firstname String
+  lastname  String
+  addition  String?
+  email     String
+  password  String
+  role      Int      @default(0)
+  session   Session[]
+  event     Event[]
+}
+
+model Scene {
+  id          String     @id @unique @default(uuid())
+  name        String
+  description String
+  mapImage    String 
+  scaleX      Float?
+  scaleY      Float?
+  sessions    Session[]
+  evidences   Evidence[]
+}
+
+model Evidence {
+  id      String  @id @unique @default(uuid())
+  x       Float
+  y       Float
+  z       Float
+  type    Int
+  scene   Scene?  @relation(fields: [sceneId], references: [id])
+  sceneId String?
+  events  Event[]
+}
+
+model Event {
+  id         String    @id @unique @default(uuid())
+  action     Int?
+  timeStamp  DateTime  @default(now())
+  user       User?     @relation(fields: [userId], references: [id])
+  userId     String?
+  session    Session   @relation(fields: [sessionId], references: [id])
+  sessionId  String
+  evidence   Evidence? @relation(fields: [evidenceId], references: [id])
+  evidenceId String?
+  light      Int?
+  filter     Int?
+}
