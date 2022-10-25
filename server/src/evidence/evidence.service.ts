@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { CreateEvidenceDTO } from './dto/evidence-create.dto';
-import { EvidenceType } from './../app.enums'
+import { EvidenceType } from 'src/app.enums';
 import { DeleteEvidenceDTO } from './dto/evidence-delete.dto';
 const prisma = new PrismaClient();
 @Injectable()
