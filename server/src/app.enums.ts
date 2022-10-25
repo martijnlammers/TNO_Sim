@@ -6,3 +6,8 @@ export enum EvidenceType {
     Fibers = 4,
     Fingerprint = 5,
 }
+
+export enum Role {
+    Trainee = 0,
+    Supervisor = 1
+}
