@@ -1,21 +1,61 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaClient } from '@prisma/client';
+import { CreateUserDTO } from './dto/user-create.dto';
+import { Role } from 'src/app.enums';
+import { ReadUserDTO } from './dto/user-read.dto';
+import { DeleteUserDTO } from './dto/user-delete.dto';
 
+const prisma = new PrismaClient();
 @Injectable()
 export class UserService {
-  createUser(): string {
-    // TODO
-    return 'Hello World!';
+  createUser(dto: CreateUserDTO): any {
+    return prisma.user.create({
+      data: {
+        firstname: dto.firstname,
+        lastname: dto.lastname,
+        addition: dto.addition,
+        email: dto.email,
+        password: dto.password,
+        role: parseInt(Role[dto.role]),
+      },
+    });
   }
-  getUser(): string {
-    // TODO
-    return 'Hello World!';
+
+  readUser(dto: ReadUserDTO): any {
+    return !!dto.id
+      ? prisma.user.findUnique({
+          where: {
+            id: dto.id,
+          },
+          select: {
+            id: true,
+            firstname: true,
+            addition: true,
+            lastname: true,
+            role: true,
+          },
+        })
+      : prisma.user.findMany({
+          select: {
+            id: true,
+            firstname: true,
+            addition: true,
+            lastname: true,
+            role: true,
+          },
+        });
   }
-  updateUser(): string {
-    // TODO
-    return 'Hello World!';
+
+  updateUser(dto: any): any {
+    return prisma.user.update({
+      where: {
+        id: dto.id,
+      },
+      data: dto,
+    });
   }
-  deleteUser(): string {
-    // TODO
-    return 'Hello World!';
+
+  deleteUser(dto: DeleteUserDTO): any {
+    return prisma.user.delete({ where: { id: dto.id } });
   }
 }
