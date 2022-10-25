@@ -1,5 +1,4 @@
 import { ApiProperty } from '@nestjs/swagger';
-
 export class CreateSceneDTO {
   @ApiProperty({
     example: 'Demo scene',
@@ -21,26 +20,4 @@ export class CreateSceneDTO {
     example: 2914.909,
   })
   scaleY: number;
-}
-
-export class ReturnCreatedSceneDTO {
-  @ApiProperty()
-  id: string;
-  @ApiProperty()
-  name: string;
-  @ApiProperty()
-  description: string;
-  @ApiProperty()
-  mapImage: string;
-  @ApiProperty()
-  scaleX: number;
-  @ApiProperty()
-  scaleY: number;
-}
-
-export class GetSceneDTO {
-  @ApiProperty({
-    example: "9952e745-45e9-4248-83b7-ef4f6e37b6f7"
-  })
-  id?: string;
 }

@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { CreateSceneDTO, GetSceneDTO } from './scene.dto';
+import { GetSceneDTO } from './dto/scene-get.dto';
+import { CreateSceneDTO } from './dto/scene-create.dto';
+import { UpdateSceneDTO } from './dto/scene-update.dto';
+import { DeleteSceneDTO } from './dto/scene-delete.dto';
 const prisma = new PrismaClient();
 
 @Injectable()
@@ -15,14 +18,16 @@ export class SceneService {
       : prisma.scene.findMany();
   }
 
-  updateScene(): string {
-    // TODO
-    return 'Hello World!';
+  updateScene(dto: UpdateSceneDTO): any {
+    return prisma.scene.update({
+      where: {
+        id: dto.id,
+      },
+      data: dto,
+    });
   }
 
-  deleteScene(): string {
-    // TODO
-    return 'Hello World!';
+  deleteScene(dto: DeleteSceneDTO): any {
+    return prisma.scene.delete({ where: { id: dto.id } });
   }
 }
- 
