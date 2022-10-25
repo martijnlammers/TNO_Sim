@@ -2,3 +2,4 @@
 /server/dist
 database2.png
 /server/.env
+/server/prisma/migrations
