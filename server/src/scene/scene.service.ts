@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { GetSceneDTO } from './dto/scene-get.dto';
+import { ReadSceneDTO } from './dto/scene-read.dto';
 import { CreateSceneDTO } from './dto/scene-create.dto';
 import { UpdateSceneDTO } from './dto/scene-update.dto';
 import { DeleteSceneDTO } from './dto/scene-delete.dto';
@@ -12,9 +12,22 @@ export class SceneService {
     return prisma.scene.create({ data });
   }
 
-  getScene(dto: GetSceneDTO): any {
+  readScene(dto: ReadSceneDTO): any {
     return !!dto.id
-      ? prisma.scene.findUnique({ where: { id: String(dto.id) } })
+      ? prisma.scene.findUnique({
+          where: { id: String(dto.id) },
+          include: {
+            evidences: {
+              select: {
+                id: true,
+                x: true,
+                y: true,
+                z: true,
+                type: true,
+              },
+            },
+          },
+        })
       : prisma.scene.findMany();
   }
 

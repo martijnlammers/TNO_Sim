@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Put, Delete, Body, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { GetSceneDTO } from './dto/scene-get.dto';
+import { ReadSceneDTO } from './dto/scene-read.dto';
 import { CreateSceneDTO } from './dto/scene-create.dto';
 import { UpdateSceneDTO } from './dto/scene-update.dto';
 import { DeleteSceneDTO } from './dto/scene-delete.dto';
@@ -17,8 +17,8 @@ export class SceneController {
   }
 
   @Get('scene')
-  getScene(@Query() dto: GetSceneDTO): JSON {
-    return this.sceneService.getScene(dto);
+  readScene(@Query() dto: ReadSceneDTO): JSON {
+    return this.sceneService.readScene(dto);
   }
 
   @Put('scene')
