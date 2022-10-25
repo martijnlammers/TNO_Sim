@@ -1,27 +1,20 @@
-import { Controller, Get, Post, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Query } from '@nestjs/common';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { EvidenceService } from './evidence.service';
-
+import { CreateEvidenceDTO } from './dto/evidence-create.dto'
+import { DeleteEvidenceDTO } from './dto/evidence-delete.dto';
 @Controller('simulation')
+@ApiTags('Evidence')
 export class EvidenceController {
   constructor(private readonly evidenceService: EvidenceService) {}
 
   @Post('evidence')
-  createEvent(): string {
-    return this.evidenceService.createEvidence();
-  }
-
-  @Get('evidence')
-  getEvent(): string {
-    return this.evidenceService.getEvidence();
-  }
-
-  @Put('evidence')
-  updateEvent(): string {
-    return this.evidenceService.updateEvidence();
+  createEvent(@Body() dto: CreateEvidenceDTO): string {
+    return this.evidenceService.createEvidence(dto);
   }
 
   @Delete('evidence')
-  deleteEvent(): string {
-    return this.evidenceService.deleteEvidence();
+  deleteEvent(@Query() dto: DeleteEvidenceDTO): string {
+    return this.evidenceService.deleteEvidence(dto);
   }
 }
