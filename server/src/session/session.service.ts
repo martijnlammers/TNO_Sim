@@ -1,21 +1,38 @@
 import { Injectable } from '@nestjs/common';
+import { CreateSessionDTO } from './dto/session-create.dto';
+import { PrismaClient } from '@prisma/client';
+import { UpdateSessionDTO } from './dto/session-update.dto';
+import { ReadSessionDTO } from './dto/session-read.dto';
+import { DeleteSessionDTO } from './dto/session-delete.dto';
+const prisma = new PrismaClient()
 
 @Injectable()
 export class SessionService {
-  createSession(): string {
-    // TODO
-    return 'Hello World!';
+  createSession(data: CreateSessionDTO): any {
+    return prisma.session.create({data});
   }
-  getSession(): string {
-    // TODO
-    return 'Hello World!';
+  readSession(dto: ReadSessionDTO): any {
+    return !!dto.sessionId
+      ? prisma.session.findUnique({ 
+        where: { 
+          id: String(dto.sessionId) 
+        }
+        })
+      : prisma.session.findMany();
   }
-  updateSession(): string {
-    // TODO
-    return 'Hello World!';
+  updateSession(dto: UpdateSessionDTO): any {
+    return prisma.session.update({
+      where:{
+        id:dto.id
+      },
+      data:dto
+    });
   }
-  deleteSession(): string {
-    // TODO
-    return 'Hello World!';
+  deleteSession(dto: DeleteSessionDTO): any {
+    return prisma.session.delete({
+      where:{
+        id:dto.sessionId
+      }
+    });
   }
 }

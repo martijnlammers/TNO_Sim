@@ -1,27 +1,33 @@
-import { Controller, Get, Post, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Query } from '@nestjs/common';
 import { SessionService } from './session.service';
+import { ApiTags } from '@nestjs/swagger';
+import { CreateSessionDTO } from './dto/session-create.dto';
+import { UpdateSessionDTO } from './dto/session-update.dto';
+import { ReadSessionDTO } from './dto/session-read.dto';
+import { DeleteSessionDTO } from './dto/session-delete.dto';
 
 @Controller('simulation')
+@ApiTags('Session')
 export class SessionController {
   constructor(private readonly sessionService: SessionService) {}
 
   @Post('session')
-  createSession(): string {
-    return this.sessionService.createSession();
+  createSession(@Body() dto: CreateSessionDTO): JSON {
+    return this.sessionService.createSession(dto);
   }
   
   @Get('session')
-  getSession(): string {
-    return this.sessionService.getSession();
+  getSession(@Query() dto: ReadSessionDTO): string {
+    return this.sessionService.readSession(dto);
   }
 
   @Put('session')
-  updateSession(): string {
-    return this.sessionService.updateSession();
+  updateSession(@Body() dto: UpdateSessionDTO): JSON {
+    return this.sessionService.updateSession(dto);
   }
 
   @Delete('session')
-  deleteSession(): string {
-    return this.sessionService.deleteSession();
+  deleteSession(@Query() dto: DeleteSessionDTO): string {
+    return this.sessionService.deleteSession(dto);
   }
 }
