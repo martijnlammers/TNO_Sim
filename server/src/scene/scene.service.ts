@@ -14,20 +14,17 @@ export class SceneService {
 
   readScene(dto: ReadSceneDTO): any {
     return !!dto.id
-      ? prisma.scene.findUnique({
-          where: { id: String(dto.id) },
-          include: {
-            evidences: {
-              select: {
-                id: true,
-                x: true,
-                y: true,
-                z: true,
-                type: true,
-              },
-            },
-          },
-        })
+      ? prisma.scene.findUnique({ where: { id: String(dto.id) }, include:{
+          evidences:{
+            select:{
+              id:true,
+              x:true,
+              y:true,
+              z:true,
+              type:true
+            }
+          }
+      } })
       : prisma.scene.findMany();
   }
 
