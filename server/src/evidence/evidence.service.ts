@@ -8,17 +8,17 @@ const prisma = new PrismaClient();
 export class EvidenceService {
   createEvidence(dto: CreateEvidenceDTO): any {
     return prisma.evidence.create({
-      data:{
-        x:dto.x,
-        y:dto.y,
-        z:dto.z,
-        type:parseInt(EvidenceType[dto.type]),
-        sceneId:dto.sceneId
-      }
-    })
+      data: {
+        x: dto.x,
+        y: dto.y,
+        z: dto.z,
+        type: parseInt(EvidenceType[dto.type]),
+        sceneId: dto.sceneId,
+      },
+    });
   }
 
   deleteEvidence(dto: DeleteEvidenceDTO): any {
-    return prisma.evidence.delete({where:{id:dto.evidenceId}})
+    return prisma.evidence.delete({ where: { id: dto.evidenceId } });
   }
 }

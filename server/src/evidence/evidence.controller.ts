@@ -9,12 +9,12 @@ export class EvidenceController {
   constructor(private readonly evidenceService: EvidenceService) {}
 
   @Post('evidence')
-  createEvidence(@Body() dto: CreateEvidenceDTO): JSON {
+  createEvidence(@Body() dto: CreateEvidenceDTO): string {
     return this.evidenceService.createEvidence(dto);
   }
 
   @Delete('evidence')
-  deleteEvidence(@Query() dto: DeleteEvidenceDTO): JSON {
+  deleteEvidence(@Query() dto: DeleteEvidenceDTO): string {
     return this.evidenceService.deleteEvidence(dto);
   }
 }
