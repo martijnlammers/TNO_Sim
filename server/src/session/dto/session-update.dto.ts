@@ -3,12 +3,16 @@ import { IsUUID, IsNotEmpty, IsOptional, Length, IsDateString } from "class-vali
 
 
 export class UpdateSessionDTO{
-    @ApiProperty()
+    @ApiProperty({
+        example:"valid session id"
+    })
     @IsNotEmpty()
     @IsUUID("all")
     id: string;
 
-    @ApiPropertyOptional()
+    @ApiPropertyOptional({
+        example:"arbitrary description"
+    })
     @IsOptional()
     @Length(0, 280)
     description?: string;

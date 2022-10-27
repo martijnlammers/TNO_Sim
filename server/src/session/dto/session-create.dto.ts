@@ -10,7 +10,9 @@ export class CreateSessionDTO {
     @Length(0, 280)
     description?: string;
 
-    @ApiProperty()
+    @ApiProperty({
+        example:"valid scene uuid"
+    })
     @IsNotEmpty()
     @IsUUID("all")
     sceneId: string;

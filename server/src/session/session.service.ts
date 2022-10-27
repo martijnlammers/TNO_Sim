@@ -50,10 +50,16 @@ export class SessionService {
     });
   }
   deleteSession(dto: DeleteSessionDTO): any {
-    return prisma.session.delete({
+    const deletedEvents = prisma.event.deleteMany({
+      where:{
+        sessionId:dto.sessionId
+      }
+    })
+    const deletedSession = prisma.session.delete({
       where:{
         id:dto.sessionId
       }
     });
+    return prisma.$transaction([deletedEvents, deletedSession])
   }
 }
