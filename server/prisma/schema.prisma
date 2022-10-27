@@ -11,7 +11,7 @@ datasource db {
 model Session {
   id           String    @id @unique @default(uuid())
   description  String?
-  participants User[]
+  participants SessionParticipants[]
   events       Event[]
   startTime    DateTime  @default(now())
   stopTime     DateTime?
@@ -27,7 +27,7 @@ model User {
   email     String
   password  String
   role      Int      @default(0)
-  session   Session[]
+  session   SessionParticipants[]
   event     Event[]
 }
 
@@ -65,4 +65,12 @@ model Event {
   evidenceId String?
   light      Int?
   filter     Int?
+}
+
+model SessionParticipants {
+  session Session @relation(fields: [sessionId], references: [id])
+  sessionId String
+  participant User @relation(fields: [participantId], references: [id])
+  participantId String
+  @@id([sessionId, participantId])
 }
