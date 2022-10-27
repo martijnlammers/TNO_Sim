@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsAscii, Length, IsEnum, IsAlpha, IsNotEmpty, IsOptional, IsEmail, IsUUID } from 'class-validator';
 import { Role } from './../../app.enums'
 export class UpdateUserDTO {
@@ -9,7 +9,7 @@ export class UpdateUserDTO {
     @IsNotEmpty()
     id: string;
 
-    @ApiProperty({
+    @ApiPropertyOptional({
         example:"Mark"
     })
     @IsAlpha()
@@ -18,7 +18,7 @@ export class UpdateUserDTO {
     @IsOptional()
     firstname?: string;
 
-    @ApiProperty({
+    @ApiPropertyOptional({
         example:"Ashton"
     })
     @IsAlpha()
@@ -27,7 +27,7 @@ export class UpdateUserDTO {
     @IsOptional()
     lastname?: string;
 
-    @ApiProperty({
+    @ApiPropertyOptional({
         example:null
     })
     @IsAlpha()
@@ -35,7 +35,7 @@ export class UpdateUserDTO {
     @Length(2, 30)
     addition?: string;
 
-    @ApiProperty({
+    @ApiPropertyOptional({
         example:"m.ashton@gmail.com"
     })
     @IsEmail()
@@ -43,7 +43,7 @@ export class UpdateUserDTO {
     @IsOptional()
     email?: string;
 
-    @ApiProperty({
+    @ApiPropertyOptional({
         example:"markashton123"
     })
     @IsAscii()
@@ -51,7 +51,7 @@ export class UpdateUserDTO {
     @IsOptional()
     password?: string;
 
-    @ApiProperty({
+    @ApiPropertyOptional({
         example:"Trainee"
     })
     @IsNotEmpty()
