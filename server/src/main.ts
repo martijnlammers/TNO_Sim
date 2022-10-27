@@ -10,7 +10,6 @@ async function bootstrap() {
     .setTitle('TNO Database calls')
     .setDescription('API calls used for creating and reading historic simulation data.')
     .setVersion('1.0')
-    .addTag('TNO')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
