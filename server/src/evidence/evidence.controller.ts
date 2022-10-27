@@ -4,17 +4,17 @@ import { EvidenceService } from './evidence.service';
 import { CreateEvidenceDTO } from './dto/evidence-create.dto'
 import { DeleteEvidenceDTO } from './dto/evidence-delete.dto';
 @Controller('simulation')
-@ApiTags('Evidence')
+@ApiTags('Scene evidences')
 export class EvidenceController {
   constructor(private readonly evidenceService: EvidenceService) {}
 
   @Post('evidence')
-  createEvent(@Body() dto: CreateEvidenceDTO): JSON {
+  createEvidence(@Body() dto: CreateEvidenceDTO): JSON {
     return this.evidenceService.createEvidence(dto);
   }
 
   @Delete('evidence')
-  deleteEvent(@Query() dto: DeleteEvidenceDTO): JSON {
+  deleteEvidence(@Query() dto: DeleteEvidenceDTO): JSON {
     return this.evidenceService.deleteEvidence(dto);
   }
 }

@@ -5,7 +5,7 @@ import { DeleteParticipantDTO } from './dto/participant-delete.dto';
 import { ParticipantService } from './participant.service';
 
 @Controller('simulation')
-@ApiTags('Participant')
+@ApiTags('Session participants')
 export class ParticipantController {
   constructor(private readonly participantService: ParticipantService) {}
 
