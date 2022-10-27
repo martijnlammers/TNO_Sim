@@ -16,6 +16,27 @@ export class SessionService {
       ? prisma.session.findUnique({ 
         where: { 
           id: String(dto.sessionId) 
+        },
+        include:{
+          participants:{
+            select:{
+              userId:true
+            }
+          },
+          scene:{
+            include:{
+              evidences:{
+                select:{
+                  id:true,
+                  x:true,
+                  y:true,
+                  z:true,
+                  type:true
+                }
+              }
+            }
+          },
+          events:true
         }
         })
       : prisma.session.findMany();
