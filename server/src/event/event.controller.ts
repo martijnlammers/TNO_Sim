@@ -1,27 +1,15 @@
-import { Controller, Get, Post, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { CreateEventDTO } from './event-create.dto';
 import { EventService } from './event.service';
 
 @Controller('simulation')
+@ApiTags('Session events')
 export class EventController {
   constructor(private readonly eventService: EventService) {}
 
   @Post('event')
-  createEvent(): string {
+  createEvent(@Body() dto: CreateEventDTO): string {
     return this.eventService.createEvent();
-  }
-
-  @Get('event')
-  getEvent(): string {
-    return this.eventService.getEvent();
-  }
-
-  @Put('event')
-  updateEvent(): string {
-    return this.eventService.updateEvent();
-  }
-
-  @Delete('event')
-  deleteEvent(): string {
-    return this.eventService.deleteEvent();
   }
 }
