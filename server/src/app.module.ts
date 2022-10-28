@@ -9,10 +9,12 @@ import { EvidenceService } from './evidence/evidence.service';
 import { SceneService } from './scene/scene.service';
 import { SessionService } from './session/session.service';
 import { UserService } from './user/user.service';
+import { ParticipantController } from './participant/participant.controller';
+import { ParticipantService } from './participant/participant.service';
 
 @Module({
   imports: [],
-  controllers: [EventController, EvidenceController, SceneController, UserController, SessionController],
-  providers: [EventService, EvidenceService, SceneService, SessionService, UserService],
+  controllers: [EventController, EvidenceController, SceneController, UserController, SessionController, ParticipantController],
+  providers: [EventService, EvidenceService, SceneService, SessionService, UserService, ParticipantService],
 })
 export class AppModule {}

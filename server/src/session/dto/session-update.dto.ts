@@ -4,7 +4,8 @@ var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
 
 export class UpdateSessionDTO{
     @ApiProperty({
-        example:"valid session id"
+        example:"valid session id",
+        description: 'has to be valid session uuid'
     })
     @IsNotEmpty()
     @IsUUID("all")
@@ -26,12 +27,15 @@ export class UpdateSessionDTO{
 
     @IsDateString()
     @ApiPropertyOptional({
-        example: new Date().toISOString()
+        example: new Date().toISOString(),
+        description: 'has to be an ISO standardized time format'
     })
     @IsOptional()
     stopTime?: string;
 
-    @ApiPropertyOptional()
+    @ApiPropertyOptional({
+        description: 'has to be valid scene uuid'
+    })
     @IsOptional()
     @IsUUID("all")
     sceneId?: string;

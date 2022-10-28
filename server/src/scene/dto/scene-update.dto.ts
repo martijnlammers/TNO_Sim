@@ -3,13 +3,15 @@ import { IsNotEmpty, IsAscii, IsUUID, Length, IsNumber, IsOptional } from 'class
 export class UpdateSceneDTO {
   @ApiProperty({
     example: '9952e745-45e9-4248-83b7-ef4f6e37b6f7',
+    description: 'has to be valid scene uuid'
   })
   @IsNotEmpty()
   @IsUUID("all")
   id: string;
 
   @ApiPropertyOptional({
-    example: "new name"
+    example: "new name",
+    description: 'scene name'
   })
   @IsAscii()
   @Length(0, 50)
@@ -18,6 +20,7 @@ export class UpdateSceneDTO {
 
   @ApiPropertyOptional({
     example: "some arbitrary description"
+    
   })
   @IsAscii()
   @Length(0, 280)
@@ -25,7 +28,8 @@ export class UpdateSceneDTO {
   description?: string;
 
   @ApiPropertyOptional({
-    example:"base64 encoded image"
+    example:"base64 encoded image",
+    description: 'name of image you want to fetch'
   })
   @IsAscii()
   @IsOptional()
@@ -33,14 +37,16 @@ export class UpdateSceneDTO {
 
   @IsNumber()
   @ApiPropertyOptional({
-    example:70.72
+    example:70.72,
+    description: 'image rescale for width in dashboard, float'
   })
   @IsOptional()
   scaleX?: number;
 
   @ApiProperty({
     required: false,
-    example: 2914.909
+    example: 2914.909,
+    description: 'image rescale for height in dashboard, float'
   })
   @IsNumber()
   @IsOptional()
