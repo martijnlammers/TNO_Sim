@@ -24,18 +24,23 @@ export class UpdateSceneDTO {
   @IsOptional()
   description?: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    example:"base64 encoded image"
+  })
   @IsAscii()
   @IsOptional()
   mapImage?: string;
 
   @IsNumber()
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    example:70.72
+  })
   @IsOptional()
   scaleX?: number;
 
   @ApiProperty({
-    required: false
+    required: false,
+    example: 2914.909
   })
   @IsNumber()
   @IsOptional()
