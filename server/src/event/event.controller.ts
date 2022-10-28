@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Put, Delete, Body } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { Action, Filter, Light } from 'src/app.enums';
 import { CreateEventDTO } from './event-create.dto';
 import { EventService } from './event.service';
 
@@ -10,6 +11,9 @@ export class EventController {
 
   @Post('event')
   createEvent(@Body() dto: CreateEventDTO): string {
-    return this.eventService.createEvent();
+    if(typeof(dto.action) === "string"){ dto.action = Action[dto.action]}
+    if(typeof(dto.filter) === "string"){ dto.filter = Filter[dto.filter]}
+    if(typeof(dto.light) === "string"){ dto.light = Light[dto.light]}
+    return this.eventService.createEvent(dto);
   }
 }

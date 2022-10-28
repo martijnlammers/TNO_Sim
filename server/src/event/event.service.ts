@@ -1,22 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client'
+import { CreateEventDTO } from './event-create.dto';
 const prisma = new PrismaClient()
 @Injectable()
 export class EventService {
-  createEvent(): string {
+  createEvent(data): any {
     // TODO
-    return 'Hello World!';
-  }
-  getEvent(): string {
-    // TODO
-    return 'Hello World!';
-  }
-  updateEvent(): string {
-    // TODO
-    return 'Hello World!';
-  }
-  deleteEvent(): string {
-    // TODO
-    return 'Hello World!';
+    return prisma.event.create({data});
   }
 }
