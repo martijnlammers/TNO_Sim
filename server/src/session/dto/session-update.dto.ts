@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsUUID, IsNotEmpty, IsOptional, Length, IsDateString } from "class-validator";
-
+var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
 export class UpdateSessionDTO{
     @ApiProperty({
@@ -18,12 +18,16 @@ export class UpdateSessionDTO{
     description?: string;
     
     @IsDateString()
-    @ApiPropertyOptional()
+    @ApiPropertyOptional({
+        example: new Date().toISOString()
+    })
     @IsOptional()
     startTime?: string;
 
     @IsDateString()
-    @ApiPropertyOptional()
+    @ApiPropertyOptional({
+        example: new Date().toISOString()
+    })
     @IsOptional()
     stopTime?: string;
 
