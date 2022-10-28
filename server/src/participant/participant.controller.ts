@@ -10,7 +10,6 @@ export class ParticipantController {
   constructor(private readonly participantService: ParticipantService) {}
 
   @Post('participant')
-  
   addParticipant(@Body() dto: AddParticipantDTO): JSON {
     return this.participantService.addParticipant(dto);
   }
