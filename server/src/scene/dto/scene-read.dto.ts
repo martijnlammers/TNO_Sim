@@ -9,7 +9,9 @@ export class ReadSceneDTO {
   @IsOptional()
   id?: string;
 
-  @IsOptional()
-  @IsAscii()
-  mapImage?: boolean;
+  // @ApiPropertyOptional({
+  //   example: 'false',
+  // })
+  // @IsOptional()
+  // mapImage?: string;
 }

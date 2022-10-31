@@ -4,8 +4,7 @@ import { ReadSceneDTO } from './dto/scene-read.dto';
 import { CreateSceneDTO } from './dto/scene-create.dto';
 import { UpdateSceneDTO } from './dto/scene-update.dto';
 import { DeleteSceneDTO } from './dto/scene-delete.dto';
-import { createReadStream } from 'fs';
-import { join } from 'path';
+import { GetMapDTO } from './dto/map-get.dto';
 const prisma = new PrismaClient();
 
 @Injectable()
@@ -41,10 +40,5 @@ export class SceneService {
 
   deleteScene(dto: DeleteSceneDTO): any {
     return prisma.scene.delete({ where: { id: dto.id } });
-  }
-  getMapImage(dto: ReadSceneDTO): any {
-    const result: any = prisma.scene.findUnique({ where: { id: dto.id } });
-    const file = createReadStream(join(process.cwd(), './src/../mapImages/' + result.mapImage));
-    return new StreamableFile(file);
   }
 }
