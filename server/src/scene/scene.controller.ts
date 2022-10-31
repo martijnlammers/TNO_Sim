@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Body, Query } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Query, StreamableFile } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ReadSceneDTO } from './dto/scene-read.dto';
 import { CreateSceneDTO } from './dto/scene-create.dto';
@@ -17,8 +17,13 @@ export class SceneController {
   }
 
   @Get('scene')
-  readScene(@Query() dto: ReadSceneDTO): JSON {
-    return this.sceneService.readScene(dto);
+  readScene(@Query() dto: ReadSceneDTO): JSON | StreamableFile {
+    if(dto.mapImage === true){
+      return this.sceneService.getMapImage(dto);
+    } else {
+      return this.sceneService.readScene(dto);
+    }
+    
   }
 
   @Put('scene')
