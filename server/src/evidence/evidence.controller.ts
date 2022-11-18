@@ -1,5 +1,5 @@
-import { Controller, Get, Post, Put, Delete, Body, Query } from '@nestjs/common';
-import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { Controller, Post, Delete, Body, Query } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { EvidenceService } from './evidence.service';
 import { CreateEvidenceDTO } from './dto/evidence-create.dto'
 import { DeleteEvidenceDTO } from './dto/evidence-delete.dto';
