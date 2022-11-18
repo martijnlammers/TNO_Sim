@@ -4,7 +4,6 @@ import { PrismaClient } from '@prisma/client';
 import { UpdateSessionDTO } from './dto/session-update.dto';
 import { ReadSessionDTO } from './dto/session-read.dto';
 import { DeleteSessionDTO } from './dto/session-delete.dto';
-import { Session } from './dto/models';
 const prisma = new PrismaClient()
 
 @Injectable()
