@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Body, Query } from '@nestjs/common';
+import { Controller, Post, Delete, Body } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AddParticipantDTO } from './dto/participant-add.dto';
 import { DeleteParticipantDTO } from './dto/participant-delete.dto';

@@ -1,10 +1,9 @@
-import { Injectable, StreamableFile } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { ReadSceneDTO } from './dto/scene-read.dto';
 import { CreateSceneDTO } from './dto/scene-create.dto';
 import { UpdateSceneDTO } from './dto/scene-update.dto';
 import { DeleteSceneDTO } from './dto/scene-delete.dto';
-import { GetMapDTO } from './dto/map-get.dto';
 const prisma = new PrismaClient();
 
 @Injectable()

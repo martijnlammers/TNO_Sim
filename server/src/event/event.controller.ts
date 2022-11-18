@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Body } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Action, Filter, Light } from 'src/app.enums';
 import { CreateEventDTO } from './event-create.dto';

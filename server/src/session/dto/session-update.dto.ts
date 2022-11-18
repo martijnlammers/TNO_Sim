@@ -1,7 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsUUID, IsNotEmpty, IsOptional, Length, IsDateString } from "class-validator";
-var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-
 export class UpdateSessionDTO{
     @ApiProperty({
         example:"valid session id",

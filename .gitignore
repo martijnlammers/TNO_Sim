@@ -3,3 +3,4 @@
 database2.png
 /server/.env
 /server/prisma/migrations
+res.json
