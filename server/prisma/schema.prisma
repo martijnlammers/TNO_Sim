@@ -13,7 +13,7 @@ model Session {
   description  String?
   participants SessionParticipants[]
   events       Event[]
-  startTime    DateTime  @default(now())
+  startTime    DateTime?
   stopTime     DateTime?
   scene        Scene?    @relation(fields: [sceneId], references: [id])
   sceneId      String?
@@ -35,9 +35,6 @@ model Scene {
   id          String     @id @unique @default(uuid())
   name        String
   description String
-  mapImage    String 
-  scaleX      Float?
-  scaleY      Float?
   sessions    Session[]
   evidences   Evidence[]
 }
