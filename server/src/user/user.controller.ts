@@ -1,9 +1,8 @@
 import { Controller, Get, Post, Put, Delete, Body, Query } from '@nestjs/common';
-import { CreateUserDTO } from './dto/user-create.dto';
 import { UserService } from './user.service';
 import { ReadUserDTO } from './dto/user-read.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { UpdateUserDTO } from './dto/user-update.dto';
+import { PutUserDTO } from './dto/user-put.dto';
 import { Role } from 'src/app.enums';
 import { DeleteUserDTO } from './dto/user-delete.dto';
 
@@ -12,19 +11,13 @@ import { DeleteUserDTO } from './dto/user-delete.dto';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post('user')
-  createUser(@Body() dto: CreateUserDTO): JSON {
-    return this.userService.createUser(dto);
-  }
-
   @Get('user')
   readUser(@Query() dto: ReadUserDTO): JSON {
     return this.userService.readUser(dto);
   }
 
   @Put('user')
-  updateUser(@Body() dto: UpdateUserDTO): JSON {
-    if(typeof(dto.role) === "string"){ dto.role = Role[dto.role]}
+  updateUser(@Body() dto: PutUserDTO): JSON {
     return this.userService.updateUser(dto);
   }
 

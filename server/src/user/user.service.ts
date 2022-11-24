@@ -4,23 +4,11 @@ import { CreateUserDTO } from './dto/user-create.dto';
 import { Role } from 'src/app.enums';
 import { ReadUserDTO } from './dto/user-read.dto';
 import { DeleteUserDTO } from './dto/user-delete.dto';
+import { PutUserDTO } from './dto/user-put.dto';
 
 const prisma = new PrismaClient();
 @Injectable()
 export class UserService {
-  createUser(dto: CreateUserDTO): any {
-    return prisma.user.create({
-      data: {
-        firstname: dto.firstname,
-        lastname: dto.lastname,
-        addition: dto.addition,
-        email: dto.email,
-        password: dto.password,
-        role: parseInt(Role[dto.role]),
-      },
-    });
-  }
-
   readUser(dto: ReadUserDTO): any {
     return !!dto.id
       ? prisma.user.findUnique({
@@ -46,12 +34,30 @@ export class UserService {
         });
   }
 
-  updateUser(dto: any): any {
-    return prisma.user.update({
+  updateUser(dto: PutUserDTO): any {
+
+    // Updates record, creates if doesnt exist.
+    return prisma.user.upsert({
       where: {
         id: dto.id,
       },
-      data: dto,
+      update: {
+        firstname: dto.firstname,
+        lastname: dto.lastname,
+        addition: dto.addition,
+        email: dto.email,
+        password: dto.password,
+        role: parseInt(Role[dto.role]),
+      },
+      create: {
+        id: dto.id,
+        firstname: dto.firstname,
+        lastname: dto.lastname,
+        addition: dto.addition,
+        email: dto.email,
+        password: dto.password,
+        role: parseInt(Role[dto.role])
+      },
     });
   }
 

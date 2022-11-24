@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsAscii, Length, IsEnum, IsAlpha, IsNotEmpty, IsOptional, IsEmail, IsUUID } from 'class-validator';
-import { Role } from './../../app.enums'
-export class UpdateUserDTO {
+import { Role } from '../../app.enums'
+export class PutUserDTO {
     @ApiProperty({
         example:"6275d1f9-f95c-43a3-a8fe-8c9cf91d0622"
     })
