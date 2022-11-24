@@ -1,8 +1,7 @@
 import { Controller, Get, Post, Put, Delete, Body, Query } from '@nestjs/common';
 import { SessionService } from './session.service';
 import { ApiTags } from '@nestjs/swagger';
-import { CreateSessionDTO } from './dto/session-create.dto';
-import { UpdateSessionDTO } from './dto/session-update.dto';
+import { PutSessionDTO } from './dto/session-put.dto';
 import { ReadSessionDTO } from './dto/session-read.dto';
 import { DeleteSessionDTO } from './dto/session-delete.dto';
 
@@ -11,18 +10,13 @@ import { DeleteSessionDTO } from './dto/session-delete.dto';
 export class SessionController {
   constructor(private readonly sessionService: SessionService) {}
 
-  @Post('session')
-  createSession(@Body() dto: CreateSessionDTO): JSON {
-    return this.sessionService.createSession(dto);
-  }
-  
   @Get('session')
   getSession(@Query() dto: ReadSessionDTO): string {
     return this.sessionService.readSession(dto);
   }
 
   @Put('session')
-  updateSession(@Body() dto: UpdateSessionDTO): JSON {
+  updateSession(@Body() dto: PutSessionDTO): JSON {
     return this.sessionService.updateSession(dto);
   }
 

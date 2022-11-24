@@ -1,8 +1,8 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsUUID, IsNotEmpty, IsOptional, Length, IsDateString } from "class-validator";
-export class UpdateSessionDTO{
+export class PutSessionDTO{
     @ApiProperty({
-        example:"valid session id",
+        example:"0f7ce1e2-1535-43ae-b499-d95bf85159cc",
         description: 'has to be valid session uuid'
     })
     @IsNotEmpty()
