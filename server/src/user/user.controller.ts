@@ -3,7 +3,6 @@ import { UserService } from './user.service';
 import { ReadUserDTO } from './dto/user-read.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { PutUserDTO } from './dto/user-put.dto';
-import { Role } from 'src/app.enums';
 import { DeleteUserDTO } from './dto/user-delete.dto';
 
 @Controller('simulation')
