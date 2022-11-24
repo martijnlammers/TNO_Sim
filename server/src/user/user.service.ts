@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { CreateUserDTO } from './dto/user-create.dto';
 import { Role } from 'src/app.enums';
 import { ReadUserDTO } from './dto/user-read.dto';
 import { DeleteUserDTO } from './dto/user-delete.dto';
