@@ -35,10 +35,4 @@ export class SceneController {
   deleteScene(@Query() dto: DeleteSceneDTO): string {
     return this.sceneService.deleteScene(dto);
   }
-  @Get('map')
-  @Header('content-type', 'image/png')
-  async getMapImage(@Query() dto: GetMapDTO): Promise<any> {
-    const scene: any = await prisma.scene.findUnique({where:{id:dto.id}})
-    return new StreamableFile(createReadStream(join(process.cwd(), '../mapImages/' + String(scene.mapImage))));
-  }
 }
