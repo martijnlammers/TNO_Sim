@@ -34,8 +34,6 @@ export class UserService {
   }
 
   updateUser(dto: PutUserDTO): any {
-
-    // Updates record, creates if doesnt exist.
     return prisma.user.upsert({
       where: {
         id: dto.id,
