@@ -1,25 +1,13 @@
 import { Controller, Get, Post, Put, Delete, Body, Query, StreamableFile, Header } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ReadSceneDTO } from './dto/scene-read.dto';
-import { CreateSceneDTO } from './dto/scene-create.dto';
-import { UpdateSceneDTO } from './dto/scene-update.dto';
+import { PutSceneDTO } from './dto/scene-put.dto';
 import { DeleteSceneDTO } from './dto/scene-delete.dto';
 import { SceneService } from './scene.service';
-import { GetMapDTO } from './dto/map-get.dto';
-import { createReadStream } from 'fs';
-import { join } from 'path';
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient()
-
 @Controller('simulation')
 @ApiTags('Scene')
 export class SceneController {
   constructor(private readonly sceneService: SceneService) {}
-
-  @Post('scene')
-  createScene(@Body() dto: CreateSceneDTO): JSON {
-    return this.sceneService.createScene(dto);
-  }
 
   @Get('scene')
   readScene(@Query() dto: ReadSceneDTO): JSON {
@@ -27,7 +15,7 @@ export class SceneController {
   }
 
   @Put('scene')
-  updateScene(@Body() dto: UpdateSceneDTO): JSON {
+  updateScene(@Body() dto: PutSceneDTO): JSON {
     return this.sceneService.updateScene(dto);
   }
 
