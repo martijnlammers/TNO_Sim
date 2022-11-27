@@ -4,6 +4,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { PutSessionDTO } from './dto/session-put.dto';
 import { ReadSessionDTO } from './dto/session-read.dto';
 import { DeleteSessionDTO } from './dto/session-delete.dto';
+import { ReadSessionsPageDTO } from './dto/session-page.dto';
 
 @Controller('simulation')
 @ApiTags('Session')
@@ -23,5 +24,9 @@ export class SessionController {
   @Delete('session')
   deleteSession(@Query() dto: DeleteSessionDTO): string {
     return this.sessionService.deleteSession(dto);
+  }
+  @Post('session/page')
+  getSessionsPage(@Query() dto: ReadSessionsPageDTO): string {
+    return this.sessionService.getSessionsPage(dto);
   }
 }
