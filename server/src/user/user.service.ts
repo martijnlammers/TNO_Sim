@@ -5,6 +5,7 @@ import { ReadUserDTO } from './dto/user-read.dto';
 import { DeleteUserDTO } from './dto/user-delete.dto';
 import { PutUserDTO } from './dto/user-put.dto';
 import { createHash } from 'crypto';
+import { CheckLoginDTO } from './dto/user-login.dto';
 
 const prisma = new PrismaClient();
 @Injectable()
@@ -64,5 +65,14 @@ export class UserService {
 
   deleteUser(dto: DeleteUserDTO): any {
     return prisma.user.delete({ where: { id: dto.id } });
+  }
+
+  checkLogin(dto: CheckLoginDTO): any { 
+    return prisma.user.count({
+      where:{
+        email: createHash('sha256').update(dto.email).digest('hex'),
+        password: createHash('sha256').update(dto.password).digest('hex')
+      }
+    })
   }
 }

@@ -4,6 +4,7 @@ import { ReadUserDTO } from './dto/user-read.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { PutUserDTO } from './dto/user-put.dto';
 import { DeleteUserDTO } from './dto/user-delete.dto';
+import { CheckLoginDTO } from './dto/user-login.dto';
 
 @Controller('simulation')
 @ApiTags('User')
@@ -23,5 +24,10 @@ export class UserController {
   @Delete('user')
   deleteUser(@Query() dto: DeleteUserDTO): string {
     return this.userService.deleteUser(dto);
+  }
+
+  @Post('user/login')
+  checkLogin(@Body() dto: CheckLoginDTO): JSON {
+    return this.userService.checkLogin(dto);
   }
 }
