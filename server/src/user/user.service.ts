@@ -36,8 +36,6 @@ export class UserService {
   }
 
   updateUser(dto: PutUserDTO): any {
-
-
     console.log("digest: ", );
     return prisma.user.upsert({
       where: {
@@ -68,7 +66,7 @@ export class UserService {
   }
 
   checkLogin(dto: CheckLoginDTO): any { 
-    return prisma.user.count({
+    return prisma.user.findFirst({
       where:{
         email: createHash('sha256').update(dto.email).digest('hex'),
         password: createHash('sha256').update(dto.password).digest('hex')
