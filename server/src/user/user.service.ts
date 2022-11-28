@@ -4,6 +4,7 @@ import { Role } from 'src/app.enums';
 import { ReadUserDTO } from './dto/user-read.dto';
 import { DeleteUserDTO } from './dto/user-delete.dto';
 import { PutUserDTO } from './dto/user-put.dto';
+import { createHash } from 'crypto';
 
 const prisma = new PrismaClient();
 @Injectable()
@@ -34,6 +35,9 @@ export class UserService {
   }
 
   updateUser(dto: PutUserDTO): any {
+
+
+    console.log("digest: ", );
     return prisma.user.upsert({
       where: {
         id: dto.id,
@@ -42,8 +46,8 @@ export class UserService {
         firstname: dto.firstname,
         lastname: dto.lastname,
         addition: dto.addition,
-        email: dto.email,
-        password: dto.password,
+        email: createHash('sha256').update(dto.email).digest('hex'),
+        password: createHash('sha256').update(dto.password).digest('hex'),
         role: parseInt(Role[dto.role]),
       },
       create: {
@@ -51,8 +55,8 @@ export class UserService {
         firstname: dto.firstname,
         lastname: dto.lastname,
         addition: dto.addition,
-        email: dto.email,
-        password: dto.password,
+        email: createHash('sha256').update(dto.email).digest('hex'),
+        password: createHash('sha256').update(dto.password).digest('hex'),
         role: parseInt(Role[dto.role])
       },
     });
