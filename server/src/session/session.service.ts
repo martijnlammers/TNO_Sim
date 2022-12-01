@@ -64,8 +64,8 @@ export class SessionService {
         startTime: dto.startTime,
         stopTime: dto.stopTime,
         sceneId: dto.sceneId ? dto.sceneId : null,
-        sceneStartTime: dto.sceneStartTime,
-        stopSceneTime: dto.sceneStopTime,
+        startSceneTime: dto.startSceneTime,
+        stopSceneTime: dto.stopSceneTime,
       },
       create: {
         description: dto.description,
