@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsUUID, IsNotEmpty, IsOptional, Length, IsDateString } from "class-validator";
+import { IsUUID, IsNotEmpty, Length, IsDateString,ValidationOptions, ValidateIf } from "class-validator";
 export class PutSessionDTO{
     @ApiPropertyOptional({
         example:"0f7ce1e2-1535-43ae-b499-d95bf85159cc",
@@ -35,7 +35,7 @@ export class PutSessionDTO{
         example: new Date().toISOString()
     })
     @IsOptional()
-    sceneEndTime?: string;
+    sceneStopTime?: string;
 
     @IsDateString()
     @ApiPropertyOptional({
@@ -61,4 +61,9 @@ export class PutSessionDTO{
     })
     @IsOptional()
     deleted?: boolean;
+}
+export function IsOptional(validationOptions?: ValidationOptions) {
+    return ValidateIf((obj, value) => {
+        return value !== null && value !== undefined && value !== '';
+    }, validationOptions);
 }

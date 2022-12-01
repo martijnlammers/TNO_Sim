@@ -63,13 +63,17 @@ export class SessionService {
         description: dto.description,
         startTime: dto.startTime,
         stopTime: dto.stopTime,
-        sceneId: dto.sceneId,
+        sceneId: dto.sceneId ? dto.sceneId : null,
+        sceneStartTime: dto.sceneStartTime,
+        stopSceneTime: dto.sceneStopTime,
       },
       create: {
         description: dto.description,
         startTime: dto.startTime,
         stopTime: dto.stopTime,
-        sceneId: dto.sceneId,
+        sceneId: dto.sceneId ? dto.sceneId : null,
+        sceneStartTime: dto.sceneStartTime,
+        stopSceneTime: dto.sceneStopTime,
       },
     });
   }
