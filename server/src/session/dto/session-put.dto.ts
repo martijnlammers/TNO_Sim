@@ -28,14 +28,14 @@ export class PutSessionDTO{
         example: new Date().toISOString()
     })
     @IsOptional()
-    sceneStartTime?: string;
+    startSceneTime?: string;
 
     @IsDateString()
     @ApiPropertyOptional({
         example: new Date().toISOString()
     })
     @IsOptional()
-    sceneStopTime?: string;
+    stopSceneTime?: string;
 
     @IsDateString()
     @ApiPropertyOptional({
