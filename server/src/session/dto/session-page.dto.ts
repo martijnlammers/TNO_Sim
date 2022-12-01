@@ -1,18 +1,17 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsUUID, IsNotEmpty, IsNumber, IsPositive } from "class-validator";
+import { IsUUID, IsNotEmpty, IsNumber, IsPositive, IsOptional } from "class-validator";
 
 
 export class ReadSessionsPageDTO{
     @ApiProperty()
-    @IsNotEmpty()
     @IsUUID("all")
     userId: string;
 
     @ApiProperty()
-    @IsNotEmpty()
+    @IsOptional()
     skip: string;
 
     @ApiProperty()
-    @IsNotEmpty()
+    @IsOptional()
     take: string;
 }

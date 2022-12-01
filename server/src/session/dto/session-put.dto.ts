@@ -5,7 +5,7 @@ export class PutSessionDTO{
         example:"0f7ce1e2-1535-43ae-b499-d95bf85159cc",
         description: 'has to be valid session uuid'
     })
-    @IsNotEmpty()
+    @IsOptional()
     @IsUUID("all")
     id: string;
 

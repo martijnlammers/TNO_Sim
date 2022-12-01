@@ -5,16 +5,12 @@ export class CheckLoginDTO {
         example:"m.ashton@gmail.com"
     })
     @IsEmail()
-    @IsNotEmpty()
-    @IsOptional()
     email?: string;
 
     @ApiProperty({
         example:"markashton123"
     })
     @IsAscii()
-    @IsNotEmpty()
-    @IsOptional()
     password?: string;
 }
 

@@ -6,6 +6,5 @@ export class ReadUserDTO {
     description: 'has to be valid user uuid, can be left empty to fetch all users'
   })
   @IsUUID("all")
-  @IsOptional()
   id?: string;
 }

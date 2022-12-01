@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsUUID, IsNotEmpty } from "class-validator";
+import { IsUUID, IsNotEmpty, IsOptional } from "class-validator";
 
 
 export class DeleteSessionDTO{
@@ -7,7 +7,7 @@ export class DeleteSessionDTO{
         example:"valid session uuid",
         description: 'has to be valid session uuid'
     })
-    @IsNotEmpty()
     @IsUUID("all")
+    @IsOptional()
     sessionId: string;
 }
