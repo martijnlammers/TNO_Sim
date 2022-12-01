@@ -15,6 +15,10 @@ model Session {
   events       Event[]
   startTime    DateTime?
   stopTime     DateTime?
+  startSceneTime DateTime?
+  stopSceneTime DateTime?
+  deleted      Boolean? @default(false)
+  ipaddr       String?
   roadmap      String?
   evaluation   String?
   scene        Scene?    @relation(fields: [sceneId], references: [id])
