@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
-
 import { PrismaClient } from '@prisma/client';
 import { PutSessionDTO } from './dto/session-put.dto';
 import { ReadSessionDTO } from './dto/session-read.dto';
 import { DeleteSessionDTO } from './dto/session-delete.dto';
 import { ReadSessionsPageDTO } from './dto/session-page.dto';
 const prisma = new PrismaClient();
+const date = new Date()
 
 @Injectable()
 export class SessionService {
   readSession(dto: ReadSessionDTO): any {
     return !!dto.sessionId
-      ? prisma.session.findUnique({
+      ? prisma.session.findMany({
           where: {
             id: String(dto.sessionId),
             deleted: false
@@ -67,7 +67,7 @@ export class SessionService {
         sceneId: dto.sceneId ? dto.sceneId : null,
         startSceneTime: dto.startSceneTime,
         stopSceneTime: dto.stopSceneTime,
-        lastmodified: Date.now()
+        lastmodified: date.toISOString()
       },
       create: {
         description: dto.description,
@@ -76,7 +76,7 @@ export class SessionService {
         sceneId: dto.sceneId ? dto.sceneId : null,
         startSceneTime: dto.startSceneTime,
         stopSceneTime: dto.stopSceneTime,
-        lastmodified: Date.now()
+        lastmodified: date.toISOString()
       },
     });
   }
@@ -85,14 +85,14 @@ export class SessionService {
       where: {sessionId: dto.sessionId},
       data: {
         deleted: true,
-        lastmodified: Date.now()
+        lastmodified: date.toISOString()
       }
     });
     const deletedSession = prisma.session.update({
       where: {id: dto.sessionId},
       data: {
         deleted: true,
-        lastmodified: Date.now()
+        lastmodified: date.toISOString()
       }
     });
     return prisma.$transaction([deletedEvents, deletedSession]);
