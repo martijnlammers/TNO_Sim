@@ -14,6 +14,7 @@ export class SessionService {
       ? prisma.session.findUnique({
           where: {
             id: String(dto.sessionId),
+            deleted: false
           },
           include: {
             participants: {
@@ -66,6 +67,7 @@ export class SessionService {
         sceneId: dto.sceneId ? dto.sceneId : null,
         startSceneTime: dto.startSceneTime,
         stopSceneTime: dto.stopSceneTime,
+        lastmodified: Date.now()
       },
       create: {
         description: dto.description,
@@ -74,19 +76,24 @@ export class SessionService {
         sceneId: dto.sceneId ? dto.sceneId : null,
         startSceneTime: dto.startSceneTime,
         stopSceneTime: dto.stopSceneTime,
+        lastmodified: Date.now()
       },
     });
   }
   deleteSession(dto: DeleteSessionDTO): any {
-    const deletedEvents = prisma.event.deleteMany({
-      where: {
-        sessionId: dto.sessionId,
-      },
+    const deletedEvents = prisma.event.updateMany({
+      where: {sessionId: dto.sessionId},
+      data: {
+        deleted: true,
+        lastmodified: Date.now()
+      }
     });
-    const deletedSession = prisma.session.delete({
-      where: {
-        id: dto.sessionId,
-      },
+    const deletedSession = prisma.session.update({
+      where: {id: dto.sessionId},
+      data: {
+        deleted: true,
+        lastmodified: Date.now()
+      }
     });
     return prisma.$transaction([deletedEvents, deletedSession]);
   }
@@ -100,6 +107,7 @@ export class SessionService {
         participants: true
       },
       where:{
+        deleted: false,
         participants:{
           some:{
             userId: dto.userId
