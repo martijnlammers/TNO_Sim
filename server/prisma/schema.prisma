@@ -13,11 +13,12 @@ model Session {
   description  String?
   participants SessionParticipants[]
   events       Event[]
-  startTime    DateTime?
+  startTime    DateTime? @default(now())
   stopTime     DateTime?
   startSceneTime DateTime?
   stopSceneTime DateTime?
   deleted      Boolean? @default(false)
+  lastmodified DateTime? @default(now())
   ipaddr       String?
   roadmap      String?
   evaluation   String?
@@ -35,6 +36,8 @@ model User {
   role      Int      @default(0)
   session   SessionParticipants[]
   event     Event[]
+  deleted      Boolean? @default(false)
+  lastmodified DateTime? @default(now())
 }
 
 model Scene {
@@ -43,6 +46,8 @@ model Scene {
   description String
   sessions    Session[]
   evidences   Evidence[]
+  deleted      Boolean? @default(false)
+  lastmodified DateTime? @default(now())
 }
 
 model Evidence {
@@ -54,6 +59,8 @@ model Evidence {
   scene   Scene?  @relation(fields: [sceneId], references: [id], onDelete: Cascade)
   sceneId String?
   events  Event[]
+  deleted      Boolean? @default(false)
+  lastmodified DateTime? @default(now())
 }
 
 model Event {
@@ -68,6 +75,8 @@ model Event {
   evidenceId String?
   light      Int?
   filter     Int?
+  deleted      Boolean? @default(false)
+  lastmodified DateTime? @default(now())
 }
 
 model SessionParticipants {
@@ -76,4 +85,6 @@ model SessionParticipants {
   user User @relation(fields: [userId], references: [id])
   userId String
   @@id([sessionId, userId])
+  deleted      Boolean? @default(false)
+  lastmodified DateTime? @default(now())
 }
