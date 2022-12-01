@@ -66,7 +66,6 @@ export class SessionService {
         sceneId: dto.sceneId,
       },
       create: {
-        id: dto.id,
         description: dto.description,
         startTime: dto.startTime,
         stopTime: dto.stopTime,
