@@ -20,7 +20,6 @@ async function bootstrap() {
       origin: ['*'],
     }
   );
-  console.log()
   await app.listen(80, `${process.env.HOST}`);
 }
 bootstrap();
