@@ -5,17 +5,14 @@ import { ReadSessionDTO } from './dto/session-read.dto';
 import { DeleteSessionDTO } from './dto/session-delete.dto';
 import { ReadSessionsPageDTO } from './dto/session-page.dto';
 const prisma = new PrismaClient();
-const date = new Date()
+const date = new Date();
 
 @Injectable()
 export class SessionService {
   readSession(dto: ReadSessionDTO): any {
     return !!dto.sessionId
-      ? prisma.session.findMany({
-          where: {
-            id: String(dto.sessionId),
-            deleted: false
-          },
+      ? prisma.session.findFirst({
+          where: { AND: [{ id: String(dto.sessionId) }, { deleted: false }] },
           include: {
             participants: {
               select: {
@@ -67,7 +64,7 @@ export class SessionService {
         sceneId: dto.sceneId ? dto.sceneId : null,
         startSceneTime: dto.startSceneTime,
         stopSceneTime: dto.stopSceneTime,
-        lastmodified: date.toISOString()
+        lastmodified: date.toISOString(),
       },
       create: {
         description: dto.description,
@@ -76,44 +73,43 @@ export class SessionService {
         sceneId: dto.sceneId ? dto.sceneId : null,
         startSceneTime: dto.startSceneTime,
         stopSceneTime: dto.stopSceneTime,
-        lastmodified: date.toISOString()
+        lastmodified: date.toISOString(),
       },
     });
   }
   deleteSession(dto: DeleteSessionDTO): any {
     const deletedEvents = prisma.event.updateMany({
-      where: {sessionId: dto.sessionId},
+      where: { sessionId: dto.sessionId },
       data: {
         deleted: true,
-        lastmodified: date.toISOString()
-      }
+        lastmodified: date.toISOString(),
+      },
     });
     const deletedSession = prisma.session.update({
-      where: {id: dto.sessionId},
+      where: { id: dto.sessionId },
       data: {
         deleted: true,
-        lastmodified: date.toISOString()
-      }
+        lastmodified: date.toISOString(),
+      },
     });
     return prisma.$transaction([deletedEvents, deletedSession]);
   }
-
 
   getSessionsPage(dto: ReadSessionsPageDTO): any {
     return prisma.session.findMany({
       skip: parseInt(dto.skip),
       take: parseInt(dto.take),
-      include:{
-        participants: true
+      include: {
+        participants: true,
       },
-      where:{
+      where: {
         deleted: false,
-        participants:{
-          some:{
-            userId: dto.userId
-          }
-        }
-      }
+        participants: {
+          some: {
+            userId: dto.userId,
+          },
+        },
+      },
     });
   }
 }
