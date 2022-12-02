@@ -99,16 +99,12 @@ export class SessionService {
     return prisma.session.findMany({
       skip: parseInt(dto.skip),
       take: parseInt(dto.take),
-      include: {
-        participants: true,
-      },
+      include: { participants: true },
       where: {
-        deleted: false,
-        participants: {
-          some: {
-            userId: dto.userId,
-          },
-        },
+        AND: [
+          { deleted: false },
+          { participants: { some: { userId: dto.userId } } },
+        ],
       },
     });
   }
