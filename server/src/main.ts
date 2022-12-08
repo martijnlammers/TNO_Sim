@@ -18,6 +18,7 @@ async function bootstrap() {
   app.enableCors(
     { 
       origin: ['*'],
+      methods: ['POST', 'PUT', 'DELETE', 'GET']
     }
   );
   await app.listen(80, `${process.env.HOST}`);
