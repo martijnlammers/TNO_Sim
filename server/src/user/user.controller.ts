@@ -27,8 +27,8 @@ export class UserController {
   }
 
   @Post('user/login')
-  checkLogin(@Body() dto: CheckLoginDTO): JSON {
-    const user: any = this.userService.checkLogin(dto);
+  async checkLogin(@Body() dto: CheckLoginDTO): Promise<JSON> {
+    const user: any = await this.userService.checkLogin(dto);
     console.log(user)
     if(!user){
       throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
