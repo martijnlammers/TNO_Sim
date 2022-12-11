@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Body, Query } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Query, HttpException, HttpStatus } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ReadUserDTO } from './dto/user-read.dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -28,6 +28,12 @@ export class UserController {
 
   @Post('user/login')
   checkLogin(@Body() dto: CheckLoginDTO): JSON {
-    return this.userService.checkLogin(dto);
+    const user: any = this.userService.checkLogin(dto);
+    console.log(user)
+    if(!user){
+      throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
+    }
+    return user;
+
   }
 }
