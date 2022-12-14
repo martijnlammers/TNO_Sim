@@ -36,27 +36,32 @@ export class UserService {
   }
 
   updateUser(dto: PutUserDTO): any {
-    console.log("digest: ", );
-    return prisma.user.upsert({
+    console.log('digest: ');
+    return prisma.user.update({
       where: {
         id: dto.id,
       },
-      update: {
+      data: {
         firstname: dto.firstname,
         lastname: dto.lastname,
         addition: dto.addition,
         email: createHash('sha256').update(dto.email).digest('hex'),
         password: createHash('sha256').update(dto.password).digest('hex'),
         role: parseInt(Role[dto.role]),
-      },
-      create: {
+      }
+    });
+  }
+
+  createUser(dto: PutUserDTO): any {
+    return prisma.user.create({
+      data: {
         id: dto.id,
         firstname: dto.firstname,
         lastname: dto.lastname,
         addition: dto.addition,
         email: createHash('sha256').update(dto.email).digest('hex'),
         password: createHash('sha256').update(dto.password).digest('hex'),
-        role: parseInt(Role[dto.role])
+        role: parseInt(Role[dto.role]),
       },
     });
   }
@@ -65,12 +70,12 @@ export class UserService {
     return prisma.user.delete({ where: { id: dto.id } });
   }
 
-  checkLogin(dto: CheckLoginDTO): any { 
+  checkLogin(dto: CheckLoginDTO): any {
     return prisma.user.findFirst({
-      where:{
+      where: {
         email: createHash('sha256').update(dto.email).digest('hex'),
-        password: createHash('sha256').update(dto.password).digest('hex')
-      }
-    })
+        password: createHash('sha256').update(dto.password).digest('hex'),
+      },
+    });
   }
 }

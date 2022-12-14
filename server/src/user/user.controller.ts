@@ -11,6 +11,11 @@ import { CheckLoginDTO } from './dto/user-login.dto';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Post('user')
+  createUser(@Body() dto: PutUserDTO): JSON { 
+    return this.userService.createUser(dto);
+  }
+
   @Get('user')
   readUser(@Query() dto: ReadUserDTO): JSON {
     return this.userService.readUser(dto);
