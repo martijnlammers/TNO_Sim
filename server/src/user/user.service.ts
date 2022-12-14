@@ -6,6 +6,7 @@ import { DeleteUserDTO } from './dto/user-delete.dto';
 import { PutUserDTO } from './dto/user-put.dto';
 import { createHash } from 'crypto';
 import { CheckLoginDTO } from './dto/user-login.dto';
+import { CreateUserDTO } from './dto/user-create.dto';
 
 const prisma = new PrismaClient();
 @Injectable()
@@ -52,10 +53,9 @@ export class UserService {
     });
   }
 
-  createUser(dto: PutUserDTO): any {
+  createUser(dto: CreateUserDTO): any {
     return prisma.user.create({
       data: {
-        id: dto.id,
         firstname: dto.firstname,
         lastname: dto.lastname,
         addition: dto.addition,
