@@ -5,6 +5,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { PutUserDTO } from './dto/user-put.dto';
 import { DeleteUserDTO } from './dto/user-delete.dto';
 import { CheckLoginDTO } from './dto/user-login.dto';
+import { CreateUserDTO } from './dto/user-create.dto';
 
 @Controller('simulation')
 @ApiTags('User')
@@ -12,7 +13,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post('user')
-  createUser(@Body() dto: PutUserDTO): JSON { 
+  createUser(@Body() dto: CreateUserDTO): JSON { 
     return this.userService.createUser(dto);
   }
 
