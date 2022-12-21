@@ -1,6 +1,7 @@
 //https://prismaliser.app/ to visualize the models.
 generator client {
   provider = "prisma-client-js"
+  engineType = "binary"
 }
 
 datasource db {

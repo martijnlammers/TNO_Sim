@@ -1,7 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { Role } from 'src/app.enums';
-import { ReadUserDTO } from './dto/user-read.dto';
+import {
+  ReadUserDTO,
+  ReadSupervisorsDTO,
+  ReadTraineesDTO,
+} from './dto/user-read.dto';
 import { DeleteUserDTO } from './dto/user-delete.dto';
 import { PutUserDTO } from './dto/user-put.dto';
 import { createHash } from 'crypto';
@@ -49,7 +53,7 @@ export class UserService {
         email: createHash('sha256').update(dto.email).digest('hex'),
         password: createHash('sha256').update(dto.password).digest('hex'),
         role: parseInt(Role[dto.role]),
-      }
+      },
     });
   }
 
@@ -75,6 +79,38 @@ export class UserService {
       where: {
         email: createHash('sha256').update(dto.email).digest('hex'),
         password: createHash('sha256').update(dto.password).digest('hex'),
+      },
+    });
+  }
+
+  getSupervisors(dto: ReadSupervisorsDTO): any {
+    return prisma.user.findMany({
+      skip: parseInt(dto.skip),
+      take: parseInt(dto.take),
+      select: {
+        firstname: true,
+        lastname: true,
+        role: true,
+        addition: true,
+      },
+      where: {
+        AND: [{ deleted: false }, { role: Role.Supervisor }],
+      },
+    });
+  }
+
+  getTrainees(dto: ReadSupervisorsDTO): any {
+    return prisma.user.findMany({
+      skip: parseInt(dto.skip),
+      take: parseInt(dto.take),
+      select: {
+        firstname: true,
+        lastname: true,
+        role: true,
+        addition: true,
+      },
+      where: {
+        AND: [{ deleted: false }, { role: Role.Trainee }],
       },
     });
   }

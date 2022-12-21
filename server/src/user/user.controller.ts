@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Put, Delete, Body, Query, HttpException, HttpStatus } from '@nestjs/common';
 import { UserService } from './user.service';
-import { ReadUserDTO } from './dto/user-read.dto';
+import { ReadSupervisorsDTO, ReadTraineesDTO, ReadUserDTO } from './dto/user-read.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { PutUserDTO } from './dto/user-put.dto';
 import { DeleteUserDTO } from './dto/user-delete.dto';
@@ -40,6 +40,15 @@ export class UserController {
       throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
     }
     return user;
+  }
 
+  @Get('user/trainees')
+  getTrainees(@Query() dto: ReadTraineesDTO): JSON {
+    return this.userService.getTrainees(dto);
+  }
+
+  @Get('user/supervisors')
+  getSupervisors(@Query() dto: ReadSupervisorsDTO): JSON {
+    return this.userService.getSupervisors(dto);
   }
 }
