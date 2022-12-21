@@ -88,6 +88,7 @@ export class UserService {
       skip: parseInt(dto.skip),
       take: parseInt(dto.take),
       select: {
+        id:true,
         firstname: true,
         lastname: true,
         role: true,
@@ -104,6 +105,7 @@ export class UserService {
       skip: parseInt(dto.skip),
       take: parseInt(dto.take),
       select: {
+        id:true,
         firstname: true,
         lastname: true,
         role: true,
