@@ -28,6 +28,6 @@ export class SessionController {
 
   @Delete('session')
   deleteSession(@Query() dto: DeleteSessionDTO): string {
-    return this.sessionService.deleteSession(dto);
+    return this.sessionService.readSession(dto);
   }
 }

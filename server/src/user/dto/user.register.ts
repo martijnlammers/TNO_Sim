@@ -1,7 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail } from 'class-validator';
 
-export class ReqRegister {
+export class Register {
+    @ApiProperty()
+    fullname: string;
+
     @ApiProperty()
     @IsEmail()
     email: string;
@@ -11,8 +14,20 @@ export class ReqRegister {
 }
 
 
-export class ResRegister{
-
+export class RegisteredUser {
+    @ApiProperty()
+    id: string
     
+    @ApiProperty()
+    fullname: string
+    
+    @ApiProperty()
+    email: string
+    
+    @ApiProperty()
+    password: string
+
+    @ApiProperty()
+    role: number
 }
 

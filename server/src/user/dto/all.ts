@@ -1,8 +1,8 @@
 export { ReqDelete, ResDelete } from './user.delete';
-export { ReqLogin, ResLogin } from './user.login';
-export { ReqRegister, ResRegister} from './user.register';
+export { Login } from './user.login';
+export { Register, RegisteredUser} from './user.register';
 export { ReqFilterByRole, ResFilterByRole} from './users.filter.role';
-export { ReqUsers, ResUsers } from './users';
+export { AllUsers, UsersPage } from './users';
 
 
 

@@ -21,11 +21,11 @@ export class SceneController {
 
   @Post('scenes')
   getScenes(@Body() dto: PutSceneDTO): JSON {
-    return this.sceneService.updateScene(dto);
+    return this.sceneService.readScene(dto);
   }
 
   @Delete('scene')
   deleteScene(@Query() dto: DeleteSceneDTO): string {
-    return this.sceneService.deleteScene(dto);
+    return this.sceneService.readScene(dto);
   }
 }

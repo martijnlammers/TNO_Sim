@@ -1,36 +1,43 @@
-import { Controller, Post, Delete, Body } from '@nestjs/common';
+import { Controller, Post, Delete, Body, HttpException, HttpStatus } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ApiTags } from '@nestjs/swagger';
 import * as dto from './dto/all';
+
+interface Error {
+  error: string
+}
+
 @Controller('/')
 @ApiTags('User')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post('user/register')
-  registerUser(@Body() body: dto.ReqRegister): dto.ResRegister {
-    return this.userService.registerUser(body);
+  async registerUser(@Body() body: dto.Register): Promise<dto.RegisteredUser | HttpException> {
+    const user = await this.userService.registerUser(body);
+    if(user) return user;
+    throw new HttpException('Account already registered.', HttpStatus.BAD_REQUEST);
   }
 
   @Post('user/login')
-  loginUser(@Body() body: dto.ReqLogin): dto.ResLogin {
-    const user = this.userService.loginUser(body);
-    console.log(user);
-    return;
+  async loginUser(@Body() body: dto.Login): Promise<dto.RegisteredUser | HttpException> {
+    const user = await this.userService.loginUser(body);
+    if(user) return user;
+    throw new HttpException('Invalid login credentials.', HttpStatus.BAD_REQUEST);
   }
 
   @Post('users')
-  readAllUsers(@Body() body: dto.ReqUsers): dto.ResUsers {
-    return this.userService.readAllUsers(body);
+  async readAllUsers(@Body() body: dto.AllUsers): Promise<dto.UsersPage> {
+    return await this.userService.readAllUsers(body);
   }
 
   @Post('users/filter/role')
   filterUsersByRole(@Body() body: dto.ReqFilterByRole): dto.ResFilterByRole {
-    return this.userService.filterUsersByRole(body);
+    return this.userService.loginUser(body);
   }
 
   @Delete('user/delete')
   deleteUser(@Body() body: dto.ReqDelete): dto.ResFilterByRole {
-    return this.userService.deleteUser(body);
+    return this.userService.loginUser(body);
   }
 }

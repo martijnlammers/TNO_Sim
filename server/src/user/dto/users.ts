@@ -1,17 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail } from 'class-validator';
 
-export class ReqUsers {
+export class AllUsers {
     @ApiProperty()
-    @IsEmail()
-    email: string;
+    skip: number;
 
     @ApiProperty()
-    password: string;
+    take: number;
 }
 
-
-export class ResUsers{
+export class UsersPage{
 
 
 }
