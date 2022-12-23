@@ -11,44 +11,32 @@ datasource db {
 
 model Session {
   id           String    @id @unique @default(uuid())
-  description  String?
-  participants SessionParticipants[]
-  events       Event[]
-  startTime    DateTime? @default(now())
-  stopTime     DateTime?
-  startSceneTime DateTime?
-  stopSceneTime DateTime?
-  deleted      Boolean? @default(false)
-  lastmodified DateTime? @default(now())
-  ipaddr       String?
-  roadmap      String?
-  evaluation   String?
   scene        Scene?    @relation(fields: [sceneId], references: [id])
   sceneId      String?
+  participants SessionParticipants[]
+  description  String?
+  startTime    DateTime? @default(now())
+  stopTime     DateTime?
+  events       Event[]
+  
 }
 
 model User {
   id        String   @id @unique @default(uuid())
-  firstname String
-  lastname  String
-  addition  String?
+  fullname  String
   email     String  @unique
   password  String
   role      Int      @default(0)
   session   SessionParticipants[]
   event     Event[]
-  deleted      Boolean? @default(false)
-  lastmodified DateTime? @default(now())
 }
 
 model Scene {
   id          String     @id @unique @default(uuid())
-  name        String
+  map_name    String
   description String
   sessions    Session[]
   evidences   Evidence[]
-  deleted      Boolean? @default(false)
-  lastmodified DateTime? @default(now())
 }
 
 model Evidence {
@@ -60,8 +48,6 @@ model Evidence {
   scene   Scene?  @relation(fields: [sceneId], references: [id], onDelete: Cascade)
   sceneId String?
   events  Event[]
-  deleted      Boolean? @default(false)
-  lastmodified DateTime? @default(now())
 }
 
 model Event {
@@ -76,8 +62,6 @@ model Event {
   evidenceId String?
   light      Int?
   filter     Int?
-  deleted      Boolean? @default(false)
-  lastmodified DateTime? @default(now())
 }
 
 model SessionParticipants {
@@ -86,6 +70,4 @@ model SessionParticipants {
   user User @relation(fields: [userId], references: [id])
   userId String
   @@id([sessionId, userId])
-  deleted      Boolean? @default(false)
-  lastmodified DateTime? @default(now())
 }
