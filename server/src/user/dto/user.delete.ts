@@ -1,10 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail } from 'class-validator';
 
-export class ReqDelete {
+export class Delete {
     @ApiProperty()
-    @IsEmail()
-    email: string;
+    userId: string;
 }
 
 

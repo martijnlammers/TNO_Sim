@@ -27,17 +27,14 @@ export class UserController {
   }
 
   @Post('users')
-  async readAllUsers(@Body() body: dto.AllUsers): Promise<dto.UsersPage> {
-    return await this.userService.readAllUsers(body);
-  }
-
-  @Post('users/filter/role')
-  filterUsersByRole(@Body() body: dto.ReqFilterByRole): dto.ResFilterByRole {
-    return this.userService.loginUser(body);
+  async readUsers(@Body() body: dto.Users): Promise<dto.UsersPage> {
+    return await this.userService.readUsers(body);
   }
 
   @Delete('user/delete')
-  deleteUser(@Body() body: dto.ReqDelete): dto.ResFilterByRole {
-    return this.userService.loginUser(body);
+  async deleteUser(@Body() body: dto.Delete): Promise<dto.RegisteredUser | HttpException> {
+    const user = await this.userService.deleteUser(body);
+    if(user) return user;
+    throw new HttpException('Account does not exist.', HttpStatus.BAD_REQUEST);
   }
 }
