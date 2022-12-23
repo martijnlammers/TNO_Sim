@@ -6,27 +6,28 @@ import { ReadSessionDTO } from './dto/session-read.dto';
 import { DeleteSessionDTO } from './dto/session-delete.dto';
 import { ReadSessionsPageDTO } from './dto/session-page.dto';
 
-@Controller('simulation')
+@Controller('/')
 @ApiTags('Session')
 export class SessionController {
   constructor(private readonly sessionService: SessionService) {}
 
-  @Get('session')
-  getSession(@Query() dto: ReadSessionDTO): string {
+  @Post('session/create')
+  create(@Query() dto: ReadSessionDTO): string {
     return this.sessionService.readSession(dto);
   }
 
-  @Put('session')
-  updateSession(@Body() dto: PutSessionDTO): JSON {
-    return this.sessionService.updateSession(dto);
+  @Post('session/event')
+  event(@Query() dto: ReadSessionDTO): string {
+    return this.sessionService.readSession(dto);
+  }
+
+  @Post('sessions/filter/user')
+  filterByUser(@Query() dto: ReadSessionDTO): string {
+    return this.sessionService.readSession(dto);
   }
 
   @Delete('session')
   deleteSession(@Query() dto: DeleteSessionDTO): string {
     return this.sessionService.deleteSession(dto);
-  }
-  @Post('session/page')
-  getSessionsPage(@Query() dto: ReadSessionsPageDTO): string {
-    return this.sessionService.getSessionsPage(dto);
   }
 }

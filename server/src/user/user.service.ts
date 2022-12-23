@@ -11,6 +11,7 @@ import { PutUserDTO } from './dto/user-put.dto';
 import { createHash } from 'crypto';
 import { CheckLoginDTO } from './dto/user-login.dto';
 import { CreateUserDTO } from './dto/user-create.dto';
+import { ReadSessionsPageDTO } from 'src/session/dto/session-page.dto';
 
 const prisma = new PrismaClient();
 @Injectable()
@@ -58,20 +59,20 @@ export class UserService {
   }
 
   createUser(dto: CreateUserDTO): any {
-    return prisma.user.create({
-      data: {
-        firstname: dto.firstname,
-        lastname: dto.lastname,
-        addition: dto.addition,
-        email: createHash('sha256').update(dto.email).digest('hex'),
-        password: createHash('sha256').update(dto.password).digest('hex'),
-        role: parseInt(Role[dto.role]),
-      },
-    });
+    // return prisma.user.create({
+    //   data: {
+    //     firstname: dto.firstname,
+    //     lastname: dto.lastname,
+    //     addition: dto.addition,
+    //     email: createHash('sha256').update(dto.email).digest('hex'),
+    //     password: createHash('sha256').update(dto.password).digest('hex'),
+    //     role: parseInt(Role[dto.role]),
+    //   },
+    // });
   }
 
   deleteUser(dto: DeleteUserDTO): any {
-    return prisma.user.delete({ where: { id: dto.id } });
+    return prisma.user.delete({ where: { id: dto.email } });
   }
 
   checkLogin(dto: CheckLoginDTO): any {
@@ -113,6 +114,33 @@ export class UserService {
       },
       where: {
         AND: [{ deleted: false }, { role: Role.Trainee }],
+      },
+    });
+  }
+
+  getSessionsPage(dto: ReadSessionsPageDTO): any {
+    return prisma.session.findMany({
+      skip: parseInt(dto.skip),
+      take: parseInt(dto.take),
+      include: {
+        participants: {
+          include: {
+            user: {
+              select: {
+                firstname: true,
+                lastname: true,
+                role: true,
+                addition: true,
+              },
+            },
+          },
+        },
+      },
+      where: {
+        AND: [
+          { deleted: false },
+          { participants: { some: { userId: dto.userId } } },
+        ],
       },
     });
   }

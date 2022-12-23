@@ -1,4 +1,4 @@
-export enum EvidenceType {
+export enum Evidence {
     Gunpowder = 0,
     Sperm = 1, 
     Saliva = 2, 

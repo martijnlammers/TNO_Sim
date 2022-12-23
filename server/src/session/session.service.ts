@@ -94,31 +94,4 @@ export class SessionService {
     });
     return prisma.$transaction([deletedEvents, deletedSession]);
   }
-
-  getSessionsPage(dto: ReadSessionsPageDTO): any {
-    return prisma.session.findMany({
-      skip: parseInt(dto.skip),
-      take: parseInt(dto.take),
-      include: {
-        participants: {
-          include: {
-            user: {
-              select: {
-                firstname: true,
-                lastname: true,
-                role: true,
-                addition: true,
-              },
-            },
-          },
-        },
-      },
-      where: {
-        AND: [
-          { deleted: false },
-          { participants: { some: { userId: dto.userId } } },
-        ],
-      },
-    });
-  }
 }
