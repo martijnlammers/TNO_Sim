@@ -1,22 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { Role } from 'src/app.enums';
-import {
-  ReadUserDTO,
-  ReadSupervisorsDTO,
-  ReadTraineesDTO,
-} from './dto/user-read.dto';
-import { DeleteUserDTO } from './dto/user-delete.dto';
-import { PutUserDTO } from './dto/user-put.dto';
 import { createHash } from 'crypto';
-import { CheckLoginDTO } from './dto/user-login.dto';
-import { CreateUserDTO } from './dto/user-create.dto';
 import { ReadSessionsPageDTO } from 'src/session/dto/session-page.dto';
+import * as dto from './dto/all';
 
 const prisma = new PrismaClient();
 @Injectable()
 export class UserService {
-  readUser(dto: ReadUserDTO): any {
+  readUser(dto): any {
     return !!dto.id
       ? prisma.user.findUnique({
           where: {
@@ -41,7 +33,7 @@ export class UserService {
         });
   }
 
-  updateUser(dto: PutUserDTO): any {
+  updateUser(dto): any {
     console.log('digest: ');
     return prisma.user.update({
       where: {
@@ -58,7 +50,7 @@ export class UserService {
     });
   }
 
-  createUser(dto: CreateUserDTO): any {
+  createUser(dto): any {
     // return prisma.user.create({
     //   data: {
     //     firstname: dto.firstname,
@@ -71,11 +63,11 @@ export class UserService {
     // });
   }
 
-  deleteUser(dto: DeleteUserDTO): any {
-    return prisma.user.delete({ where: { id: dto.email } });
-  }
+  // deleteUser(dto): any {
+  //   return prisma.user.delete({ where: { id: dto.email } });
+  // }
 
-  checkLogin(dto: CheckLoginDTO): any {
+  checkLogin(dto): any {
     return prisma.user.findFirst({
       where: {
         email: createHash('sha256').update(dto.email).digest('hex'),
@@ -84,12 +76,12 @@ export class UserService {
     });
   }
 
-  getSupervisors(dto: ReadSupervisorsDTO): any {
+  getSupervisors(dto): any {
     return prisma.user.findMany({
       skip: parseInt(dto.skip),
       take: parseInt(dto.take),
       select: {
-        id:true,
+        id: true,
         firstname: true,
         lastname: true,
         role: true,
@@ -101,12 +93,12 @@ export class UserService {
     });
   }
 
-  getTrainees(dto: ReadSupervisorsDTO): any {
+  getTrainees(dto): any {
     return prisma.user.findMany({
       skip: parseInt(dto.skip),
       take: parseInt(dto.take),
       select: {
-        id:true,
+        id: true,
         firstname: true,
         lastname: true,
         role: true,
@@ -143,5 +135,31 @@ export class UserService {
         ],
       },
     });
+  }
+  registerUser(body: dto.ReqRegister): dto.ResRegister {
+    return;
+  }
+
+  loginUser(body: dto.ReqLogin): dto.ResLogin {
+    const user = prisma.user.findFirst({
+      where: {
+        email: createHash('sha256').update(body.email).digest('hex'),
+        password: createHash('sha256').update(body.password).digest('hex'),
+      }
+    });
+    console.log(user);
+    return;
+  }
+
+  readAllUsers(body: dto.ReqUsers): dto.ResUsers {
+    return;
+  }
+
+  filterUsersByRole(body: dto.ReqFilterByRole): dto.ResFilterByRole {
+    return;
+  }
+
+  deleteUser(body: dto.ReqDelete): dto.ResDelete {
+    return;
   }
 }

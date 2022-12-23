@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail } from 'class-validator';
 
-export class UserLogin {
+export class ReqFilterByRole {
     @ApiProperty()
     @IsEmail()
     email: string;
@@ -10,4 +10,9 @@ export class UserLogin {
     password: string;
 }
 
+
+export class ResFilterByRole{
+
+    
+}
 

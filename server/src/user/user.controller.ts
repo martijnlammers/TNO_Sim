@@ -1,56 +1,34 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Put,
-  Delete,
-  Body,
-  Query,
-  HttpException,
-  HttpStatus,
-} from '@nestjs/common';
+import { Controller, Post, Delete, Body } from '@nestjs/common';
 import { UserService } from './user.service';
-import {
-  ReadSupervisorsDTO,
-  ReadTraineesDTO,
-  ReadUserDTO,
-} from './dto/user-read.dto';
-
-import { UserLogin, UserSessions, User } from './dto/post/all';
 import { ApiTags } from '@nestjs/swagger';
-import { PutUserDTO } from './dto/user-put.dto';
-import { DeleteUserDTO } from './dto/user-delete.dto';
-import { CheckLoginDTO } from './dto/user-login.dto';
-import { CreateUserDTO } from './dto/user-create.dto';
-import { ReadSessionsPageDTO } from 'src/session/dto/session-page.dto';
-
+import * as dto from './dto/all';
 @Controller('/')
 @ApiTags('User')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post('user/register')
-  register(@Body() dto: CreateUserDTO): JSON {
-    return this.userService.createUser(dto);
+  registerUser(@Body() body: dto.ReqRegister): dto.ResRegister {
+    return this.userService.registerUser(body);
   }
 
   @Post('user/login')
-  login(@Body() dto: CreateUserDTO): JSON {
-    return this.userService.createUser(dto);
+  loginUser(@Body() body: dto.ReqLogin): dto.ResLogin {
+    return this.userService.loginUser(body);
   }
 
   @Post('users')
-  readAllUsers(@Body() dto: CreateUserDTO): JSON {
-    return this.userService.createUser(dto);
+  readAllUsers(@Body() body: dto.ReqUsers): dto.ResUsers {
+    return this.userService.readAllUsers(body);
   }
 
   @Post('users/filter/role')
-  filterUsersByRole(@Body() dto: CreateUserDTO): JSON {
-    return this.userService.createUser(dto);
+  filterUsersByRole(@Body() body: dto.ReqFilterByRole): dto.ResFilterByRole {
+    return this.userService.filterUsersByRole(body);
   }
 
   @Delete('user/delete')
-  delete(@Body() dto: CreateUserDTO): JSON {
-    return this.userService.createUser(dto);
+  deleteUser(@Body() body: dto.ReqDelete): dto.ResFilterByRole {
+    return this.userService.deleteUser(body);
   }
 }
