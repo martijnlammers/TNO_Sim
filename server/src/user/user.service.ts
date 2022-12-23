@@ -147,8 +147,7 @@ export class UserService {
         password: createHash('sha256').update(body.password).digest('hex'),
       }
     });
-    console.log(user);
-    return;
+    return user;
   }
 
   readAllUsers(body: dto.ReqUsers): dto.ResUsers {

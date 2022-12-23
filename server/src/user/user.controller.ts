@@ -14,7 +14,9 @@ export class UserController {
 
   @Post('user/login')
   loginUser(@Body() body: dto.ReqLogin): dto.ResLogin {
-    return this.userService.loginUser(body);
+    const user = this.userService.loginUser(body);
+    console.log(user);
+    return;
   }
 
   @Post('users')
