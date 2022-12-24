@@ -15,6 +15,7 @@ export class UserService {
           fullname: body.fullname,
           email: createHash('sha256').update(body.email).digest('hex'),
           password: createHash('sha256').update(body.password).digest('hex'),
+          role: Role[body?.role]
         }
       });
     } catch (e) {
@@ -22,7 +23,7 @@ export class UserService {
     }
   }
 
-  async loginUser(body: any): Promise<dto.RegisteredUser | null> {
+  async loginUser(body: dto.Login): Promise<dto.RegisteredUser | null> {
     try {
       return await prisma.user.findFirst({
         where: {

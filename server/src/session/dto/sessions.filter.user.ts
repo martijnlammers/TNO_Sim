@@ -1,9 +1,10 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsUUID, IsOptional } from "class-validator";
 
-
-export class CreateSession {
+export class GetSessionsByUser {
     @ApiProperty()
     sessionId: string;
 }
 
+export class Session { 
+
+}

@@ -65,7 +65,7 @@ model Event {
 model SessionParticipants {
   session Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
   sessionId String
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
   @@id([sessionId, userId])
 }
