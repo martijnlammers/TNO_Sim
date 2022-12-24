@@ -2,11 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { Role } from 'src/app.enums';
 import { createHash } from 'crypto';
-import { ReadSessionsPageDTO } from 'src/session/dto/session-page.dto';
 import * as dto from './dto/all';
-interface Error {
-  error: string
-}
+
 const prisma = new PrismaClient();
 @Injectable()
 export class UserService {
@@ -38,7 +35,7 @@ export class UserService {
     }
   }
 
-  async readUsers(body: dto.Users): Promise<dto.UsersPage> {
+  async getUsers(body: dto.Users): Promise<dto.User[]> {
     if (body?.role) {
       return await prisma.user.findMany({
         where: {

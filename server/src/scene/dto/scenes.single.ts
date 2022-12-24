@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-
-export class Delete {
+export class GetScene {
     @ApiProperty()
-    userId: string;
+    sceneId: string;
 }

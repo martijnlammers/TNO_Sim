@@ -15,19 +15,10 @@ export class Register {
 
 
 export class RegisteredUser {
-    @ApiProperty()
     id: string
-    
-    @ApiProperty()
     fullname: string
-    
-    @ApiProperty()
     email: string
-    
-    @ApiProperty()
     password: string
-
-    @ApiProperty()
     role: number
 }
 

@@ -1,10 +1,4 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Role } from 'src/app.enums';
-// const enum Role {
-//     Trainee = "Trainee",
-//     Supervisor = "Supervisor"
-// }
-
 export class Users {
     @ApiProperty()
     skip: number;
@@ -16,8 +10,9 @@ export class Users {
     role: 'Trainee' | 'Supervisor';
 }
 
-export class UsersPage{
-
-
+export class User {
+  id: string
+  fullname: string
+  role: number
 }
 

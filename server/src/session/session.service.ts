@@ -1,15 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { PutSessionDTO } from './dto/session-put.dto';
-import { ReadSessionDTO } from './dto/session-read.dto';
-import { DeleteSessionDTO } from './dto/session-delete.dto';
-import { ReadSessionsPageDTO } from './dto/session-page.dto';
 const prisma = new PrismaClient();
 const date = new Date();
 
 @Injectable()
 export class SessionService {
-  readSession(dto: ReadSessionDTO): any {
+  readSession(dto): any {
     // return !!dto.sessionId
     //   ? prisma.session.findFirst({
     //       where: { AND: [{ id: String(dto.sessionId) }, { deleted: false }] },

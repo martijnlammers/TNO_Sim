@@ -3,10 +3,6 @@ import { UserService } from './user.service';
 import { ApiTags } from '@nestjs/swagger';
 import * as dto from './dto/all';
 
-interface Error {
-  error: string
-}
-
 @Controller('/')
 @ApiTags('User')
 export class UserController {
@@ -27,8 +23,8 @@ export class UserController {
   }
 
   @Post('users')
-  async readUsers(@Body() body: dto.Users): Promise<dto.UsersPage> {
-    return await this.userService.readUsers(body);
+  async getUsers(@Body() body: dto.Users): Promise<dto.User[]> {
+    return await this.userService.getUsers(body);
   }
 
   @Delete('user/delete')

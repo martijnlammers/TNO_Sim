@@ -1,52 +1,72 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { ReadSceneDTO } from './dto/scene-read.dto';
-import { PutSceneDTO } from './dto/scene-put.dto';
-import { DeleteSceneDTO } from './dto/scene-delete.dto';
+import { Evidence } from 'src/app.enums';
+import * as dto from './dto/all';
 const prisma = new PrismaClient();
 
 @Injectable()
 export class SceneService {
-  readScene(dto): any {
-    return;
-    // return !!dto.id
-    //   ? prisma.scene.findUnique({
-    //       where: { id: String(dto.id) },
-    //       include: {
-    //         evidences: {
-    //           select: {
-    //             id: true,
-    //             x: true,
-    //             y: true,
-    //             z: true,
-    //             type: true,
-    //           },
-    //         },
-    //       },
-    //     })
-    //   : prisma.scene.findMany();
+
+  async createScene(body: dto.CreateScene): Promise<dto.Scene | null> {
+    return await prisma.scene.create({
+      data: {
+        map_name: body.map_name,
+        description: body.description
+      }
+    })
   }
 
-  // updateScene(dto: PutSceneDTO): any {
+  async addEvidence(body: dto.Evidence): Promise<any | null> {
+    if(!Evidence[body.type]) return null;
+    try {
+      return prisma.evidence.create({
+        data: {
+          x: body.x,
+          y: body.y,
+          z: body.z,
+          type: Evidence[body.type],
+          sceneId: body.sceneId,
+        },
+      });
+    } catch(e){
+      return null;
+    }
+  }
 
-  //   // Updates record, creates if doesnt exist.
-  //   return prisma.scene.upsert({
-  //     where: {
-  //       id: dto.id,
-  //     },
-  //     update: {
-  //       name: dto.name,
-  //       description: dto.description
-  //     },
-  //     create: {
-  //       id: dto.id,
-  //       name: dto.name,
-  //       description: dto.description
-  //     },
-  //   });
-  // }
+  async getScene(body: dto.GetScene): Promise<any> {
+    return await prisma.scene.findUnique({
+      where: { id: body.sceneId },
+      include: {
+        evidences: {
+          select: {
+            id: true,
+            x: true,
+            y: true,
+            z: true,
+            type: true,
+          },
+        },
+      },
+    })
+  }
 
-  // deleteScene(dto: DeleteSceneDTO): any {
-  //   return prisma.scene.delete({ where: { id: dto.id } });
-  // }
+  async getScenes(body: dto.Scenes): Promise<dto.Scene[]> {
+    return await prisma.scene.findMany({
+      select: {
+        id: true,
+        map_name: true,
+        description: true
+      },
+      take: body.take,
+      skip: body.skip
+    })
+  }
+
+  async deleteScene(body: dto.Delete): Promise<any | null> {
+    try {
+      return await prisma.scene.delete({ where: { id: body.sceneId } });
+    } catch (e) {
+      return null
+    }
+  }
 }
