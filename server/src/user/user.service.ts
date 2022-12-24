@@ -3,8 +3,8 @@ import { PrismaClient } from '@prisma/client';
 import { Role } from 'src/app.enums';
 import { createHash } from 'crypto';
 import * as dto from './dto/all';
-
 const prisma = new PrismaClient();
+
 @Injectable()
 export class UserService {
 
@@ -57,6 +57,24 @@ export class UserService {
   async deleteUser(body: dto.Delete): Promise<dto.RegisteredUser | null> {
     try{
       return await prisma.user.delete({ where: { id: body.userId } });
+    } catch(e){
+      return null
+    }
+  }
+
+  async getUserSessions(body: dto.UserSessions): Promise<any | null> {
+    try{
+      return await prisma.session.findMany({ 
+        where: { 
+          participants:{
+            some:{
+              userId: body.userId
+            }
+          }
+        },
+        skip: body.skip,
+        take: body.take
+       });
     } catch(e){
       return null
     }

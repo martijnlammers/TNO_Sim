@@ -22,6 +22,13 @@ export class UserController {
     throw new HttpException('Invalid login credentials.', HttpStatus.BAD_REQUEST);
   }
 
+  @Post('user/sessions')
+  async getUserSessions(@Body() body: dto.UserSessions): Promise<dto.RegisteredUser | HttpException> {
+    const user = await this.userService.getUserSessions(body);
+    if(user) return user;
+    throw new HttpException('Invalid login credentials.', HttpStatus.BAD_REQUEST);
+  }
+
   @Post('users')
   async getUsers(@Body() body: dto.Users): Promise<dto.User[]> {
     return await this.userService.getUsers(body);

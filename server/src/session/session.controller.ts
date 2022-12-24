@@ -9,25 +9,35 @@ export class SessionController {
   constructor(private readonly sessionService: SessionService) {}
 
   @Post('session/create')
-  async create(@Body() dto: dto.CreateSession): Promise<any | HttpException> {
-    const session = await this.sessionService.create(dto);
+  async create(@Body() body: dto.CreateSession): Promise<dto.Session | HttpException> {
+    const session = await this.sessionService.create(body);
     if(session) return session;
     throw new HttpException('Could not make session. Check all the IDs.', HttpStatus.BAD_REQUEST);
-
   }
 
   @Post('session/event')
-  addEvent(@Body() dto: dto.AddEvent): Promise<any> {
-    return this.sessionService.addEvent(dto);
+  addEvent(@Body() body: dto.AddEvent): Promise<Event | HttpException> {
+    const event = this.sessionService.addEvent(body);
+    if(event) return event;
+    throw new HttpException('Something went wrong.', HttpStatus.BAD_REQUEST);
   }
 
-  @Post('sessions/filter/user')
-  filterSessionsByUser(@Body() dto: dto.GetSessionsByUser): Promise<any> {
-    return this.sessionService.filterSessionsByUser(dto);
+  @Post('sessions')
+  getSessions(@Body() body: dto.Sessions): Promise<dto.Session[]> {
+    return this.sessionService.getSessions(body);
   }
 
-  @Delete('session')
-  deleteSession(@Body() dto: dto.Delete): Promise<any> {
-    return this.sessionService.deleteSession(dto);
+  @Post('sessions/single')
+  async getSession(@Body() body: dto.GetSession): Promise<dto.VerboseSession | HttpStatus.BAD_REQUEST> {
+    const session: dto.VerboseSession = await this.sessionService.getSession(body);
+    if(session) return session;
+    throw new HttpException('Session not found.', HttpStatus.BAD_REQUEST);
+  }
+
+  @Delete('session/delete')
+  async deleteSession(@Body() body: dto.DeleteSession): Promise<any | HttpStatus.BAD_REQUEST> {
+    const session = await this.sessionService.deleteSession(body);
+    if(session) return session;
+    throw new HttpException('Session does not exist.', HttpStatus.BAD_REQUEST);
   }
 }

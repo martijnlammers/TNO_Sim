@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { Role } from 'src/app.enums';
+import { Role, Action, Light, Filter } from 'src/app.enums';
 import { User } from 'src/user/dto/users';
 const prisma = new PrismaClient();
 const date = new Date();
@@ -8,92 +8,7 @@ import * as dto from './dto/all'
 
 @Injectable()
 export class SessionService {
-  readSession(dto): any {
-    // return !!dto.sessionId
-    //   ? prisma.session.findFirst({
-    //       where: { AND: [{ id: String(dto.sessionId) }, { deleted: false }] },
-    //       include: {
-    //         participants: {
-    //           select: {
-    //             userId: true,
-    //           },
-    //         },
-    //         scene: {
-    //           include: {
-    //             evidences: {
-    //               select: {
-    //                 id: true,
-    //                 x: true,
-    //                 y: true,
-    //                 z: true,
-    //                 type: true,
-    //               },
-    //             },
-    //           },
-    //         },
-    //         events: true,
-    //       },
-    //     })
-    //   : prisma.session.findMany({
-    //       include: {
-    //         participants: {
-    //           include: {
-    //             user: {
-    //               select: {
-    //                 firstname: true,
-    //                 lastname: true,
-    //                 role: true,
-    //                 addition: true,
-    //               },
-    //             },
-    //           },
-    //         },
-    //       },
-    //     });
-    return;
-  }
-  // updateSession(dto: PutSessionDTO): any {
-  //   return prisma.session.upsert({
-  //     where: {
-  //       id: dto.id,
-  //     },
-  //     update: {
-  //       description: dto.description,
-  //       startTime: dto.startTime,
-  //       stopTime: dto.stopTime,
-  //       sceneId: dto.sceneId ? dto.sceneId : null,
-  //       startSceneTime: dto.startSceneTime,
-  //       stopSceneTime: dto.stopSceneTime,
-  //       lastmodified: date.toISOString(),
-  //     },
-  //     create: {
-  //       description: dto.description,
-  //       startTime: dto.startTime,
-  //       stopTime: dto.stopTime,
-  //       sceneId: dto.sceneId ? dto.sceneId : null,
-  //       startSceneTime: dto.startSceneTime,
-  //       stopSceneTime: dto.stopSceneTime,
-  //       lastmodified: date.toISOString(),
-  //     },
-  //   });
-  // }
-  // deleteSession(dto: DeleteSessionDTO): any {
-  //   const deletedEvents = prisma.event.updateMany({
-  //     where: { sessionId: dto.sessionId },
-  //     data: {
-  //       deleted: true,
-  //       lastmodified: date.toISOString(),
-  //     },
-  //   });
-  //   const deletedSession = prisma.session.update({
-  //     where: { id: dto.sessionId },
-  //     data: {
-  //       deleted: true,
-  //       lastmodified: date.toISOString(),
-  //     },
-  //   });
-  //   return prisma.$transaction([deletedEvents, deletedSession]);
-  // }
+
   async create(body: dto.CreateSession): Promise<any | null> {
     const supervisor: User = await this.findUserWithRole(body.userId_supervisor, Role.Supervisor);
     const participant1: User = await this.findUserWithRole(body.userId_trainee1, Role.Trainee);
@@ -113,28 +28,88 @@ export class SessionService {
     await this.addParticipantToSession(session.id, participant1.id);
     await this.addParticipantToSession(session.id, participant2.id);
     return prisma.session.findUnique({
-        where: {
-          id: session.id
-        },
-        select:{
-          id:true,
-          description:true,
-          participants:{
-            select:{
-              userId:true
-            }
+      where: {
+        id: session.id
+      },
+      select: {
+        id: true,
+        description: true,
+        participants: {
+          select: {
+            userId: true
           }
         }
-      })
+      }
+    })
   }
 
   async addEvent(body: dto.AddEvent): Promise<any | null> {
+    try {
+      return await prisma.event.create({
+        data: {
+          sessionId: body.sessionId,
+          action: Action[body.action],
+          userId: body.userId,
+          evidenceId: body?.evidenceId,
+          light: Light[body?.light],
+          filter: Filter[body?.filter]
+        }
+      })
+    } catch (e) {
+      return null;
+    }
   }
 
-  async filterSessionsByUser(body: dto.GetSessionsByUser): Promise<any | null> {
+  async deleteSession(body: dto.DeleteSession): Promise<any | null> {
+    try {
+      return await prisma.session.delete({ where: { id: body.sessionId } });
+    } catch (e) {
+      return null
+    }
   }
 
-  async deleteSession(body: dto.Delete): Promise<any | null> {
+  async getSessions(body: dto.Sessions): Promise<any> {
+    return await prisma.session.findMany({
+      skip: body.skip,
+      take: body.take
+    })
+  }
+
+  async getSession(body: dto.GetSession): Promise<dto.VerboseSession> {
+    return await prisma.session.findUnique({
+      where: {
+        id: body.sessionId
+      },
+      include: {
+        events: true,
+        scene: {
+          select: {
+            map_name: true,
+            description: true,
+            evidences: {
+              select: {
+                id: true,
+                type: true,
+                x: true,
+                y: true,
+                z: true,
+              }
+            }
+          }
+        },
+        participants: {
+          select: {
+            user: {
+              select: {
+                id: true,
+                fullname: true,
+                role: true
+              }
+            }
+          },
+        },
+      },
+    })
   }
 
   async findUserWithRole(userId: string, role: Role): Promise<User | null> {
@@ -151,14 +126,14 @@ export class SessionService {
   }
 
   async addParticipantToSession(sessionId: string, userId: string): Promise<void | null> {
-    try{
+    try {
       await prisma.sessionParticipants.create({
         data: {
           sessionId: sessionId,
           userId: userId,
         },
       })
-    } catch(e){
+    } catch (e) {
       return null;
     }
   }

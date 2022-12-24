@@ -1,4 +1,4 @@
-export { Delete } from './session';
+export { DeleteSession, GetSession, VerboseSession } from './session';
 export { CreateSession } from './sessions.create';
 export { AddEvent } from './sessions.event';
-export { GetSessionsByUser } from './sessions.filter.user';
+export { Sessions, Session } from './sessions'
