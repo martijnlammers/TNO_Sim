@@ -25,6 +25,7 @@ export class SessionService {
       }
     })
 
+    await this.addParticipantToSession(session.id, supervisor.id);
     await this.addParticipantToSession(session.id, participant1.id);
     await this.addParticipantToSession(session.id, participant2.id);
     return prisma.session.findUnique({
