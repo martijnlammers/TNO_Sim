@@ -73,6 +73,11 @@ export class UserService {
           }
         },
         select:{
+          sceneId:true,
+          description: true,
+          id:true,
+          startTime:true,
+          stopTime:true,
           participants:{
             select:{
               user:{
