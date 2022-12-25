@@ -72,6 +72,18 @@ export class UserService {
             }
           }
         },
+        select:{
+          participants:{
+            select:{
+              user:{
+                select:{
+                  fullname:true,
+                  role:true,
+                }
+              }
+            }
+          },
+        },
         skip: body.skip,
         take: body.take
        });

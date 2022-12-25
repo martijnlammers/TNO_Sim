@@ -72,18 +72,6 @@ export class SessionService {
     return await prisma.session.findMany({
       skip: body.skip,
       take: body.take,
-      select:{
-        participants:{
-          select:{
-            user:{
-              select:{
-                fullname:true,
-                role:true,
-              }
-            }
-          }
-        },
-      }
     })
   }
 
