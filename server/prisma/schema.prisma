@@ -10,7 +10,7 @@ datasource db {
 
 model Session {
   id           String    @id @unique @default(uuid())
-  scene        Scene?    @relation(fields: [sceneId], references: [id])
+  scene        Scene?    @relation(fields: [sceneId], references: [id], onDelete: Cascade)
   sceneId      String?
   participants SessionParticipants[]
   description  String?
