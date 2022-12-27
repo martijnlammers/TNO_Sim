@@ -7,7 +7,7 @@ export class Evidence {
     sceneId: string;
 
     @ApiProperty()
-    type: 'Saliva' | 'Blood' | 'Gunpowder';
+    type: 'Saliva' | 'Blood' | 'Gunpowder' | 'Sperm' | 'Fiber' | 'Fingerprint';
 
     @ApiProperty()
     x: number;
@@ -18,15 +18,3 @@ export class Evidence {
     @ApiProperty()
     z: number;
 }
-
-// export class AddedEvidence {
-//     export interface Root {
-//         id: string
-//         x: number
-//         y: number
-//         z: number
-//         type: number
-//         sceneId: string
-//       }
-      
-// }
