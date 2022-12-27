@@ -17,7 +17,7 @@ export class SceneService {
   }
 
   async addEvidence(body: dto.Evidence): Promise<any | null> {
-    if(!Evidence[body.type]) return null;
+    if(Evidence[body.type] === undefined) return null;
     try {
       return prisma.evidence.create({
         data: {
