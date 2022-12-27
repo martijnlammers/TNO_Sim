@@ -4,7 +4,7 @@ export enum Evidence {
     Saliva = 2, 
     Blood = 3,
     Fibers = 4,
-    Fingerprint = 5,
+    Fingerprints = 5,
 }
 
 export enum Role {

@@ -69,4 +69,12 @@ export class SceneService {
       return null
     }
   }
+
+  async deleteEvidence(body: dto.DeleteEvidence): Promise<any | null> {
+    try {
+      return await prisma.evidence.delete({ where: { id: body.evidenceId } });
+    } catch (e) {
+      return null
+    }
+  }
 }
