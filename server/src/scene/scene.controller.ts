@@ -25,7 +25,7 @@ export class SceneController {
   async deleteEvidence(@Body() body: dto.DeleteEvidence): Promise<dto.Evidence | null> {
     const evidence: dto.Evidence = await this.sceneService.deleteEvidence(body);
     if (evidence) return evidence;
-    throw new HttpException('Scene does not exist.', HttpStatus.BAD_REQUEST);
+    throw new HttpException('Evidence does not exist.', HttpStatus.BAD_REQUEST);
   }
 
   @Post('scenes')
