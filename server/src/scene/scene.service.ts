@@ -21,6 +21,7 @@ export class SceneService {
     try {
       return prisma.evidence.create({
         data: {
+          id: body?.id,
           x: body.x,
           y: body.y,
           z: body.z,

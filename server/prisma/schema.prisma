@@ -58,6 +58,7 @@ model Event {
   sessionId  String
   evidence   Evidence? @relation(fields: [evidenceId], references: [id])
   evidenceId String?
+  relevance  Int?
   light      Int?
   filter     Int?
 }

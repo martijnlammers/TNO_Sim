@@ -1,6 +1,7 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 
 export class Evidence {
+    @ApiPropertyOptional()
     id?: string;
 
     @ApiProperty()
