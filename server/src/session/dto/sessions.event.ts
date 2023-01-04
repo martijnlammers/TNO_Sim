@@ -14,6 +14,9 @@ export class AddEvent {
     evidenceId?: string;
 
     @ApiPropertyOptional()
+    relevance?: string;
+
+    @ApiPropertyOptional()
     light?: string;
 
     @ApiPropertyOptional()

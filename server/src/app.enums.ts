@@ -33,3 +33,8 @@ export enum Filter {
     Glasses529nm = 3,
     Glasses549nm = 4
 }
+
+export enum Relevance {
+    Low = 0,
+    High = 1
+}

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { Role, Action, Light, Filter } from 'src/app.enums';
+import { Role, Action, Light, Filter, Relevance } from 'src/app.enums';
 import { User } from 'src/user/dto/users';
 const prisma = new PrismaClient();
 const date = new Date();
@@ -52,6 +52,7 @@ export class SessionService {
           action: Action[body.action],
           userId: body.userId,
           evidenceId: body?.evidenceId,
+          relevance: Relevance[body?.relevance],
           light: Light[body?.light],
           filter: Filter[body?.filter]
         }

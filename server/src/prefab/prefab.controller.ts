@@ -28,7 +28,7 @@ export class PrefabController {
 
   @Post('/read')
   async get(@Body() body: ReadOrDeleteBody) {
-    return KeyValue.get(body.key)
+    return {"key":`${body.key}`, "value":`${KeyValue.get(body.key)}`};
   }
 
   @Delete('/delete')
