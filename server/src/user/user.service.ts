@@ -42,60 +42,63 @@ export class UserService {
         where: {
           role: Role[body.role]
         },
-        select:{
-          id:true,
-          fullname:true,
-          role:true
+        select: {
+          id: true,
+          fullname: true,
+          role: true
         },
-        skip: body.skip,
-        take: body.take,
+        skip: parseInt(body.skip),
+        take: parseInt(body.take)
       })
     }
-    return await prisma.user.findMany({ skip: body.skip, take: body.take })
+    return await prisma.user.findMany({
+      skip: parseInt(body.skip),
+      take: parseInt(body.take)
+    })
   }
 
   async deleteUser(body: dto.Delete): Promise<dto.RegisteredUser | null> {
-    try{
+    try {
       return await prisma.user.delete({ where: { id: body.userId } });
-    } catch(e){
+    } catch (e) {
       return null
     }
   }
 
   async getUserSessions(body: dto.UserSessions): Promise<any | null> {
-    try{
-      return await prisma.session.findMany({ 
-        orderBy:{
+    try {
+      return await prisma.session.findMany({
+        orderBy: {
           startTime: "desc"
         },
-        where: { 
-          participants:{
-            some:{
+        where: {
+          participants: {
+            some: {
               userId: body.userId
             }
           }
         },
-        select:{
-          sceneId:true,
+        select: {
+          sceneId: true,
           description: true,
-          id:true,
-          startTime:true,
-          stopTime:true,
-          participants:{
-            select:{
-              user:{
-                select:{
-                  fullname:true,
-                  role:true,
+          id: true,
+          startTime: true,
+          stopTime: true,
+          participants: {
+            select: {
+              user: {
+                select: {
+                  fullname: true,
+                  role: true,
                 }
               }
             }
           },
         },
-        skip: body.skip,
-        take: body.take
-       });
-    } catch(e){
+        skip: parseInt(body.skip),
+        take: parseInt(body.take)
+      });
+    } catch (e) {
       return null
     }
   }

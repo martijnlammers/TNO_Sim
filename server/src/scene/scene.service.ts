@@ -22,9 +22,9 @@ export class SceneService {
       return prisma.evidence.create({
         data: {
           id: body?.id,
-          x: body.x,
-          y: body.y,
-          z: body.z,
+          x: parseFloat(body.x),
+          y: parseFloat(body.y),
+          z: parseFloat(body.z),
           type: Evidence[body.type],
           sceneId: body.sceneId,
         },
@@ -58,8 +58,8 @@ export class SceneService {
         map_name: true,
         description: true
       },
-      take: body.take,
-      skip: body.skip
+      take: parseInt(body.take),
+      skip: parseInt(body.skip)
     })
   }
 

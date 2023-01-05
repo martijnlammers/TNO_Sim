@@ -2,14 +2,14 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class Sessions {
     @ApiProperty({
-        example: 0
+        example: "0"
     })
-    skip: number;
+    skip: string;
 
     @ApiProperty({
-        example: 5
+        example: "5"
     })
-    take: number;
+    take: string;
 }
 
 

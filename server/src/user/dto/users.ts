@@ -1,10 +1,10 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 export class Users {
     @ApiProperty()
-    skip: number;
+    skip: string;
 
     @ApiProperty()
-    take: number;
+    take: string;
 
     @ApiPropertyOptional()
     role: 'Trainee' | 'Supervisor';

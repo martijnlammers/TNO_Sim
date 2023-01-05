@@ -5,8 +5,8 @@ export class UserSessions {
     userId: string;
 
     @ApiProperty()
-    skip: number;
+    skip: string;
 
     @ApiProperty()
-    take: number;
+    take: string;
 }

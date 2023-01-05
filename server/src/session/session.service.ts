@@ -72,8 +72,8 @@ export class SessionService {
 
   async getSessions(body: dto.Sessions): Promise<any> {
     return await prisma.session.findMany({
-      skip: body.skip,
-      take: body.take,
+      skip: parseInt(body.skip),
+      take: parseInt(body.take),
     })
   }
 

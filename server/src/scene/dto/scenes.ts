@@ -2,8 +2,8 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class Scenes {
     @ApiProperty()
-    skip: number;
+    skip: string;
 
     @ApiProperty()
-    take: number;
+    take: string;
 }

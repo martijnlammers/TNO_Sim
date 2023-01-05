@@ -11,11 +11,11 @@ export class Evidence {
     type: 'Saliva' | 'Blood' | 'Gunpowder' | 'Sperm' | 'Fiber' | 'Fingerprint';
 
     @ApiProperty()
-    x: number;
+    x: string;
 
     @ApiProperty()
-    y: number;
+    y: string;
 
     @ApiProperty()
-    z: number;
+    z: string;
 }
