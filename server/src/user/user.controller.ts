@@ -26,7 +26,7 @@ export class UserController {
   async getUserSessions(@Body() body: dto.UserSessions): Promise<dto.RegisteredUser | HttpException> {
     const user = await this.userService.getUserSessions(body);
     if(user) return user;
-    throw new HttpException('Invalid login credentials.', HttpStatus.BAD_REQUEST);
+    throw new HttpException('Could not find sessions.', HttpStatus.BAD_REQUEST);
   }
 
   @Post('users')
