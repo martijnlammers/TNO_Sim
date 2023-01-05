@@ -3,7 +3,10 @@ import { ApiProperty, ApiTags } from '@nestjs/swagger';
 import { VerboseSession } from 'src/session/dto/session';
 import { UnityService } from './unity.service';
 
-
+class SessionId {
+  @ApiProperty()
+  id: string;
+}
 @Controller('/unity')
 @ApiTags('Unity')
 export class UnityController {
@@ -11,7 +14,7 @@ export class UnityController {
   constructor(private readonly unityService: UnityService) {}
 
   @Post('/user/latestSessionId')
-  async append(@Body() body: {id:string}) {
+  async append(@Body() body: SessionId) {
     const session: VerboseSession = await this.unityService.getUserSession(body);
     return session.id;
   }
