@@ -65,6 +65,9 @@ export class UserService {
   async getUserSessions(body: dto.UserSessions): Promise<any | null> {
     try{
       return await prisma.session.findMany({ 
+        orderBy:{
+          startTime: "desc"
+        },
         where: { 
           participants:{
             some:{
