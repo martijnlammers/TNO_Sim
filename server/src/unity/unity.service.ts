@@ -4,11 +4,16 @@ import { Role } from 'src/app.enums';
 import { createHash } from 'crypto';
 const prisma = new PrismaClient();
 
+
+class SessionId {
+  id: string;
+}
+
 @Injectable()
 export class UnityService {
 
 
-  async getUserSession(body: {id:string}): Promise<any | null> {
+  async getUserSession(body: SessionId): Promise<any | null> {
     try {
       return await prisma.session.findMany({
         orderBy: {
