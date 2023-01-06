@@ -18,7 +18,10 @@ export class SessionController {
   @Post('session/event')
   addEvent(@Body() body: dto.AddEvent): Promise<Event | HttpException> {
     const event = this.sessionService.addEvent(body);
-    if(event) return event;
+    if(event){
+      console.log(event);
+      return event;
+    } 
     throw new HttpException('Something went wrong.', HttpStatus.BAD_REQUEST);
   }
 

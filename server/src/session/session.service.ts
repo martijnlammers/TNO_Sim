@@ -45,6 +45,7 @@ export class SessionService {
   }
 
   async addEvent(body: dto.AddEvent): Promise<any | null> {
+    console.log(body);
     try {
       return await prisma.event.create({
         data: {
@@ -83,7 +84,15 @@ export class SessionService {
         id: body.sessionId
       },
       include: {
-        events: true,
+        events: {
+          include:{
+            user:{
+              select:{
+                fullname:true
+              }
+            }
+          }
+        },
         scene: {
           select: {
             map_name: true,

@@ -13,11 +13,11 @@ export enum Role {
 }
 
 export enum Light {
-    White = 0,
-    Violet = 1,
-    Blue = 2,
-    BlueGreen = 3,
-    Green = 4,
+    FlashLightWhite = 0,
+    FlashLightViolet_425nm = 1,
+    FlashLightBlue_450nm = 2,
+    "FlashLightBlue/Green_485nm" = 3,
+    FlashLightGreen_520nm = 4,
 }
 
 export enum Action {
@@ -28,13 +28,14 @@ export enum Action {
 
 export enum Filter { 
     GlassesBase = 0,
-    Glasses435nm = 1,
-    Glasses476nm = 2,
-    Glasses529nm = 3,
-    Glasses549nm = 4
+    Glasses435 = 1,
+    Glasses476 = 2,
+    Glasses529 = 3,
+    Glasses549 = 4
 }
 
 export enum Relevance {
     Low = 0,
-    High = 1
+    Medium = 1,
+    High = 2
 }
