@@ -5,4 +5,4 @@ database2.png
 /server/prisma/migrations
 res.json
 redeploy.sh
-/idea
+/.idea
