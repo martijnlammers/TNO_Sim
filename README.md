@@ -45,11 +45,56 @@ HOST=127.0.0.0
 ```bash
 cd ~/TNO_Sim/server/prisma
 npx prisma generate
-prisma migrate dev --name init
+npx prisma migrate dev --name init
 ```
 ### Create and run the build:
 ```bash
 cd ~/TNO_Sim/server
 npm run build
-npm start
+
+# API runs on port 80, so it is necessary to run the application with root permissions. 
+sudo npm start
 ```
+### Using the API:
+```bash
+# Visit http://hostaddress/api for Swagger docs on the endpoints.
+# The API uses standard HTTP requests with JSON bodies to transfer data.
+```
+#### Using Curl:
+```bash
+curl -X 'POST' \
+  'http://hostaddress/prefab/append' \
+  -H 'Content-Type: application/json' \
+  -d '{ "key": "string", "value": "string" }'
+```
+#### Using Javascript:
+```javascript
+//https://reqbin.com/code/javascript/wzp2hxwh/javascript-post-request-example
+const data = { key: "string", value: "string" };
+const response = await fetch(`http://hostaddress/prefab/append`, 
+    {
+        method: "POST",
+        mode: "cors",
+        headers: {
+        "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    }
+);
+```
+#### Using C#:
+```C#
+// https://stackoverflow.com/questions/4015324/send-http-post-request-in-net
+using System.Net.Http;
+class ClassName {
+    private static readonly HttpClient client = new HttpClient();
+    var body = new Dictionary<string, string>{
+        { "key", "string" },
+        { "value", "value"}
+    };
+    var response = await client.PostAsync("http://hostaddress/prefab/append", new FormUrlEncodedContent(body));
+}
+```
+
+
+
