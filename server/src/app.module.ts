@@ -7,10 +7,11 @@ import { SessionService } from './session/session.service';
 import { UserService } from './user/user.service';
 import { UnityService } from './unity/unity.service';
 import { UnityController } from './unity/unity.controller';
+import { PrefabController } from './prefab/prefab.controller';
 
 @Module({
   imports: [],
-  controllers: [UserController, SceneController, SessionController, UnityController],
+  controllers: [PrefabController, UserController, SceneController, SessionController, UnityController],
   providers: [SceneService, SessionService, UserService, UnityService],
 })
 export class AppModule {}
