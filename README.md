@@ -16,9 +16,22 @@ Git | 2.34.1 | git --version
 PostgreSQL | 14.5 | psql -V
 
 # Instructions
+### Clone the repository and install the dependencies.
 ```bash
-cd ~
 git clone https://github.com/martijnlammers/TNO_Sim.git
 
+cd ./TNO_Sim/server 
+npm i && npm i prisma --save-dev && npm i @prisma/client
+```
+### Set up your enviorment
+```bash
+nano .env
 
+# Inside the .env file, set up the following:
+
+# The postgresql database information.
+DATABASE_URL=postgresql://username:password@localhost:port/database
+
+# The host address (Typically 0.0.0.0)
+HOST=0.0.0.0
 ```
