@@ -10,7 +10,7 @@ refer to [this website](https://www.digitalocean.com/community/tutorials/how-to-
 #
 Pre-requisites
 Software | Version | Check version (Ubuntu)
---- | --- 
+--- | --- | ---
 Ubuntu | 22.04.1 | lsb_release -a
 NodeJS | 14.20.1 | node -v
 Git | 2.34.1 | git --version
