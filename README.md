@@ -1,6 +1,6 @@
 Setup
 ======
-#### These instructions guide the developer to set up 
+These instructions guide the developer to set up 
 and use the REST API used to manipulate the database.
 It is important to note that this guide assumes that
 a PostgreSQL database has already been set up.
@@ -16,6 +16,9 @@ Git | 2.34.1 | git --version
 PostgreSQL | 14.5 | psql -V
 
 # Instructions
+```bash
+cd ~
+git clone https://github.com/martijnlammers/TNO_Sim.git
 
-####
-1. something
+
+```
