@@ -60,14 +60,14 @@ sudo npm start
 # Visit http://hostaddress/api for Swagger docs on the endpoints.
 # The API uses standard HTTP requests with JSON bodies to transfer data.
 ```
-#### Using Curl:
+#### Curl:
 ```bash
 curl -X 'POST' \
   'http://hostaddress/prefab/append' \
   -H 'Content-Type: application/json' \
   -d '{ "key": "string", "value": "string" }'
 ```
-#### Using Javascript:
+#### Javascript:
 ```javascript
 //https://reqbin.com/code/javascript/wzp2hxwh/javascript-post-request-example
 const data = { key: "string", value: "string" };
@@ -82,7 +82,7 @@ const response = await fetch(`http://hostaddress/prefab/append`,
     }
 );
 ```
-#### Using C#:
+#### C#:
 ```C#
 // https://stackoverflow.com/questions/4015324/send-http-post-request-in-net
 using System.Net.Http;
