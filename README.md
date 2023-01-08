@@ -57,7 +57,8 @@ sudo npm start
 ```
 ### Using the API:
 ```bash
-# Visit http://hostaddress/api for Swagger docs on the endpoints.
+# When the server is started using 'sudo npm start';
+# visit http://hostaddress/api for Swagger docs on the endpoints.
 # The API uses standard HTTP requests with JSON bodies to transfer data.
 ```
 #### Curl:
