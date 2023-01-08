@@ -18,9 +18,10 @@ PostgreSQL | 14.5 | psql -V
 # Instructions
 ### Clone the repository and install the dependencies:
 ```bash
+cd ~
 git clone https://github.com/martijnlammers/TNO_Sim.git
 
-cd ./TNO_Sim/server 
+cd ~/TNO_Sim/server 
 npm i && npm i prisma --save-dev && npm i @prisma/client
 ```
 ### Set up your enviorment:
@@ -42,13 +43,13 @@ HOST=127.0.0.0
 ```
 ### Setting up database:
 ```bash
-cd /prisma
+cd ~/TNO_Sim/server/prisma
 npx prisma generate
 prisma migrate dev --name init
 ```
 ### Create and run the build:
 ```bash
-cd /TNO_Sim/server
+cd ~/TNO_Sim/server
 npm run build
 npm start
 ```
