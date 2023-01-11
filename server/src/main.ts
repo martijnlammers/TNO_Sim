@@ -21,6 +21,6 @@ async function bootstrap() {
       methods: ['POST', 'PUT', 'DELETE', 'GET']
     }
   );
-  await app.listen(80, `${process.env.HOST}`);
+  await app.listen(`${process.env.PORT}`, `${process.env.HOST}`);
 }
 bootstrap();
