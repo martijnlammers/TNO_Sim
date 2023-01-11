@@ -1,0 +1,25 @@
+
+version: '3.8'
+services: 
+  server:
+    image: node:14
+    environment:
+      PORT: '80'
+      HOST: '0.0.0.0'
+      DATABASE_URL: 'postgresql://postgres:postgres@database:5432/TNO_SIM_DB'
+    ports:
+      - '80:80'
+    volumes:
+      - ./server:/server
+    entrypoint: /bin/sh /server/src/init.sh
+  database:
+    image: postgres
+    restart: always 
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_PASSWORD: 'postgres'
+      POSTGRES_USER: 'postgres'
+      POSTGRES_DB: 'TNO_SIM_DB'
+    volumes:
+      - ./db-data:/var/lib/postgresql/data
