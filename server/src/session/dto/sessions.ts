@@ -2,12 +2,18 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class Sessions {
     @ApiProperty({
-        example: "0"
+        required: true,
+        description: 'Quantity of sessions in the list that are skipped.  Number in string literal, can not be float.',
+        example: "0",
+        type: String,
     })
     skip: string;
 
     @ApiProperty({
-        example: "5"
+        required: true,
+        description: 'Quantity of sessions per page. Number in string literal, can not be float.',
+        example: "5",
+        type: String,
     })
     take: string;
 }

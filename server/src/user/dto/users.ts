@@ -2,7 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 export class Users {
   @ApiProperty({
     required: true,
-    description: 'Quantity of items in the list are skipped. Number in string literal, can not be float.',
+    description: 'Quantity of users in the list that are skipped. Number in string literal, can not be float.',
     example: "0",
     type: String,
   })
@@ -10,7 +10,7 @@ export class Users {
 
   @ApiProperty({
     required: true,
-    description: 'Quantity of items per page. Number in string literal, can not be float.',
+    description: 'Quantity of users per page. Number in string literal, can not be float.',
     example: "5",
     type: String,
   })

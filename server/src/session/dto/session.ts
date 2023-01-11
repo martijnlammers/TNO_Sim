@@ -1,12 +1,22 @@
 import { ApiProperty } from "@nestjs/swagger";
 
 export class DeleteSession {
-    @ApiProperty()
+    @ApiProperty({
+        required: true,
+        description: 'SessionId of the sessions needing to be deleted.',
+        example: "d5216c22-91c7-11ed-a1eb-0242ac120002",
+        type: String
+    })
     sessionId: string;
 }
 
 export class GetSession {
-    @ApiProperty()
+    @ApiProperty({
+        required: true,
+        description: 'SessionId of the session that needs to be retrieved.',
+        example: "d5216c22-91c7-11ed-a1eb-0242ac120002",
+        type: String
+    })
     sessionId: string;
 }
 
