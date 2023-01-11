@@ -2,10 +2,20 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Evidence } from './scene.evidence';
 
 export class CreateScene {
-    @ApiProperty()
+    @ApiProperty({
+        required: true,
+        description: 'Name of the scene map',
+        example: "Cabin",
+        type: String,
+    })
     map_name: string;
 
-    @ApiProperty()
+    @ApiProperty({
+        required: true,
+        description: 'Description of the scene.',
+        example: "A broken home, with a mystery.",
+        type: String
+    })
     description: string;
 }
 
