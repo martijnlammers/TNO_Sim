@@ -1,13 +1,30 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 export class Users {
-    @ApiProperty()
-    skip: string;
+  @ApiProperty({
+    required: true,
+    description: 'Quantity of items in the list are skipped. Number in string literal, can not be float.',
+    example: "0",
+    type: String,
+  })
+  skip: string;
 
-    @ApiProperty()
-    take: string;
+  @ApiProperty({
+    required: true,
+    description: 'Quantity of items per page. Number in string literal, can not be float.',
+    example: "5",
+    type: String,
+  })
+  take: string;
 
-    @ApiPropertyOptional()
-    role: 'Trainee' | 'Supervisor';
+  @ApiPropertyOptional({
+    required: false,
+    description: 'The role of all the users in the list.',
+    example: "Trainee",
+    default: 'Trainee',
+    type: String,
+    enum: ['Trainee', 'Supervisor']
+})
+  role: 'Trainee' | 'Supervisor';
 }
 
 export class User {

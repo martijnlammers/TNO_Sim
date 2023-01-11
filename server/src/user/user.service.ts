@@ -57,7 +57,7 @@ export class UserService {
     })
   }
 
-  async deleteUser(body: dto.Delete): Promise<dto.RegisteredUser | null> {
+  async deleteUser(body: dto.DeleteUser): Promise<dto.RegisteredUser | null> {
     try {
       return await prisma.user.delete({ where: { id: body.userId } });
     } catch (e) {
