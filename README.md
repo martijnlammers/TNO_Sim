@@ -10,4 +10,4 @@ cd ./TNO_Sim
 docker-compose up
 ```
 ### Go to application.
-address: 'http:localhost/api'
+address: 'http://localhost/api'
