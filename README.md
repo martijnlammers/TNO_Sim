@@ -10,4 +10,6 @@ cd ./TNO_Sim
 docker-compose up
 ```
 ### Go to application.
-address: 'http://localhost/api'
+The application will be hosted on: 'http://localhost/'.
+Visit 'http://localhost/api' for the Swagger Docs to see how 
+to interface to the application.
