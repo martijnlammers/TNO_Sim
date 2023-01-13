@@ -1,7 +1,7 @@
 #!/bin/sh
-cd /server/
+cd ..
 npm i
-cd /server/prisma
+cd ./prisma
 npx prisma generate
 npx prisma migrate dev --name init
 cd .. 
