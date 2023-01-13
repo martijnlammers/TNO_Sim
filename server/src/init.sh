@@ -1,8 +1,6 @@
 #!/bin/sh
-cd /server/
-npm i
-cd /server/prisma
-npx prisma generate
-npx prisma migrate dev --name init
+npm i server
+npx server/prisma generate
+npx server/prisma migrate dev --name init
 cd .. 
 npm run start:dev

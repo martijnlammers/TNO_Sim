@@ -13,3 +13,20 @@ docker-compose up
 The application will be hosted on: 'http://localhost/'.
 Visit 'http://localhost/api' for the Swagger Docs to see how 
 to interface to the application.
+
+
+
+
+Manual
+
+set PORT=8081
+set HOST=localhost
+set DATABASE_URL=postgresql://postgres:postgres@localhost:5432/TNO_SIM_DB
+cd server
+npm i
+cd prisma
+npx prisma generate
+npx prisma migrate dev --name init
+cd ..
+npm run build
+npm start

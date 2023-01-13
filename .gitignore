@@ -7,3 +7,4 @@ res.json
 redeploy.sh
 /.idea
 /db-data
+node_modules/
