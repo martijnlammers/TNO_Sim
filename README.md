@@ -22,6 +22,7 @@ Manual
 set PORT=8081
 set HOST=localhost
 set DATABASE_URL=postgresql://postgres:postgres@localhost:5432/TNO_SIM_DB
+
 cd server
 npm i
 cd prisma
@@ -30,3 +31,9 @@ npx prisma migrate dev --name init
 cd ..
 npm run build
 npm start
+
+
+npx prisma generate --schema=server\prisma\schema.prisma
+npx prisma migrate dev --name init  --schema=server\prisma\schema.prisma
+npm --prefix server run build
+npm --prefix server start 

@@ -2,10 +2,11 @@
 version: '3.8'
 services: 
   server:
+    container_name: api-server
     image: node:14
     environment:
       PORT: '8081'
-      HOST: '127.0.0.0'
+      HOST: 'localhost'
       DATABASE_URL: 'postgresql://postgres:postgres@localhost:5432/TNO_SIM_DB'
     ports:
       - '8081:8081'
@@ -13,6 +14,7 @@ services:
       - ./server:/server
     entrypoint: /bin/sh /server/src/init.sh
   database:
+    container_name: postgres-db
     image: postgres
     restart: always 
     ports:
