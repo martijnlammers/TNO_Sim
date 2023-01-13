@@ -1,5 +1,5 @@
 #!/bin/sh
-cd ./server
+cd /server
 npm i
 cd server/prisma
 npx prisma generate
