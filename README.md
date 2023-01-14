@@ -1,4 +1,5 @@
 # Pre-requisites
+Make sure you have docker and docker composed installed on the machine.
 Software | Version | Check version (Ubuntu) 
 --- | --- | --- 
 Docker | 20.10.22 | docker --version
