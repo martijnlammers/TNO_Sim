@@ -1,8 +1,14 @@
 
 version: '3.8'
 services: 
+  dashboard: 
+    build: 
+      context: .
+      dockerfile: ./Dockerfile.server
   server:
-    build: .
+    build: 
+      context: .
+      dockerfile: ./Dockerfile.server
     # bless this thread https://stackoverflow.com/questions/52942913/docker-compose-docker-entrypoint
     command: >
       sh -c "npm i && 

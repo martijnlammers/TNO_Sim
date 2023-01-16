@@ -1,0 +1,66 @@
+.App {
+  min-height:100%;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.grow { 
+  transition: all .2s ease-in-out; 
+}
+  
+.grow:hover { 
+  transform: scale(1.1); 
+}
+
+.growSmall { 
+  transition: all .1s ease-in-out; 
+}
+  
+.growSmall:hover { 
+  transform: scale(1.02); 
+}
+
+body, html {
+  width: 100%;
+  padding: 0;
+}
+.image{
+  background-image: url(img/backgroundplaceholder.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+}
+
+.wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header,
+footer {
+  height: auto;
+}
+
+main {
+  flex: 1;
+}
