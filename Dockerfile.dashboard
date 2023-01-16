@@ -1,5 +1,0 @@
-FROM node:16
-WORKDIR /dashboard
-COPY ./dashboard/* . 
-RUN npm install
-RUN npm install react-scripts
