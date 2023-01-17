@@ -1,7 +1,7 @@
 export enum Evidence {
     gunPowder,
     sperm, 
-    saliva, 
+    salvia, 
     blood,
     fibers,
     fingerPrints,

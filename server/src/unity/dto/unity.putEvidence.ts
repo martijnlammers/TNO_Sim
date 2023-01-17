@@ -21,7 +21,7 @@ export class PutEvidence {
     @ApiProperty({
         required: true,
         description: 'The type of the evidence. Check the schema for possible options.',
-        example: "Saliva",
+        example: "salvia",
         type: String,
         enum: ['salvia', 'blood', 'gunPowder', 'sperm', 'fibers', 'fingerPrints', 'fingerPrintsDeveloped']
     })
