@@ -23,9 +23,9 @@ export class PutEvidence {
         description: 'The type of the evidence. Check the schema for possible options.',
         example: "Saliva",
         type: String,
-        enum: ['Saliva', 'Blood', 'Gunpowder', 'Sperm', 'Fiber', 'Fingerprint']
+        enum: ['salvia', 'blood', 'gunPowder', 'sperm', 'fibers', 'fingerPrints', 'fingerPrintsDeveloped']
     })
-    type: 'Saliva' | 'Blood' | 'Gunpowder' | 'Sperm' | 'Fiber' | 'Fingerprint';
+    type: 'salvia' | 'blood' | 'gunPowder' | 'sperm' | 'fibers' | 'fingerPrints' | 'fingerPrintsDeveloped';
 
     @ApiProperty({
         required: true,
